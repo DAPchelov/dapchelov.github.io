@@ -100,8 +100,8 @@ document.addEventListener("keydown", function (event) {
     }
 });
 document.addEventListener("keyup", function () {
-        let key = document.querySelector(".keyPressed");
-        if (key !== undefined) {
-            key.classList.remove("keyPressed");
-        }
+    let key = document.querySelector(".keyPressed");
+    if (key !== undefined) {
+        key.classList.remove("keyPressed");
+    }
 });

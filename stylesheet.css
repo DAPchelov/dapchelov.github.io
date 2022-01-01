@@ -17,42 +17,40 @@ body {
 }
 
 .white-keys {
-    z-index: 0;
-    position: relative;
     /*border: solid blue;*/
     display: flex;
+    z-index: 0;
+    position: relative;
     align-items: stretch;
     justify-content: space-between;
     column-gap: 4px;
-    min-height: 250px;
     width: 100%;
 }
 
 .black-keys {
-    z-index: 1;
-    position: absolute;
     /*border: solid green;*/
     display: flex;
+    z-index: 1;
+    position: absolute;
     align-items: stretch;
     justify-content: space-between;
-    column-gap: 4px;
+    column-gap: 8px;
     min-height: 125px;
-    width: 34%;
+    width: 33%;
 }
 
 kbd {
     display: flex;
-    justify-content: center;
     align-items: flex-end;
+    justify-content: center;
     font-size: 16pt;
     min-width: 13%;
-    max-width: 70px;
     box-shadow: 4px 4px 1px 1px rgba(64, 64, 64, 0.3);
 }
 .white_keys {
     color: black;
     flex-basis: 6%;
-    background-color: white;
+    background-color: #fffaf0ff;
 }
 .black_keys {
     color: white;

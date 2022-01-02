@@ -8,9 +8,11 @@ document.addEventListener("keydown", function (event) {
     key.classList.add("keyPressed");
 
 });
+
 document.addEventListener("keyup", function () {
     let key = document.querySelector(".keyPressed");
     if (key !== undefined) {
         key.classList.remove("keyPressed");
     }
+    
 });

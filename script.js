@@ -1,18 +1,18 @@
 document.addEventListener("keydown", function (event) {
+    const keyDown = document.getElementById(event.code[3]) // find an element by pressing a key
+    if (keyDown !== null) { // if the required element was found
 
-    let audio = document.createElement("Audio");
-    audio.src = ("KeySounds/" + event.code[3] + ".mp3");
-    audio.play();
+        keyDown.classList.add("keyPressed"); // add the class "keyPressed" to element
 
-    let key = document.querySelector("#" + event.code[3]);
-    key.classList.add("keyPressed");
-
+        const audio = document.createElement("Audio"); // making a sound
+        audio.src = ("KeySounds/" + event.code[3] + ".mp3");
+        audio.play();
+    }
 });
 
 document.addEventListener("keyup", function () {
-    let key = document.querySelector(".keyPressed");
-    if (key !== undefined) {
-        key.classList.remove("keyPressed");
+    const keyUp = document.querySelector(".keyPressed"); // find an element with class "keyPressed"
+    if (keyUp !== null) { // if the required element was found
+        keyUp.classList.remove("keyPressed"); // delete class "keyPressed" -> normal condition
     }
-    
 });

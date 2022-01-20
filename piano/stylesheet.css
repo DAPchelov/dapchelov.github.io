@@ -1,0 +1,68 @@
+html {
+    background-color: seagreen;
+}
+body {
+    /*border: solid gray;*/
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    /*border: solid red;*/
+    display: flex;
+    justify-content: center;
+    width: 40%;
+    min-height: 250px;
+    margin-top: 200px;
+}
+
+.white-keys {
+    /*border: solid blue;*/
+    display: flex;
+    z-index: 0;
+    position: relative;
+    align-items: stretch;
+    justify-content: space-between;
+    column-gap: 4px;
+    width: 100%;
+}
+
+.black-keys {
+    /*border: solid green;*/
+    display: flex;
+    z-index: 1;
+    position: absolute;
+    align-items: stretch;
+    justify-content: space-between;
+    column-gap: 8px;
+    min-height: 125px;
+    width: 33%;
+}
+
+kbd {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    font-size: 16pt;
+    min-width: 13%;
+    box-shadow: 4px 4px 1px 1px rgba(64, 64, 64, 0.3);
+}
+.white_keys {
+    color: black;
+    flex-basis: 6%;
+    background-color: #fffaf0ff;
+}
+.black_keys {
+    color: white;
+    flex-basis: 10%;
+    background-color: #2f2f2f;
+}
+.emptyKey {
+    flex-basis: 10%;
+    background-color: rgba(0, 0, 0, 0%);
+    box-shadow: none;
+}
+
+.keyPressed {
+    filter: brightness(50%);
+}

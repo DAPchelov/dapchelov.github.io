@@ -1,0 +1,126 @@
+body {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+}
+
+.space {
+    /*border: solid red;*/
+    display: flex;
+    justify-content: left;
+    align-items: flex-end;
+    min-width: 80vw;
+    min-height: 97vh;
+    background-image: url("space.png");
+}
+
+.planet-area {
+    border: solid green;
+    display: flex;
+    justify-content: left;
+    align-items: flex-end;
+    z-index: 0;
+    width: 650px;
+    height: 80vh;
+}
+
+.planet {
+    border: solid blue;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+    width: 420px;
+    height: 390px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+
+
+}
+.rocket {
+    border: solid deeppink;
+    position: absolute;
+    margin-bottom: 190px;
+    margin-left: 190px;
+    bottom: 0;
+    z-index: 0;
+    width: 200px;
+    height: 180px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    transform: rotate(30deg);
+}
+
+.flyer {
+    animation-name: flight;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes flight {
+    from {
+        bottom: 190px;
+        margin-left: -190px;
+    }
+
+    to {
+        margin-bottom: 120vw;
+        margin-left: 120vh;
+    }
+}
+.control-panel {
+    /*border: solid deeppink;*/
+    border: 10px dashed #ffff00;
+    background: linear-gradient(rgba(0,0,0,1) 70%, rgba(46,46,46,0) 100%);
+    position: absolute;
+    text-align: center;
+    padding: 20px 0;
+    height: 250px;
+    width: 400px;
+    left: 60vw;
+    top: 40vh;
+}
+
+.check-buttons,
+.levers {
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+    width: 400px;
+}
+
+.check-buttons {
+    height: 25%;
+    padding-top: 5%;
+}
+
+.levers {
+    height: 120px;
+}
+
+input[type=range] {
+    transform: rotate(270deg);
+    left: -40px;
+    width: 80px;
+
+}
+
+input[type=password] {
+    border-color: yellow;
+    border-radius: 10px;
+    background-color: rgb(36,36,36);
+    color: white;
+}
+
+#bt_ok {
+    background-color: yellow;
+    border-radius: 10px;
+}
+
+#bt_launch {
+    background-color: red;
+    font-size: 16pt;
+    border-radius: 50%;
+    color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

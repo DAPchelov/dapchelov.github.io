@@ -58,8 +58,8 @@ body {
 
 @keyframes flight {
     from {
-        bottom: 190px;
-        margin-left: -190px;
+        margin-bottom: 190px;
+        margin-left: 190px;
     }
 
     to {

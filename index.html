@@ -1,17 +1,34 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <link rel="icon" href="beeFavicon.png" type="image/x-icon">
     <link rel="stylesheet" href="stylesheet.css">
+<!--    <script src="script.js"></script> почему-то не работает (не видит элементы в документе) -->
     <title>DAPchelov_Project</title>
 </head>
 <body>
+<header></header>
+<section id="bar">
     <article id="mainArticle">
-        <div class="icons"></div>
-        <div class="icons"><a href="/piano/piano.html"><img src="pianoIcon.png" alt="Виртуальное пианино"></a></div>
-        <div class="icons"><a href="/toSpace/toSpace.html"><img src="rocketIcon.png" alt="Запуск ракеты"></a></div>
-        <div class="icons"></div>
+        <div class="icons" infoStr="Там пусто"></div>
+        <div class="icons" infoStr="Дриньк-дрыньк"><a href="/piano/piano.html"><img src="pianoIcon.png" alt="Дриньк-дрыньк"></a>
+        </div>
+        <div class="icons" infoStr="Ну что, народ, погнали...?"><a href="/toSpace/toSpace.html"><img src="rocketIcon.png" alt="Ну что, погнали?"></a></div>
+        <div class="icons" infoStr="Там пусто"></div>
     </article>
+    <article id="subArticle">
+        <div id="infoString"></div>
+    </article>
+</section>
+<footer></footer>
 </body>
+<script>
+    let icons = document.getElementsByClassName("icons");
+    for (let icon of icons) {
+        icon.addEventListener("mouseover", function () {
+            document.getElementById("infoString").innerHTML = icon.getAttribute("infoStr");
+        });
+    }
+</script>
 </html>

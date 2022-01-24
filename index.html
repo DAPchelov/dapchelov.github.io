@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <link rel="icon" href="beeFavicon.png" type="image/x-icon">
     <link rel="stylesheet" href="stylesheet.css">
-    <script src="script.js"></script>
+<!--    <script src="script.js"></script> почему-то не работает -->
     <title>DAPchelov_Project</title>
 </head>
 <body>
@@ -23,4 +23,12 @@
 </section>
 <footer></footer>
 </body>
+<script>
+    let icons = document.getElementsByClassName("icons");
+    for (let icon of icons) {
+        icon.addEventListener("mouseover", function () {
+            document.getElementById("infoString").innerHTML = icon.getAttribute("infoStr");
+        });
+    }
+</script>
 </html>

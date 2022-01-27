@@ -159,7 +159,7 @@ p {
     width: 530px;
     padding: 10px 10px 25px 10px;
     justify-content: space-between;
-    align-items: end;
+    align-items: flex-end;
 }
 #col1 {
     height: 150px; border-radius: 5px 5px 0 0;

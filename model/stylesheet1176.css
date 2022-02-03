@@ -14,6 +14,7 @@ main {
     "aside carts"
     "footer footer"
 }
+
 aside {
     grid-area: aside;
     padding-right: 30px;
@@ -23,10 +24,13 @@ aside {
     justify-content: stretch;
     width: 140px;
 }
+
 a {
     color: rgb(54, 166, 162);
     text-decoration: none;
+    font-style: italic;
 }
+
 footer {
     grid-area: footer;
     display: flex;
@@ -38,12 +42,14 @@ footer {
     align-items: center;
     padding: 10px;
 }
+
 .content {
     display: block;
     grid-area: content;
     /*border: solid hotpink;*/
     position: relative;
 }
+
 .mail {
     grid-area: mail;
     /*border: solid yellow;*/
@@ -51,6 +57,7 @@ footer {
     display: flex;
     align-items: center;
 }
+
 .carts {
     grid-area: carts;
     /*border: solid saddlebrown;*/
@@ -64,31 +71,36 @@ footer {
     display: block;
     text-align: center;
 }
-.logo>img {
+
+.logo > img {
     height: 120px;
     width: 120px;
 }
 
-.link>a>img {
+.link > a > img {
     width: 30px;
     height: 30px;
     vertical-align: middle;
     padding-right: 10px;
     padding-left: 10px;
 }
-.tweet{
+
+.tweet {
     /*border: solid deepskyblue;*/
     display: block;
 }
+
 .tweetReplica {
     border-bottom: dashed rgb(192, 192, 192) 1px;
     padding-bottom: 3px;
     font-size: 9pt;
 }
+
 .tweetButton {
     padding-top: 10px;
     padding-bottom: 5px;
 }
+
 #tweetAD {
     font-size: 7pt;
     font-style: italic;
@@ -101,10 +113,12 @@ footer {
     grid-area: banner;
     display: block;
 }
-.banner>img {
+
+.banner > img {
     width: 100%;
     height: 100%;
 }
+
 .tabs {
     display: grid;
     position: absolute;
@@ -114,10 +128,12 @@ footer {
     height: 85px;
     bottom: 0;
 }
+
 .tabItem {
     /*border: solid purple;*/
     background-color: rgb(226, 255, 253);
 }
+
 .bigTextBlock {
     display: block;
     padding-top: 20px;
@@ -125,12 +141,14 @@ footer {
     font-size: 16pt;
     color: rgb(54, 166, 162);
 }
+
 .littleTextBlock {
     color: rgb(54, 166, 162);
     padding-right: 10px;
     padding-left: 10px;
     font-size: 8pt;
 }
+
 #bannerLogoHead {
     position: absolute;
     /*border: solid black;*/
@@ -143,6 +161,7 @@ footer {
     font-size: 18pt;
     font-style: italic;
 }
+
 #bannerLogoSub {
     position: absolute;
     /*border: solid greenyellow;*/
@@ -161,18 +180,21 @@ input[type="text"] {
     border: solid rgb(231, 231, 231) 1px;
     line-height: 16pt;
 }
+
 input[type="submit"] {
     border: solid rgb(231, 231, 231) 1px;
     line-height: 16pt;
     padding: 0 20px 0 20px;
     font-size: 8pt;
-    background: rgb(222,222,222);
-    background: linear-gradient(0deg, rgba(222,222,222,1) 0%, rgba(241,241,241,1) 50%);
+    background: rgb(222, 222, 222);
+    background: linear-gradient(0deg, rgba(222, 222, 222, 1) 0%, rgba(241, 241, 241, 1) 50%);
 }
-#mailIcon>img {
+
+#mailIcon > img {
     width: 32px;
     height: 26px;
 }
+
 .mailContainer {
     height: 51px;
     padding-left: 18px;
@@ -180,47 +202,54 @@ input[type="submit"] {
     font-size: 10pt;
     font-style: italic;
     border-top: dashed rgb(192, 192, 192) 1px;
-    border-bottom: dashed rgb(192, 192, 192)  1px;
+    border-bottom: dashed rgb(192, 192, 192) 1px;
     display: grid;
     grid-template-columns: 1fr 10fr 300px;
     column-gap: 10px;
 }
+
 #subscribeField {
     /*border: solid red;*/
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
 #subscribeText {
     /*border: solid blue;*/
     display: flex;
     align-items: center;
 }
+
 #mailIcon {
     /*border: solid green;*/
     display: flex;
     align-items: center;
 }
 
-.cartImg{
+.cartImg {
     border: solid white 11px;
     box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.2);
 }
-.cartImg>img {
+
+.cartImg > img {
     width: 100%;
     height: 100%;
 }
+
 .cartHeader {
     display: block;
     padding-top: 11px;
     font-size: 12pt;
     color: rgb(54, 166, 162);
 }
+
 .cartText {
     display: block;
     padding-top: 11px;
     line-height: 20px;
 }
+
 .cartDate {
     display: block;
     padding-top: 11px;
@@ -235,14 +264,17 @@ input[type="submit"] {
     height: 40px;
     width: 110px;
 }
+
 #tweetImg {
     height: 26px;
     width: 30px;
 }
+
 #fbImg {
     height: 32px;
     width: 16px;
 }
+
 #rssImg {
     height: 32px;
     width: 32px;

@@ -1,0 +1,29 @@
+@media screen and (max-width: 500px) {
+    main {
+        height: 250vh;
+        grid-template-rows: 3fr 4fr 2fr 14fr 2fr;
+    }
+    aside {
+        flex-wrap: wrap-reverse;
+        justify-content: space-between;
+    }
+    input[type="text"] {
+        width: 330px;
+    }
+    .logo {
+        flex-basis: 100%;
+    }
+    .mailContainer {
+        height: 100px;
+    }
+    .carts {
+        padding-top: 10px;
+        grid-template-columns: 80%;
+        grid-template-rows: repeat(4, fit-content(100%));
+        justify-content: center;
+        row-gap: 30px;
+    }
+    .cartImg>img {
+        max-height: 200px;
+    }
+}

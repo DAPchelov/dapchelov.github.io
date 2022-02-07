@@ -1,0 +1,43 @@
+@media screen and (max-width: 1176px) {
+    main {
+        grid-template-columns: 1fr 9fr;
+        grid-template-rows: 8fr 2fr 7fr 1fr;
+    }
+
+    .banner {
+        overflow: hidden;
+    }
+
+    .banner > img {
+        width: 130%;
+        height: 130%;
+    }
+
+    .tabs {
+        height: 30px;
+    }
+
+    .bigTextBlock {
+        padding-top: 0;
+        text-align: center;
+        font-size: 10pt;
+        line-height: 30px;
+    }
+
+    .littleTextBlock {
+        display: none;
+    }
+
+    .mailContainer {
+        height: 80px;
+        grid-template-columns: 1fr 6fr 300px;
+    }
+
+    #bannerLogoHead {
+        bottom: 130px;
+    }
+
+    #bannerLogoSub {
+        bottom: 90px;
+    }
+}

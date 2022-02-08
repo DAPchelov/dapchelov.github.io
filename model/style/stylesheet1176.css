@@ -279,3 +279,6 @@ input[type="submit"] {
     content: ' |';
     color: lightgray;
 }
+.footerLink:last-child::after {
+    content: '';
+}

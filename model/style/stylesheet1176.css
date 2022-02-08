@@ -24,17 +24,21 @@ aside {
 }
 
 a {
-    color: rgb(54, 166, 162);
+    color: cadetblue;
     text-decoration: none;
     font-style: italic;
+}
+
+a:hover {
+    text-shadow: 0 0 10px Cyan;
 }
 
 footer {
     grid-area: footer;
     display: flex;
-    border-top: solid rgb(224, 224, 224) 2px;
+    border-top: lightgray 2px;
     margin-top: 25px;
-    color: rgb(231, 231, 231);
+    color: lightgray;
     font-size: 8pt;
     justify-content: space-between;
     align-items: center;
@@ -84,7 +88,7 @@ footer {
 }
 
 .tweetReplica {
-    border-bottom: dashed rgb(192, 192, 192) 1px;
+    border-bottom: dashed lightgray 1px;
     padding-bottom: 3px;
     font-size: 9pt;
 }
@@ -122,7 +126,6 @@ footer {
     display: flex;
     position: relative;
     left: 0;
-    transition: all ease 1s;
 }
 
 .tabs {
@@ -135,7 +138,7 @@ footer {
 }
 
 .tabItem {
-    background-color: rgb(226, 255, 253);
+    background-color: LightCyan;
     cursor: pointer;
 }
 
@@ -144,11 +147,11 @@ footer {
     padding-top: 20px;
     padding-left: 10px;
     font-size: 16pt;
-    color: rgb(54, 166, 162);
+    color: cadetblue;
 }
 
 .littleTextBlock {
-    color: rgb(54, 166, 162);
+    color: cadetblue;
     padding-right: 10px;
     padding-left: 10px;
     font-size: 8pt;
@@ -177,16 +180,16 @@ footer {
 }
 
 input[type="text"] {
-    border: solid rgb(231, 231, 231) 1px;
+    border: solid lightgray 1px;
     line-height: 16pt;
 }
 
 input[type="submit"] {
-    border: solid rgb(231, 231, 231) 1px;
+    border: solid lightgray 1px;
     line-height: 16pt;
     padding: 0 20px 0 20px;
     font-size: 8pt;
-    background: rgb(222, 222, 222);
+    background: lightgray;
     background: linear-gradient(0deg, rgba(222, 222, 222, 1) 0%, rgba(241, 241, 241, 1) 50%);
 }
 
@@ -201,8 +204,8 @@ input[type="submit"] {
     padding-right: 18px;
     font-size: 10pt;
     font-style: italic;
-    border-top: dashed rgb(192, 192, 192) 1px;
-    border-bottom: dashed rgb(192, 192, 192) 1px;
+    border-top: dashed lightgray 1px;
+    border-bottom: dashed lightgray 1px;
     display: grid;
     grid-template-columns: 1fr 10fr 300px;
     column-gap: 10px;
@@ -235,19 +238,18 @@ input[type="submit"] {
 }
 
 .cartHeader {
-    padding-top: 11px;
     font-size: 12pt;
-    color: rgb(54, 166, 162);
+    line-height: 28pt;
+    color: lightseagreen;
 }
 
 .cartText {
-    padding-top: 11px;
     line-height: 20px;
 }
 
 .cartDate {
     padding-top: 11px;
-    color: rgb(192, 192, 192);
+    color: lightgray;
 }
 
 #footerLogo {
@@ -256,10 +258,6 @@ input[type="submit"] {
     align-items: center;
     height: 40px;
     width: 110px;
-}
-
-#footerLinks:hover {
-    text-shadow: 0 0 10px #94faf5;
 }
 
 #tweetImg {
@@ -275,4 +273,9 @@ input[type="submit"] {
 #rssImg {
     height: 32px;
     width: 32px;
+}
+
+.footerLink::after {
+    content: '|';
+    color: lightgray;
 }

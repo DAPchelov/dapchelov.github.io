@@ -276,6 +276,6 @@ input[type="submit"] {
 }
 
 .footerLink::after {
-    content: '|';
+    content: ' |';
     color: lightgray;
 }

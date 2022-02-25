@@ -1,0 +1,146 @@
+body {
+    margin: 0;
+}
+main {
+    width: 100vw;
+    height: 1900px;
+    background-color: #282d2d;
+    display: grid;
+    grid-template-rows: 70px 30px 1fr;
+}
+/*header style*/
+header {
+    width: 100vw;
+    background-color: #1d2121;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#searchField {
+    height: 40px;
+    background-color: darkgray;
+    cursor: pointer;
+    width: 320px;
+    margin-right: 50px;
+}
+
+#headerLogo {
+    margin-left: 50px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16pt;
+    font-family: Arial;
+    color: darkgray;
+    cursor: pointer;
+}
+#headerLogo:hover {
+    color: #8be1ff;
+}
+
+/*cart-container style*/
+#cartsTable {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: repeat(5, 1fr);
+    column-gap: 30px;
+    row-gap: 40px;
+    justify-content: center;
+    padding: 20px;
+}
+/*cart style*/
+.cart {
+    width: 100%;
+    height: 100%;
+    background-color: #474949;
+    display: grid;
+    grid-template-rows: 6fr 1fr;
+}
+.poster {
+    display: flex;
+    overflow: hidden;
+    justify-content: center;
+}
+.poster > img {
+    height: 350px;
+    width: 270px;
+}
+.annotation {
+    width: 100%;
+    display: block;
+    text-align: center;
+    padding-top: 10px;
+    font-family: Arial;
+    font-size: 12pt;
+    color:  darkgray;
+}
+
+/*genre drop-menu*/
+#dropMenu { margin-top: 50px }
+.dropGenreBtn {
+    position: relative;
+    margin-left: 50px;
+    display: block;
+}
+.headGenreBtn {
+    width: 120px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-family: Arial;
+    font-size: 12pt;
+    background-color: darkgray;
+}
+.contentGenreBtn {
+    display: none;
+    position: absolute;
+    width: 120px;
+    background-color: darkgray;
+}
+.genreBtn {
+    display: block;
+    line-height: 30px;
+    padding-left: 8px;
+    cursor: pointer;
+    font-family: Arial;
+}
+.dropGenreBtn:hover .contentGenreBtn {
+    display: block;
+}
+.contentGenreBtn .genreBtn:hover {
+    background-color: #8be1ff;
+}
+#selectedGenre {
+    background-color: darkgray;
+    height: 40px;
+    width: 120px;
+    text-align: center;
+    line-height: 40px;
+    font-family: Arial;
+    display: block;
+}
+#pageButtons {
+    height: 40px;
+    width: 100px;
+    display: flex;
+    justify-content: space-between;
+}
+#pageButtons::before {
+    content: '';
+    height: 57px;
+    width: 70px;
+    background-color: #1d2121;
+    position: absolute;
+    margin-left: 15px;
+    margin-top: -8px;
+    z-index: 3;
+}
+.pageButton {
+    height: 40px;
+    width: 40px;
+    background-color: darkgray;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
+.pageButton:hover {
+    background-color: #8be1ff;
+}

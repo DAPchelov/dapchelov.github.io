@@ -3,7 +3,7 @@ let posters = document.getElementsByClassName("poster");
 let annotations = document.getElementsByClassName("annotation");
 let filmCollection;
 let pageNumber = 1;
-let filterMode = "genre";
+let filterMode = "rating";
 let filterContent = 18;
 let genreButtons = document.getElementsByClassName("genreBtn");
 
@@ -12,37 +12,38 @@ for (let i = 0; i < genreButtons.length; i++) {
 }
 document.getElementById("nextBtn").addEventListener("click", nextPage);
 document.getElementById("prevBtn").addEventListener("click", prevPage);
+document.getElementById("searchButton").addEventListener("click", searchFilms);
+document.getElementById("searchInput").addEventListener("keypress", searchFilms);
 
-
-initialization();
 mainAsyncFunction();
 
-function initialization(){
-    removeCarts();
-    createCarts(20);
-}
 async function mainAsyncFunction() {
     await fillFilmCollection();
+    removeCarts();
+    createCarts(filmCollection.length);
     fillPosters();
     fillAnnotations();
+    requestDetailsAnnotation();
 }
 function selectOtherGenre(i) {
     filterContent = genreButtons[i].getAttribute("genreId");
     filterMode = "genre";
-    initialization();
     mainAsyncFunction();
     changeGenre(genreButtons[i].textContent);
 }
+function searchFilms() {
+    filterMode = "search";
+    filterContent = document.getElementById("searchInput").value;
+    mainAsyncFunction();
+}
 function nextPage() {
     pageNumber++;
-    initialization();
     mainAsyncFunction();
 }
 function prevPage() {
     if (pageNumber > 1) {
         pageNumber--;
     }
-    initialization();
     mainAsyncFunction();
 }
 
@@ -54,7 +55,7 @@ async function fillFilmCollection() {
         await getFilmCollectionByGenre();
     }
     if (filterMode === "search") {
-
+        await getFilmCollectionBySearch();
     }
 }
 
@@ -113,9 +114,26 @@ async function getFilmCollectionByGenre() {
     filmCollection = collection.results;
 }
 
+async function getFilmCollectionBySearch() {
+    let response = await fetch("https://api.themoviedb.org/3/search/movie?query=" + filterContent + apiKeyAddition)
+    let collection = await response.json();
+    filmCollection = collection.results;
+}
+
 function changeGenre(textContent) {
     let selectedGenreField = document.getElementById("selectedGenre");
     selectedGenreField.innerText = textContent;
+}
+
+function requestDetailsAnnotation() {
+    let carts = document.getElementsByClassName("cart");
+    for (let i = 0; i < carts.length; i++) {
+        carts[i].addEventListener("click", () => makeNewWindowWithFilm(i));
+    }
+}
+
+async function makeNewWindowWithFilm(cartNumber) {
+    window.open("details.html" + "?" + "id=" + filmCollection[cartNumber].id + apiKeyAddition);
 }
 
 

@@ -1,0 +1,76 @@
+body {
+    margin: 0;
+}
+main {
+    width: 100vw;
+    height: 1900px;
+    background-color: #282d2d;
+    display: grid;
+    grid-template-rows: 70px 1fr;
+}
+/*header style*/
+header {
+    width: 100vw;
+    background-color: #1d2121;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#headerLogo {
+    margin-left: 50px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16pt;
+    font-family: Arial;
+    color: darkgray;
+    cursor: pointer;
+}
+#headerLogo:hover {
+    color: #8be1ff;
+}
+
+/*filmdetails*/
+#filmDetails {
+    display: grid;
+    grid-template-columns: 270px 540px 1fr;
+    column-gap: 80px;
+    width: 1fr;
+    height: 380px;
+    background-color: lightgray;
+    align-items: center;
+    padding-left : 50px;
+    padding-right: 50px;
+}
+#detailsPoster img {
+    width: 270px;
+    height: 350px;
+}
+#detailsAnnotation {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 350px;
+}
+#detailsOverview {
+    display: flex;
+    align-items: center;
+    /*background-color: greenyellow;*/
+    height: 350px;
+    min-width: 500px;
+    font-family: Arial;
+}
+.annotationRow {
+    font-family: Arial;
+    height: 25px;
+    line-height: 25px;
+    width: 540px;
+    /*background-color: #ee5858;*/
+    display: flex;
+}
+.annotationParameter {
+    width: 150px;
+    padding-right: 8px;
+    /*background-color: #ffc400;*/
+}
+

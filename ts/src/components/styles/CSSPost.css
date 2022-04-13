@@ -1,0 +1,17 @@
+.postTitle {
+    display: block;
+    width: 600px;
+    height: 40px;
+    border-bottom: solid yellow 5px;
+    line-height: 20px;
+    font-family: Arial;
+    font-size: 16pt;
+    padding: 10px;
+    text-align: center;
+}
+.postBody {
+    display: block;
+    width: 610px;
+    background-color: lightgray;
+    margin-left: 10px;
+}

@@ -1,0 +1,7 @@
+.list {
+    display: flex;
+    flex-direction: column;
+    height: 800px;
+    width: 1000px;
+    justify-content: space-between;
+}

@@ -1,0 +1,7 @@
+# source: @platform-fe/shared
+config
+public
+**/*.js
+**/*.json
+**/*.md
+**/*.d.ts

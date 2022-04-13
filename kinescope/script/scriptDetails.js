@@ -13,7 +13,6 @@ async function makeDetailsAnnotation() {
     const apiKey = searchParams.get("api_key");
     const response = await fetch("https://api.themoviedb.org/3/movie/" + filmId + "?" + "api_key=" + apiKey);
     const filmJson = await response.json();
-    console.log(filmJson);
     return (filmJson);
 }
 

@@ -2,12 +2,13 @@ import React from 'react'
 import './styles/Likes.css';
 import { useDispatch } from "react-redux";
 import { connect } from 'react-redux';
+import { incrementLikes, decrementLikes } from './redux/actions'
 
 interface Likes {
     likes: number;
 }
 
-const Likes: React.FC<Likes> = (props: any) => {
+const Likes = (props: any) => {
     console.log('render > ', props);
     return (
         <div className='buttons'>
@@ -18,27 +19,17 @@ const Likes: React.FC<Likes> = (props: any) => {
 }
 
 function mapStateToProps(state: any) {
-    console.log ('mapStateToProps > ', state);
+    console.log('mapStateToProps > ', state);
+    const { likesReducer } = state;
     return {
-        likes: state.likes
+        likes: likesReducer.likes
     }
 }
 
 function mapDispatchToProps(dispatch: any) {
     return {
-        onIncrementLikes: () => {
-            const action = {
-                type: 'INCREMENT'
-            };
-            dispatch (action);
-        },
-        onDecrementLikes: () => {
-            const action = {
-                type: 'DECREMENT'
-            };
-            dispatch (action);
-        }
-
+        onIncrementLikes: () => {dispatch(incrementLikes())},
+        onDecrementLikes: () => {dispatch(decrementLikes())}
     }
 }
 

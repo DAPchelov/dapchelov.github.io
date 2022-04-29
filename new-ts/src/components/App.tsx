@@ -1,6 +1,5 @@
 import {Link} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {PostLine} from "./PostLine";
 import {Post} from "components/Post";
 import { PostsList } from "./PostsList";
 import './styles/CSSApp.css';

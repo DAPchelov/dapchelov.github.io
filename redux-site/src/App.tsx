@@ -1,6 +1,7 @@
 import React from 'react';
 import './styles/App.css';
-import Likes from './likes';
+import { Likes } from './likes';
+import { Title } from './Title';
 
 function App() {
     return (
@@ -8,7 +9,8 @@ function App() {
             <div className='wrap'>
                 <div className='card'>
                     <div className='card-image'>
-                        <img className='posterImage' src='./Barsik.jpg' alt='Barsik'/>
+                        <img className='posterImage' src='./Barsik.jpg' alt='Barsik' />
+                        <Title />
                         <Likes />
                     </div>
                 </div>

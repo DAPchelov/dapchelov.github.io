@@ -15,7 +15,9 @@ export const postReducer = (state = initialState, action: PostAction): PostState
         case PostActionTypes.FETCH_POSTS_ERROR:
             return { loading: false, error: action.payload, posts: [] }
         case PostActionTypes.DELETE_POST:
-            return {loading: false, error: null, posts: action.payload}
+            return { loading: false, error: null, posts: action.payload }
+        case PostActionTypes.ADD_POST:
+            return { loading: false, error: null, posts: action.payload }
         default:
             return state
     }

@@ -1,14 +1,16 @@
-import { INCREMENT, DECREMENT, INPUT_TEXT } from "./types";
+import { INPUT_TEXT } from "./types";
+import { LikesActionTypes } from './likes';
+
 
 const incrementLikes = () => {
     return {
-        type: INCREMENT
+        type: LikesActionTypes.INCREMENT
     }
 }
 
 const decrementLikes = () => {
     return {
-        type: DECREMENT
+        type: LikesActionTypes.DECREMENT
     }
 }
 

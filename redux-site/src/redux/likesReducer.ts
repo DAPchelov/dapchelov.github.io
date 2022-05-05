@@ -1,17 +1,17 @@
-import { INCREMENT, DECREMENT } from "./types";
+import { LikesAction, LikesState, LikesActionTypes } from './likes'
 
-const initialState = {
+const initialState: LikesState = {
     likes: 5
 }
 
-const likesReducer = (state = initialState, action: any) => {
+const likesReducer = (state = initialState, action: LikesAction): LikesState => {
     switch (action.type) {
-        case INCREMENT:
+        case LikesActionTypes.INCREMENT:
             return {
                 ...state,
                 likes: state.likes + 1
             }
-        case DECREMENT:
+        case LikesActionTypes.DECREMENT:
             return {
                 ...state,
                 likes: state.likes - 1

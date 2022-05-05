@@ -21,5 +21,4 @@ const Likes = () => {
     )
 }
 
-
 export { Likes };

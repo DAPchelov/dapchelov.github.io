@@ -1,17 +1,22 @@
 enum LikesActionTypes {
-    INCREMENT_LIKE = 'INCREMENT_LIKE'
+    INCREMENT = 'INCREMENT',
+    DECREMENT = 'DECREMENT'
 }
+const INPUT_TEXT = 'INPUT_TEXT'
 
-interface IncrementLike {
-    type: LikesActionTypes.INCREMENT_LIKE
-}
-
-export interface LikeState {
+interface LikesState {
     likes: number;
 }
 
-export interface LikeState {
-    likes: number;
+interface IncrementAction {
+    type: LikesActionTypes.INCREMENT
 }
 
-export type Action = IncrementLike;
+interface DecrementAction {
+    type: LikesActionTypes.DECREMENT
+}
+
+type LikesAction = IncrementAction | DecrementAction;
+
+export type { LikesAction, LikesState };
+export { LikesActionTypes }

@@ -1,4 +1,4 @@
-import { INPUT_TEXT } from "./types";
+import { TitleActionTypes, TitleState } from "./title";
 import { LikesActionTypes } from './likes';
 
 
@@ -15,9 +15,10 @@ const decrementLikes = () => {
 }
 
 const inputText = (text: string) => {
+
     return {
-        type: INPUT_TEXT,
-        text
+        type: TitleActionTypes.INPUT_TEXT,
+        payload: text
     }
 }
 

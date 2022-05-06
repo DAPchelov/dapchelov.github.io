@@ -1,15 +1,15 @@
-import { INPUT_TEXT } from "./types";
+import { TitleActionTypes, TitleState, TitleAction } from "./title";
 
-const initialState = {
+const initialState: TitleState = {
     text: ''
 }
 
-const inputReducer = (state = initialState, action: any) => {
+const inputReducer = (state = initialState, action: TitleAction): TitleState => {
     switch (action.type) {
-        case INPUT_TEXT:
+        case TitleActionTypes.INPUT_TEXT: 
             return {
                 ...state,
-                text: action.text
+                text: action.payload
             }
         default:
             return state;

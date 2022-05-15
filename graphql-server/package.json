@@ -1,0 +1,34 @@
+{
+  "name": "graphpack",
+  "description": "☄️ A minimalistic zero-config GraphQL server",
+  "author": "Glenn Reyes <glenn@glennreyes.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glennreyes/graphpack.git"
+  },
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "graphpack": "file:packages/graphpack",
+    "husky": "^3.0.9",
+    "lerna": "^3.18.2",
+    "prettier": "^1.18.2",
+    "pretty-quick": "^2.0.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "bugs": {
+    "url": "https://github.com/glennreyes/graphpack/issues"
+  },
+  "homepage": "https://github.com/glennreyes/graphpack#readme",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "graphpack",
+    "build": "graphpack build"
+  },
+  "keywords": []
+  
+}

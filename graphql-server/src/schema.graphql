@@ -1,16 +1,15 @@
 type Message {
-  id: ID!
+  id: String!
   name: String!
   text: String!
 }
 
 type Query {
-  message(id: ID!): Message!
+  message(id: String!): Message!
   messages: [Message!]!
 }
 
-# type Mutation {
-#   createUser(id: ID!, name: String!, email: String!, age: Int): User!
-#   updateUser(id: ID!, name: String, email: String, age: Int): User!
-#   deleteUser(id: ID!): User!
-# }
+type Mutation {
+  createMessage(id: String!, name: String!, text: String!): Message!
+  deleteMessage(id: String!): Message!
+}

@@ -9,7 +9,7 @@ const ChatList = () => {
     text: string;
   }
 
-  const MakeChatList = (props: number) => {
+  const MakeChatList = () => {
     const [messagesList, setMessagesList] = useState<Imessage[]>([]);
 
     useEffect(() => {
@@ -52,7 +52,7 @@ const ChatList = () => {
   };
 
   return (
-    <div className="body-Frame-ChatList">
+    <div className="bodyFrame-ChatList">
       <List
         sx={{
           width: "100%",
@@ -60,7 +60,7 @@ const ChatList = () => {
           bgcolor: "background.paper"
         }}
       >
-        {MakeChatList(4)}
+        {MakeChatList()}
       </List>
     </div>
   );

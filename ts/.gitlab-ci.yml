@@ -1,4 +1,0 @@
-# source: @platform-fe/shared
-include:
-  - project: 'config/ci'
-    file: '.common-pipeline.yml'

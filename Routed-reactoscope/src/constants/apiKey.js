@@ -1,1 +1,0 @@
-export let apiKey = "8523c5bd6d26c68b7c80861d8e57494e";

@@ -1,5 +1,5 @@
 export let messages = [
-  { id: '1', name: 'John Doe', text: 'TextText' },
-  { id: '2', name: 'Leeroy Jenkins', text: 'someText' },
-  { id: '3', name: 'Lyra Heartstrings', text: 'someTextLyra' },
+  { id: '0', user: 'John Doe', content: 'TextText' },
+  { id: '1', user: 'Leeroy Jenkins', content: 'someText' },
+  { id: '2', user: 'Lyra Heartstrings', content: 'someTextLyra' },
 ];

@@ -1,7 +1,7 @@
 type Message {
   id: String!
-  name: String!
-  text: String!
+  user: String!
+  content: String!
 }
 
 type Query {
@@ -10,6 +10,6 @@ type Query {
 }
 
 type Mutation {
-  createMessage(id: String!, name: String!, text: String!): Message!
+  postMessage(user: String!, content: String!): ID!
   deleteMessage(id: String!): Message!
 }

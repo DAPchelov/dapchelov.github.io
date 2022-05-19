@@ -11,12 +11,12 @@ const resolvers = {
   },
 
   Mutation: {
-    createMessage: (parent, { id, name, text }, context, info) => {
-      const newMessage = { id, name, text };
+    postMessage: (parent, { user, content }, context, info) => {
+      const id = messages.length;
 
-      messages.push(newMessage);
+      messages.push({ id, user, content });
 
-      return newMessage;
+      return id;
     },
     deleteMessage: (parent, { id }, context, info) => {
       const messageIndex = messages.findIndex(message => message.id == id);
@@ -25,7 +25,7 @@ const resolvers = {
 
       const deletedMessages = users.splice(messageIndex, 1);
 
-      return deletedUsers[0];
+      return deletedMessages[0];
     },
   },
 };

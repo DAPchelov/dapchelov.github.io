@@ -24,7 +24,8 @@ const ChatList = () => {
                           }`
 
     const Messages = () => {
-        const { data } = useQuery(GET_MESSAGES);
+        const { data } = useQuery(GET_MESSAGES, {
+        });
         if (!data) {
             return null;
         }

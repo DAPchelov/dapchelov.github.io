@@ -1,4 +1,10 @@
 import { messages } from './db';
+const { PubSub, withFilter } = require("graphql-yoga");
+
+const pubsub = new PubSub();
+
+const subscribers = [];
+const onMessagesUpdates = (fn) => subscribers.push(fn);
 
 const resolvers = {
   Query: {
@@ -16,6 +22,8 @@ const resolvers = {
 
       messages.push({ id, user, content });
 
+      subscribers.forEach(fn => fn());
+
       return id;
     },
     deleteMessage: (parent, { id }, context, info) => {
@@ -23,11 +31,21 @@ const resolvers = {
 
       if (messageIndex === -1) throw new Error('Message not found.');
 
-      const deletedMessages = users.splice(messageIndex, 1);
+      const deletedMessages = messages.splice(messageIndex, 1);
 
       return deletedMessages[0];
     },
   },
+  Subscription: {
+    messages: {
+      subscribe: (parent, args, {pubsub}) => {
+        const channel = Math.random().toString(36).slice(2,15);
+        onMessagesUpdates(() => pubsub.publish(channel, { messages }));
+        setTimeout(() => pubsub.publish(channel, { messages }), 0);
+        return pubsub.asyncIterator(channel);
+      }
+    }
+  }
 };
 
 export default resolvers;

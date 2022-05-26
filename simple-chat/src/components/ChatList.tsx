@@ -1,7 +1,5 @@
 import { gql, useQuery, useSubscription } from "@apollo/client";
-import { Container } from "@mui/material";
 import List from "@mui/material/List";
-import React, { useEffect, useState } from "react";
 import { ChatListItem } from "./ChatListItem";
 
 import "../styles/ChatList.css";
@@ -13,7 +11,7 @@ const ChatList = () => {
     content: string;
   }
 
-  const GET_MESSAGES = gql`
+  const WS_MESSAGES = gql`
     subscription Subscription {
       newMessages {
         id
@@ -23,10 +21,28 @@ const ChatList = () => {
     }
   `;
 
+  const QUERY_MESSAGES = gql`
+    query GetMessages {
+      messages {
+        id
+        user
+        content
+      }
+    }
+  `;
+
+  const queryData = useQuery(QUERY_MESSAGES);
+
+  const { data } = useSubscription(WS_MESSAGES);
+
   const Messages = () => {
-    const { data } = useSubscription(GET_MESSAGES);
-    if (!data) {
+    if (!data && !queryData.data) {
       return null;
+    }
+    if (!data) {
+      return queryData.data.messages.map(({ id, user, content }: Imessage) => (
+        <ChatListItem key={id} name={user} message={content} />
+      ));
     }
     return data.newMessages.map(({ id, user, content }: Imessage) => (
       <ChatListItem key={id} name={user} message={content} />

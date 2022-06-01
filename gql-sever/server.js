@@ -6,7 +6,28 @@ import { PubSub } from "graphql-subscriptions";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { WebSocketServer } from "ws";
 import { useServer } from "graphql-ws/lib/use/ws";
-import { messages } from "./db.js";
+// import { messages } from "./db.js";
+import mongoose from "mongoose";
+
+
+//create mongoose model
+const Schema = mongoose.Schema;
+
+const messageSchema = new Schema({
+    user: {
+        type: String,
+        required: true,
+    },
+    content: {
+        type: String,
+        required: true,
+    }
+});
+
+const mongooseMessage = mongoose.model('Message', messageSchema);
+let messages = [];
+
+//create mongoose model
 
 const PORT = 4000;
 const pubsub = new PubSub();
@@ -14,19 +35,19 @@ const pubsub = new PubSub();
 // Schema definition
 const typeDefs = gql`
   type Message {
-    id: String!
+    _id: ID!
     user: String!
     content: String!
   }
 
   type Query {
-    message(id: String!): Message!
+    message(id: ID!): Message!
     messages: [Message!]!
   }
 
   type Mutation {
-    postMessage(user: String!, content: String!): ID!
-    deleteMessage(id: String!): Message!
+    postMessage(postUser: String!, postContent: String!): ID!
+    # deleteMessage(id: ID!): Message!
   }
   type Subscription {
     newMessages: [Message!]!
@@ -45,21 +66,34 @@ const resolvers = {
   },
 
   Mutation: {
-    postMessage: (parent, { user, content }, context, info) => {
-      const id = messages.length;
-      messages.push({ id, user, content });
-      pubsub.publish("POST_CREATED", { newMessages: messages });
-      return id;
+    postMessage: (parent, { postUser, postContent }, context, info) => {
+      const messageNumber = messages.length;
+
+      //push message to MongoDB
+      const message = new mongooseMessage({
+        user: postUser,
+        content: postContent,
+      })
+      message.save()
+      .then(result => {
+        messages.push(result);
+        pubsub.publish("POST_CREATED", { newMessages: messages });
+      })
+      .catch(error => {
+        console.log(error);
+        throw error;
+      });
+      return messageNumber;
     },
-    deleteMessage: (parent, { id }, context, info) => {
-      const messageIndex = messages.findIndex(message => message.id == id);
+    // deleteMessage: (parent, { id }, context, info) => {
+    //   const messageIndex = messages.findIndex(message => message.id == id);
 
-      if (messageIndex === -1) throw new Error("Message not found.");
+    //   if (messageIndex === -1) throw new Error("Message not found.");
 
-      const deletedMessages = messages.splice(messageIndex, 1);
+    //   const deletedMessages = messages.splice(messageIndex, 1);
 
-      return deletedMessages[0];
-    }
+    //   return deletedMessages[0];
+    // }
   },
   Subscription: {
     newMessages: {
@@ -103,7 +137,16 @@ const server = new ApolloServer({
     }
   ]
 });
+
+mongoose.connect(`mongodb+srv://simpledb:simpledbpassword@cluster0.qfdf4.mongodb.net/messages-simple-chat?proxyHost=192.168.1.100&proxyPort=9050`)
+.then(() => {
+  console.log("MongoDB connect sucsessful")
+}).catch(error => {
+  console.log(error);
+});
 await server.start();
+
+
 server.applyMiddleware({ app });
 
 // Now that our HTTP server is fully set up, actually listen.

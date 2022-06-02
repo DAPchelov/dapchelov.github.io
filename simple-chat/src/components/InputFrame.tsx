@@ -8,30 +8,30 @@ import { gql, useMutation } from "@apollo/client";
 
 const InputFrame = () => {
   interface INewMessage {
-    user: string;
-    content: string;
+    postUser: string;
+    postContent: string;
   }
 
   const [state, setState] = useState<INewMessage>({
-    user: "NoName",
-    content: "NoMessage"
+    postUser: "NoName",
+    postContent: "NoMessage"
   });
 
   const POST_MESSAGE = gql`
-    mutation($user: String!, $content: String!) {
-      postMessage(user: $user, content: $content)
+    mutation($postUser: String!, $postContent: String!) {
+      postMessage(postUser: $postUser, postContent: $postContent)
     }
   `;
 
   const [postMessage] = useMutation(POST_MESSAGE);
 
   const onSend = () => {
-    if (state.content.length > 0) {
+    if (state.postContent.length > 0) {
       postMessage({
         variables: state
       });
     }
-    setState({ ...state, content: "" });
+    setState({ ...state, postContent: "" });
   };
 
   return (
@@ -46,7 +46,7 @@ const InputFrame = () => {
               variant="standard"
               size="small"
               onChange={event =>
-                setState({ ...state, user: event.target.value })
+                setState({ ...state, postUser: event.target.value })
               }
             />
           </Box>
@@ -60,7 +60,7 @@ const InputFrame = () => {
           variant="outlined"
           size="small"
           onChange={event =>
-            setState({ ...state, content: event.target.value })
+            setState({ ...state, postContent: event.target.value })
           }
         />
       </div>

@@ -5,8 +5,8 @@ import Avatar from "@mui/material/Avatar";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 
 interface itemProps {
-  name: string;
-  message: string;
+  user: string;
+  content: string;
 }
 
 const ChatListItem: React.FC<itemProps> = itemProps => {
@@ -17,7 +17,7 @@ const ChatListItem: React.FC<itemProps> = itemProps => {
           <PermIdentityIcon />
         </Avatar>
       </ListItemAvatar>
-      <ListItemText primary={itemProps.name} secondary={itemProps.message} />
+      <ListItemText primary={itemProps.user} secondary={itemProps.content} />
     </ListItem>
   );
 };

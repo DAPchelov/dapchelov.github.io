@@ -6,7 +6,7 @@ import "../styles/ChatList.css";
 
 const ChatList = () => {
   interface Imessage {
-    id: number;
+    _id: string;
     user: string;
     content: string;
   }
@@ -14,7 +14,7 @@ const ChatList = () => {
   const WS_MESSAGES = gql`
     subscription Subscription {
       newMessages {
-        id
+        _id
         user
         content
       }
@@ -24,7 +24,7 @@ const ChatList = () => {
   const QUERY_MESSAGES = gql`
     query GetMessages {
       messages {
-        id
+        _id
         user
         content
       }
@@ -32,20 +32,22 @@ const ChatList = () => {
   `;
 
   const queryData = useQuery(QUERY_MESSAGES);
+  console.log("queryData", queryData);
 
   const { data } = useSubscription(WS_MESSAGES);
+  console.log("wsData", data);
 
   const Messages = () => {
     if (!data && !queryData.data) {
       return null;
     }
     if (!data) {
-      return queryData.data.messages.map(({ id, user, content }: Imessage) => (
-        <ChatListItem key={id} name={user} message={content} />
+      return queryData.data.messages.map(({ _id, user, content }: Imessage) => (
+        <ChatListItem key={_id} user={user} content={content} />
       ));
     }
-    return data.newMessages.map(({ id, user, content }: Imessage) => (
-      <ChatListItem key={id} name={user} message={content} />
+    return data.newMessages.map(({ _id, user, content }: Imessage) => (
+      <ChatListItem key={_id} user={user} content={content} />
     ));
   };
 

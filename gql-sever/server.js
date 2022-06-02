@@ -6,11 +6,11 @@ import { PubSub } from "graphql-subscriptions";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { WebSocketServer } from "ws";
 import { useServer } from "graphql-ws/lib/use/ws";
-// import { messages } from "./db.js";
 import mongoose from "mongoose";
+import { MongoClient } from "mongodb"
 
 
-//create mongoose model
+// Create mongoose model
 const Schema = mongoose.Schema;
 
 const messageSchema = new Schema({
@@ -25,10 +25,9 @@ const messageSchema = new Schema({
 });
 
 const mongooseMessage = mongoose.model('Message', messageSchema);
+
+// Set up server
 let messages = [];
-
-//create mongoose model
-
 const PORT = 4000;
 const pubsub = new PubSub();
 
@@ -138,12 +137,34 @@ const server = new ApolloServer({
   ]
 });
 
-mongoose.connect(`mongodb+srv://simpledb:simpledbpassword@cluster0.qfdf4.mongodb.net/messages-simple-chat?proxyHost=192.168.1.100&proxyPort=9050`)
+// Connect to MongoDB
+const mongoUri = `mongodb+srv://simpledb:simpledbpassword@cluster0.qfdf4.mongodb.net/messages-simple-chat?proxyHost=192.168.1.100&proxyPort=9050`
+const mongoDBClient = new MongoClient(`mongodb+srv://simpledb:simpledbpassword@cluster0.qfdf4.mongodb.net/test?proxyHost=192.168.1.100&proxyPort=9050`);
+mongoose.connect(mongoUri)
 .then(() => {
   console.log("MongoDB connect sucsessful")
 }).catch(error => {
   console.log(error);
 });
+
+const reFillLocalStorage = async () => {
+  try {
+    await mongoDBClient.connect();
+    // database and collection code goes here
+    const db = mongoDBClient.db("messages-simple-chat");
+    const coll = db.collection("messages");
+    // find code goes here
+    const cursor = coll.find();
+    // iterate code goes here
+    messages.length = 0;
+    await cursor.forEach(element => messages.push(element));
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await mongoDBClient.close();
+  }
+}
+reFillLocalStorage().catch(console.dir);
+
 await server.start();
 
 

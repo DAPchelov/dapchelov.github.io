@@ -7,27 +7,28 @@ import { makeExecutableSchema } from "@graphql-tools/schema";
 import { WebSocketServer } from "ws";
 import { useServer } from "graphql-ws/lib/use/ws";
 import mongoose from "mongoose";
-import { MongoClient } from "mongodb"
-
+import { MongoClient } from "mongodb";
 
 // Create mongoose model
 const Schema = mongoose.Schema;
 
 const messageSchema = new Schema({
-    user: {
-        type: String,
-        required: true,
-    },
-    content: {
-        type: String,
-        required: true,
-    }
+  user: {
+    type: String,
+    required: true
+  },
+  content: {
+    type: String,
+    required: true
+  }
 });
 
-const mongooseMessage = mongoose.model('Message', messageSchema);
+const mongooseMessage = mongoose.model("Message", messageSchema);
 
 // Set up server
 let messages = [];
+let users = [];
+
 const PORT = 4000;
 const pubsub = new PubSub();
 
@@ -37,6 +38,11 @@ const typeDefs = gql`
     _id: ID!
     user: String!
     content: String!
+  }
+  type User {
+    _id: ID!
+    userLogin: String!
+    userPassword: String!
   }
 
   type Query {
@@ -62,6 +68,9 @@ const resolvers = {
     messages: (parent, args, context, info) => {
       return messages;
     }
+    // userID: (parent, { login }, context, info) => {
+    //   user = users.find(user => user.userLogin == login);
+    // }
   },
 
   Mutation: {
@@ -71,19 +80,20 @@ const resolvers = {
       //push message to MongoDB
       const message = new mongooseMessage({
         user: postUser,
-        content: postContent,
-      })
-      message.save()
-      .then(result => {
-        messages.push(result);
-        pubsub.publish("POST_CREATED", { newMessages: messages });
-      })
-      .catch(error => {
-        console.log(error);
-        throw error;
+        content: postContent
       });
+      message
+        .save()
+        .then(result => {
+          messages.push(result);
+          pubsub.publish("POST_CREATED", { newMessages: messages });
+        })
+        .catch(error => {
+          console.log(error);
+          throw error;
+        });
       return messageNumber;
-    },
+    }
     // deleteMessage: (parent, { id }, context, info) => {
     //   const messageIndex = messages.findIndex(message => message.id == id);
 
@@ -138,14 +148,18 @@ const server = new ApolloServer({
 });
 
 // Connect to MongoDB
-const mongoUri = `mongodb+srv://simpledb:simpledbpassword@cluster0.qfdf4.mongodb.net/messages-simple-chat?proxyHost=192.168.1.100&proxyPort=9050`
-const mongoDBClient = new MongoClient(`mongodb+srv://simpledb:simpledbpassword@cluster0.qfdf4.mongodb.net/test?proxyHost=192.168.1.100&proxyPort=9050`);
-mongoose.connect(mongoUri)
-.then(() => {
-  console.log("MongoDB connect sucsessful")
-}).catch(error => {
-  console.log(error);
-});
+const mongoUriPullData = `mongodb+srv://simpledb:simpledbpassword@cluster0.qfdf4.mongodb.net/messages-simple-chat?proxyHost=192.168.1.100&proxyPort=9050`;
+const mongoUriPushData = `mongodb+srv://simpledb:simpledbpassword@cluster0.qfdf4.mongodb.net/test?proxyHost=192.168.1.100&proxyPort=9050`;
+
+const mongoDBClient = new MongoClient(mongoUriPushData);
+mongoose
+  .connect(mongoUriPullData)
+  .then(() => {
+    console.log("MongoDB connect sucsessful");
+  })
+  .catch(error => {
+    console.log(error);
+  });
 
 const reFillLocalStorage = async () => {
   try {
@@ -162,11 +176,10 @@ const reFillLocalStorage = async () => {
     // Ensures that the client will close when you finish/error
     await mongoDBClient.close();
   }
-}
+};
 reFillLocalStorage().catch(console.dir);
 
 await server.start();
-
 
 server.applyMiddleware({ app });
 
@@ -179,5 +192,3 @@ httpServer.listen(PORT, () => {
     `🚀 Subscription endpoint ready at ws://localhost:${PORT}${server.graphqlPath}`
   );
 });
-
-pubsub.publish("POST_CREATED", { newMessages: messages });

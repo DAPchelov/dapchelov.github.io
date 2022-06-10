@@ -32,10 +32,8 @@ const ChatList = () => {
   `;
 
   const queryData = useQuery(QUERY_MESSAGES);
-  console.log("queryData", queryData);
 
   const { data } = useSubscription(WS_MESSAGES);
-  console.log("wsData", data);
 
   const Messages = () => {
     if (!data && !queryData.data) {

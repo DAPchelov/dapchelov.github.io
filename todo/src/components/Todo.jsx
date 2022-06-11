@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography';
 
 const Todo = ({ task, handleToggle }) => {
     return (
-        <div>
             <Paper elevation={1}>
                 <ListItem disablePadding aria-multiline>
                     <Checkbox
@@ -18,7 +17,6 @@ const Todo = ({ task, handleToggle }) => {
                     </Typography>
                 </ListItem>
             </Paper>
-        </div>
     );
 }
 

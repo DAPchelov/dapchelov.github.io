@@ -1,7 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import App from './components/App';
+import Todo from './components/Todo';
 
-test('renders TODO app', () => {
+
+test('renders TODO app generally', () => {
   render(<App />);
   expect(screen.getByText(/TODOS/i)).toBeInTheDocument();
 
@@ -15,3 +17,14 @@ test('renders TODO app', () => {
 
   expect(screen.getByText(/CLEAR COMPLETED/i)).toBeInTheDocument();
 });
+
+test('renders todo component', () => {
+  const testTask = {
+      id: 0,
+      complete: false,
+      content: "Test text"
+  }
+  render(<Todo task={ testTask } />);
+  expect(screen.getByText('Test text')).toBeInTheDocument();
+
+})

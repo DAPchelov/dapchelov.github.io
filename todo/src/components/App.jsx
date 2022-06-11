@@ -7,6 +7,7 @@ import ClearButton from "./ClearButton";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import { Container } from "@mui/system";
+import Typography from '@mui/material/Typography';
 
 const App = () => {
   const [taskArray, setTaskArray] = useState([]);
@@ -44,7 +45,15 @@ const App = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ pt: "100px" }}>
+    <Container maxWidth="sm" sx={{
+      pt: "100px",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center"
+    }}>
+      <Typography variant="h4" color="text.secondary" gutterBottom>
+        TODOS
+      </Typography>
       <Box sx={{ width: "100%", maxWidth: 450 }}>
         <InputForm addProp={addTask} />
         {taskArray
@@ -63,9 +72,8 @@ const App = () => {
           }}
         >
           <Chip
-            label={`${
-              taskArray.filter(task => task.complete === false).length
-            }`.concat(" items left")}
+            label={`${taskArray.filter(task => task.complete === false).length
+              }`.concat(" items left")}
             size="small"
             variant="outlined"
           />

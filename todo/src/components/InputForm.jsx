@@ -14,13 +14,13 @@ const InputForm = ({ addProp }) => {
     <Paper elevation={1}>
       <TextField
         id="filled-basic"
-        label="What needs to be done?"
-        variant="standard"
+        label="What needs to be done? (press Enter to add Task)"
+        variant="filled"
         onChange={event => {
           textToAdd = event.target.value;
         }}
         onKeyUp={key => onPush(key)}
-        sx={{ width: "100%", maxWidth: 430, pl: "10px" }}
+        sx={{ width: "100%" }}
       />
     </Paper>
   );

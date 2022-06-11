@@ -8,12 +8,19 @@ const Todo = ({ task, handleToggle }) => {
     return (
     <div>
         <Paper elevation={1}>
-        <ListItem disablePadding>
+        <ListItem disablePadding aria-multiline>
             <Checkbox
                 checked={task.complete}
                 onClick={() => handleToggle(task.id)}
             />
-            <ListItemText primary={task.content} />
+            <ListItemText 
+            primaryTypographyProps={{ 
+                style: {
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis'
+                }
+            }}
+            primary={task.content} />
         </ListItem>
         </Paper>
     </div>

@@ -1,12 +1,16 @@
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 
-const InputForm = ({ addProp }) => {
+interface IPropsInputForm {
+  addProp: (value: string) => void;
+}
+
+const InputForm: React.FC<IPropsInputForm> = (props: IPropsInputForm) => {
   let textToAdd = "";
 
-  const onPush = key => {
-    if (key.keyCode === 13 && textToAdd.length > 0) {
-      addProp(textToAdd);
+  const onPush = (keyKode: string) => {
+    if (keyKode === "Enter" && textToAdd.length > 0) {
+      props.addProp(textToAdd);
     }
   };
 
@@ -19,7 +23,7 @@ const InputForm = ({ addProp }) => {
         onChange={event => {
           textToAdd = event.target.value;
         }}
-        onKeyUp={key => onPush(key)}
+        onKeyUp={event => onPush(event.key )}
         sx={{ width: "100%" }}
       />
     </Paper>

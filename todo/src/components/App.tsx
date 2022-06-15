@@ -8,13 +8,20 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import { Container } from "@mui/system";
 import Typography from '@mui/material/Typography';
+import { type } from "@testing-library/user-event/dist/type";
 
-const App = () => {
-  const [taskArray, setTaskArray] = useState([]);
-  const [completed, setCompleted] = useState(undefined);
+interface ITask {
+  id: number
+  complete: boolean,
+  content: string
+}
 
-  const addTask = text => {
-    const newTask = {
+const App: React.FC = () => {
+  const [taskArray, setTaskArray] = useState<ITask[]>([]);
+  const [completed, setCompleted] = useState<boolean | undefined>(undefined);
+
+  const addTask = (text: string) => {
+    const newTask: ITask = {
       id: taskArray.length - 1,
       complete: false,
       content: text
@@ -22,7 +29,7 @@ const App = () => {
     setTaskArray([...taskArray, newTask]);
   };
 
-  const handleToggle = id => {
+  const handleToggle = (id: number) => {
     setTaskArray([
       ...taskArray.map(task =>
         task.id === id ? { ...task, complete: !task.complete } : { ...task }
@@ -34,7 +41,7 @@ const App = () => {
     setTaskArray([...taskArray.filter(task => task.complete === false)]);
   };
 
-  const filterTask = task => {
+  const filterTask = (task: ITask) => {
     if (completed === undefined) {
       return true;
     }
@@ -85,4 +92,5 @@ const App = () => {
   );
 };
 
-export default App;
+export type { ITask };
+export { App };

@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import { Container } from "@mui/system";
 import Typography from '@mui/material/Typography';
-import { type } from "@testing-library/user-event/dist/type";
+import TodoList from './TodoList'
 
 interface ITask {
   id: number
@@ -63,13 +63,7 @@ const App: React.FC = () => {
       </Typography>
       <Box sx={{ width: "100%", maxWidth: 450 }}>
         <InputForm addProp={addTask} />
-        {taskArray
-          .filter(task => filterTask(task))
-          .map(task => {
-            return (
-              <Todo key={task.id} task={task} handleToggle={handleToggle} />
-            );
-          })}
+        <TodoList taskArray={taskArray} completed={completed} handleToggle={handleToggle} />
         <Paper
           elevation={1}
           sx={{

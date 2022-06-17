@@ -78,7 +78,7 @@ const App: React.FC = () => {
             size="small"
             variant="outlined"
           />
-          <SelectButtons setCompleted={setCompleted} />
+          <SelectButtons setCompleted={setCompleted} completed={completed}/>
           <ClearButton clearFinished={clearFinished} />
         </Paper>
       </Box>

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import InputForm from "./InputForm";
-import Todo from "./Todo";
 import SelectButtons from "./SelectButtons";
 import Chip from "@mui/material/Chip";
 import ClearButton from "./ClearButton";
@@ -39,16 +38,6 @@ const App: React.FC = () => {
 
   const clearFinished = () => {
     setTaskArray([...taskArray.filter(task => task.complete === false)]);
-  };
-
-  const filterTask = (task: ITask) => {
-    if (completed === undefined) {
-      return true;
-    }
-    if (task.complete === completed) {
-      return true;
-    }
-    return false;
   };
 
   return (

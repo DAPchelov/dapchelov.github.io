@@ -5,9 +5,12 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
+import { useState } from "react";
 
 
 const Main: React.FC = () => {
+    const [UUID, setUUID] = useState('');
+
     return (
         <BrowserRouter>
             <Routes>

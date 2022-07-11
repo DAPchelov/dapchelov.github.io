@@ -9,14 +9,16 @@ interface IPropsLoginPage {
 
 function LoginPage(props: IPropsLoginPage) {
   let contained: boolean = false;
-  const [login, setLogin] = useState('user');
-  const [password, setPassword] = useState('pass');
+  const [login, setLogin] = useState('null');
+  const [password, setPassword] = useState('null');
 
   const QUERY_USER_UUID = gql`
-    query UserUUID($login: String!, $password: String!) {
-    user(login: ${login}, password: ${password}) {
-     _id
-    }
+    query UserUUID {
+      user(login: ${login}, password: ${password}) {
+    _id
+    login
+    password
+  }
   }`;
 
   const queryUserID = useQuery(QUERY_USER_UUID);

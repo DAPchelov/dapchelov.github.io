@@ -175,7 +175,7 @@ reFillLocalStorage().catch(console.dir);
 await server.start();
 
 const corsOptions = {
-  origin: ["http://localhost:3000"]
+  origin: ["http://localhost:3000", "https://studio.apollographql.com"]
 };
 
 server.applyMiddleware({ app, cors: corsOptions, });

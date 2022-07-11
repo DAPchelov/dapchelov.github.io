@@ -9,21 +9,21 @@ interface IPropsLoginPage {
 
 function LoginPage(props: IPropsLoginPage) {
   let contained: boolean = false;
-  const [login, setLogin] = useState('');
-  const [password, setPassword] = useState('');
+  const [login, setLogin] = useState('user');
+  const [password, setPassword] = useState('pass');
 
-  const QUERY_MESSAGES = gql`
-    query GetUUID {
-      users {
-      _id
-      login
-      password
-  }
+  const QUERY_USER_UUID = gql`
+    query UserUUID($login: String!, $password: String!) {
+    user(login: ${login}, password: ${password}) {
+     _id
     }
-  `;
+  }`;
+
+  const queryUserID = useQuery(QUERY_USER_UUID);
+  console.log(queryUserID);
 
   const getUUID = (login: string, password: string) => {
-
+    
   }
 
   const [loginButton, setLoginButton] = useState(<Button variant="outlined" disabled sx={{ width: 200 }}>SIGN IN</Button>)

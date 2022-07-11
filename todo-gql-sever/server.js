@@ -174,7 +174,11 @@ reFillLocalStorage().catch(console.dir);
 
 await server.start();
 
-server.applyMiddleware({ app });
+const corsOptions = {
+  origin: ["http://localhost:3000"]
+};
+
+server.applyMiddleware({ app, cors: corsOptions, });
 
 // Now that our HTTP server is fully set up, actually listen.
 httpServer.listen(PORT, () => {

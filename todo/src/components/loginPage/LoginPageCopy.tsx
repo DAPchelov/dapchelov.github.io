@@ -2,15 +2,34 @@ import './LoginPage.css';
 import React, { useState } from 'react';
 import { Card, CardContent, Typography, CardActions, Button, TextField } from '@mui/material';
 import { gql, useQuery, useSubscription } from "@apollo/client";
+import { useForm, Controller } from "react-hook-form";
+import type {
+  SubmitHandler,
+  DefaultValues
+} from "react-hook-form";
+
 
 interface IPropsLoginPage {
   setUUID: (UUID: string) => void;
 }
 
-function LoginPage(props: IPropsLoginPage) {
+interface IFormInputs {
+  TextField: string
+}
 
-  let [login, setLogin] = useState('null');
-  let [password, setPassword] = useState('null');
+export type FormValues = {
+  TextField: string;
+};
+
+export const defaultValues: DefaultValues<FormValues> = {
+  TextField: "",
+};
+
+function LoginPageCopy(props: IPropsLoginPage) {
+
+  const { handleSubmit, control } = useForm<FormValues>({
+    defaultValues
+  });
 
   const QUERY_USER_UUID = gql`
     query UserUUID {
@@ -24,38 +43,33 @@ function LoginPage(props: IPropsLoginPage) {
   const queryUserID = useQuery(QUERY_USER_UUID);
   console.log(queryUserID);
 
-  const getUUID = (login: string, password: string) => {
-    
-  }
-
   const [loginButton, setLoginButton] = useState(<Button variant="outlined" disabled sx={{ width: 200 }}>SIGN IN</Button>)
 
-  const turnOnSinginButton = () => {
-    if ((login.length > 0) && (password.length > 4)) {
-      setLoginButton(<Button variant="contained" color="success" sx={{ width: 200 }} onClick={() => getUUID(login, password)}>SIGN IN</Button>)
-    } else {
-      setLoginButton(<Button variant="outlined" disabled sx={{ width: 200 }}>SIGN IN</Button>);
-    }
-  }
+  const onSubmit: SubmitHandler<IFormInputs> = (data) => console.log(data);
 
   return (
     <div className="loginPage">
       <Card className="loginFrame">
         <CardContent className='loginContent'>
           <Typography color="text.secondary" sx={{ fontSize: 28 }} gutterBottom>Sing in</Typography>
-          <TextField
-            id="standard-basic"
-            label="Login"
-            variant="standard"
-            onChange={(event) => { login = event.target.value; turnOnSinginButton() }}
-          />
+          <form onSubmit={handleSubmit(onSubmit)} className="form">
+          <Controller
+              render={({ field }) => <TextField {...field}
+                id="standard-basic"
+                label="Login"
+                variant="standard"
+              />}
+              name="TextField"
+              control={control}
+            />
+          </form>
+
           <TextField
             id="standard-password-input"
             label="Password"
             type="password"
             autoComplete="current-password"
             variant="standard"
-            onChange={(event) => { password = event.target.value; turnOnSinginButton() }}
           />
           {
             loginButton
@@ -73,4 +87,4 @@ function LoginPage(props: IPropsLoginPage) {
   );
 }
 
-export default LoginPage;
+export default LoginPageCopy;

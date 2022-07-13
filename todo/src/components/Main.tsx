@@ -1,5 +1,5 @@
 import { App } from "./App";
-import LoginPage from "./loginPage/LoginPage";
+import LoginPageCopy from "./loginPage/LoginPageCopy";
 import {
     BrowserRouter,
     Routes,
@@ -53,7 +53,7 @@ const Main: React.FC = () => {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<App />} />
-                    <Route path="/login" element={<LoginPage setUUID={setUUID} />} />
+                    <Route path="/loginCopy" element={<LoginPageCopy setUUID={setUUID} />} />
                 </Routes>
             </BrowserRouter>
         </ApolloProvider>

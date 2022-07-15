@@ -30,13 +30,22 @@ const defaultValues: DefaultValues<FormValues> = {
 
 function LoginPageCopy(props: IPropsLoginPage) {
 
-  const { register, handleSubmit, control } = useForm<FormValues>({
-    defaultValues
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: {isValid}
+  } = useForm<FormValues>({
+    defaultValues,
+    mode: "onBlur",
   });
+  
+  const [login, setLogin] = useState<string>('null')
+  const [password, setPassword] = useState<string>('null')
 
   const QUERY_USER_UUID = gql`
     query UserUUID {
-      user(login: "qweqwe", password: "qweqwe") {
+      user(login: "${login}", password: "${password}") {
     _id
     login
     password
@@ -48,28 +57,36 @@ function LoginPageCopy(props: IPropsLoginPage) {
 
   const [loginButton, setLoginButton] = useState(<Button variant="outlined" disabled sx={{ width: 200 }}>SIGN IN</Button>)
 
-  const onSubmit: SubmitHandler<IFormInputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<IFormInputs> = (data) => {
+    setLogin(data.Login);
+    setPassword(data.Password);
+  };
 
   return (
     <div className="loginPage">
       <Card className="loginFrame">
         <form onSubmit={handleSubmit(onSubmit)} className="loginContent">
           <Typography color="text.secondary" sx={{ fontSize: 28 }} gutterBottom>Sing in</Typography>
-          <TextField {...register('Login')}
+          <TextField {...register('Login', {
+            required: true,
+            minLength: 3,
+          })}
             id="standard-basic"
             label="Login"
             variant="standard"
-            name="Login"
           />
           <TextField
-            {...register('Password')}
+            {...register('Password', {
+              required: true,
+              minLength: 6,
+            })}
             id="standard-password-input"
             label="Password"
+            variant="standard"
             type="password"
             autoComplete="current-password"
-            variant="standard"
           />
-          <Button type="submit" variant="outlined" sx={{ width: 200 }}>SIGN IN</Button>
+          <Button type="submit" variant={isValid ? "contained" : "outlined"} color="success" disabled={!isValid} sx={{ width: 200 }}>SIGN IN</Button>
         </form>
         <CardActions className="loginActions" sx={{ '& button': { m: 1 } }}>
           <div className='sinbgUpBlock'>

@@ -14,20 +14,23 @@ interface IPropsLoginPage {
 }
 
 interface IFormInputs {
-  TextField: string
+  Password: string,
+  Login: string,
 }
 
-export type FormValues = {
-  TextField: string;
+type FormValues = {
+  Password: string;
+  Login: string;
 };
 
-export const defaultValues: DefaultValues<FormValues> = {
-  TextField: "",
+const defaultValues: DefaultValues<FormValues> = {
+  Password: '',
+  Login: '',
 };
 
 function LoginPageCopy(props: IPropsLoginPage) {
 
-  const { handleSubmit, control } = useForm<FormValues>({
+  const { register, handleSubmit, control } = useForm<FormValues>({
     defaultValues
   });
 
@@ -50,33 +53,25 @@ function LoginPageCopy(props: IPropsLoginPage) {
   return (
     <div className="loginPage">
       <Card className="loginFrame">
-        <CardContent className='loginContent'>
+        <form onSubmit={handleSubmit(onSubmit)} className="loginContent">
           <Typography color="text.secondary" sx={{ fontSize: 28 }} gutterBottom>Sing in</Typography>
-          <form onSubmit={handleSubmit(onSubmit)} className="form">
-          <Controller
-              render={({ field }) => <TextField {...field}
-                id="standard-basic"
-                label="Login"
-                variant="standard"
-              />}
-              name="TextField"
-              control={control}
-            />
-          </form>
-
+          <TextField {...register('Login')}
+            id="standard-basic"
+            label="Login"
+            variant="standard"
+            name="Login"
+          />
           <TextField
+            {...register('Password')}
             id="standard-password-input"
             label="Password"
             type="password"
             autoComplete="current-password"
             variant="standard"
           />
-          {
-            loginButton
-          }
-        </CardContent>
+          <Button type="submit" variant="outlined" sx={{ width: 200 }}>SIGN IN</Button>
+        </form>
         <CardActions className="loginActions" sx={{ '& button': { m: 1 } }}>
-
           <div className='sinbgUpBlock'>
             <Typography color="text.secondary" sx={{ fontSize: 28 }} gutterBottom>Create account</Typography>
             <Button variant="contained" color="secondary" sx={{ width: 200 }}>SING UP</Button>

@@ -2,67 +2,95 @@ import './LoginPage.css';
 import React, { useState } from 'react';
 import { Card, CardContent, Typography, CardActions, Button, TextField } from '@mui/material';
 import { gql, useQuery, useSubscription } from "@apollo/client";
+import { useForm, Controller } from "react-hook-form";
+import type {
+  SubmitHandler,
+  DefaultValues
+} from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+
 
 interface IPropsLoginPage {
   setUUID: (UUID: string) => void;
 }
 
-function LoginPage(props: IPropsLoginPage) {
+interface IFormInputs {
+  Password: string,
+  Login: string,
+}
 
-  let [login, setLogin] = useState('null');
-  let [password, setPassword] = useState('null');
+type FormValues = {
+  Password: string;
+  Login: string;
+};
+
+const defaultValues: DefaultValues<FormValues> = {
+  Password: '',
+  Login: '',
+};
+
+const LoginPage: React.FC<IPropsLoginPage> = (props: IPropsLoginPage) => {
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: {isValid}
+  } = useForm<FormValues>({
+    defaultValues,
+    mode: "onChange",
+  });
+
+  const navigate = useNavigate();
+  
+  const [login, setLogin] = useState<string>('null')
+  const [password, setPassword] = useState<string>('null')
 
   const QUERY_USER_UUID = gql`
     query UserUUID {
-      user(login: "qweqwe", password: "qweqwe") {
+      user(login: "${login}", password: "${password}") {
     _id
-    login
-    password
   }
   }`;
 
   const queryUserID = useQuery(QUERY_USER_UUID);
-  console.log(queryUserID);
+  if (queryUserID.data) {
+    props.setUUID(queryUserID.data.user._id);
+    navigate("../", { replace: true });
+  };
 
-  const getUUID = (login: string, password: string) => {
-    
-  }
-
-  const [loginButton, setLoginButton] = useState(<Button variant="outlined" disabled sx={{ width: 200 }}>SIGN IN</Button>)
-
-  const turnOnSinginButton = () => {
-    if ((login.length > 0) && (password.length > 4)) {
-      setLoginButton(<Button variant="contained" color="success" sx={{ width: 200 }} onClick={() => getUUID(login, password)}>SIGN IN</Button>)
-    } else {
-      setLoginButton(<Button variant="outlined" disabled sx={{ width: 200 }}>SIGN IN</Button>);
-    }
-  }
+  const onSubmit: SubmitHandler<IFormInputs> = (data) => {
+    setLogin(data.Login);
+    setPassword(data.Password);
+  };
 
   return (
     <div className="loginPage">
       <Card className="loginFrame">
-        <CardContent className='loginContent'>
+        <form onSubmit={handleSubmit(onSubmit)} className="loginContent">
           <Typography color="text.secondary" sx={{ fontSize: 28 }} gutterBottom>Sing in</Typography>
-          <TextField
+          <TextField {...register('Login', {
+            required: true,
+            minLength: 3,
+          })}
             id="standard-basic"
             label="Login"
             variant="standard"
-            onChange={(event) => { login = event.target.value; turnOnSinginButton() }}
           />
           <TextField
+            {...register('Password', {
+              required: true,
+              minLength: 6,
+            })}
             id="standard-password-input"
             label="Password"
+            variant="standard"
             type="password"
             autoComplete="current-password"
-            variant="standard"
-            onChange={(event) => { password = event.target.value; turnOnSinginButton() }}
           />
-          {
-            loginButton
-          }
-        </CardContent>
+          <Button type="submit" variant={isValid ? "contained" : "outlined"} color="success" disabled={!isValid} sx={{ width: 200 }}>SIGN IN</Button>
+        </form>
         <CardActions className="loginActions" sx={{ '& button': { m: 1 } }}>
-
           <div className='sinbgUpBlock'>
             <Typography color="text.secondary" sx={{ fontSize: 28 }} gutterBottom>Create account</Typography>
             <Button variant="contained" color="secondary" sx={{ width: 200 }}>SING UP</Button>

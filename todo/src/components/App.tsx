@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InputForm from "./InputForm";
 import SelectButtons from "./SelectButtons";
 import Chip from "@mui/material/Chip";
@@ -8,16 +8,29 @@ import Paper from "@mui/material/Paper";
 import { Container } from "@mui/system";
 import Typography from '@mui/material/Typography';
 import TodoList from './TodoList'
+import { useNavigate } from "react-router-dom";
 
 interface ITask {
   id: number
   complete: boolean,
   content: string
 }
+interface IPropsApp {
+  UUID: string | undefined;
+}
 
-const App: React.FC = () => {
+const App: React.FC<IPropsApp> = (props: IPropsApp) => {
   const [taskArray, setTaskArray] = useState<ITask[]>([]);
   const [completed, setCompleted] = useState<boolean | undefined>(undefined);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!props.UUID) {
+      navigate("../login", { replace: true });
+    };
+  })
+
 
   const addTask = (text: string) => {
     const newTask: ITask = {
@@ -67,7 +80,7 @@ const App: React.FC = () => {
             size="small"
             variant="outlined"
           />
-          <SelectButtons setCompleted={setCompleted} completed={completed}/>
+          <SelectButtons setCompleted={setCompleted} completed={completed} />
           <ClearButton clearFinished={clearFinished} />
         </Paper>
       </Box>

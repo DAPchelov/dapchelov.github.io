@@ -1,5 +1,5 @@
 import { App } from "./App";
-import LoginPageCopy from "./loginPage/LoginPageCopy";
+import LoginPage from "./loginPage/LoginPage";
 import {
     BrowserRouter,
     Routes,
@@ -15,7 +15,8 @@ import {
     ApolloProvider,
     split,
     HttpLink
-  } from "@apollo/client";
+} from "@apollo/client";
+
 
 const httpLink = new HttpLink({
     uri: "http://localhost:4000/graphql"
@@ -46,14 +47,14 @@ const client = new ApolloClient({
 
 
 const Main: React.FC = () => {
-    const [UUID, setUUID] = useState('');
+    const [UUID, setUUID] = useState<string>();
 
     return (
         <ApolloProvider client={client}>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<App />} />
-                    <Route path="/loginCopy" element={<LoginPageCopy setUUID={setUUID} />} />
+                    <Route path="/" element={<App UUID = {UUID}/>} />
+                    <Route path="/login" element={<LoginPage setUUID={setUUID} />} />
                 </Routes>
             </BrowserRouter>
         </ApolloProvider>

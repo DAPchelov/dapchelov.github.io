@@ -7,6 +7,7 @@ import type {
   SubmitHandler,
   DefaultValues
 } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 
 interface IPropsLoginPage {
@@ -37,8 +38,10 @@ function LoginPageCopy(props: IPropsLoginPage) {
     formState: {isValid}
   } = useForm<FormValues>({
     defaultValues,
-    mode: "onBlur",
+    mode: "onChange",
   });
+
+  const navigate = useNavigate();
   
   const [login, setLogin] = useState<string>('null')
   const [password, setPassword] = useState<string>('null')
@@ -47,15 +50,14 @@ function LoginPageCopy(props: IPropsLoginPage) {
     query UserUUID {
       user(login: "${login}", password: "${password}") {
     _id
-    login
-    password
   }
   }`;
 
   const queryUserID = useQuery(QUERY_USER_UUID);
-  console.log(queryUserID);
-
-  const [loginButton, setLoginButton] = useState(<Button variant="outlined" disabled sx={{ width: 200 }}>SIGN IN</Button>)
+  if (queryUserID.data) {
+    props.setUUID(queryUserID.data.user._id)
+    navigate("../", { replace: true });
+  };
 
   const onSubmit: SubmitHandler<IFormInputs> = (data) => {
     setLogin(data.Login);

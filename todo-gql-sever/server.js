@@ -13,6 +13,7 @@ import { MongoClient } from "mongodb";
 
 // Set up server
 let users = [];
+let tasks =[];
 
 const PORT = 4000;
 const pubsub = new PubSub();
@@ -25,9 +26,18 @@ const typeDefs = gql`
     password: String!
   }
 
+  type Task {
+    _id: ID!
+    UUID: String!
+    id: String!
+    complete: Boolean!
+    content: String!
+  }
+
   type Query {
     user(login: String! password: String!): User!
     users: [User!]!
+    tasks(UUID: String!): [Task!]!
   }
 
   # type Mutation {
@@ -49,7 +59,10 @@ const resolvers = {
     },
     users: (parent, args, context, info) => {
       return users;
-    }
+    },
+    tasks: (parent, { UUID }, context, info) => {
+      return tasks.filter(task => task.UUID == UUID);
+    },
   },
 
   // Mutation: {
@@ -145,12 +158,18 @@ const reFillLocalStorage = async () => {
     await mongoDBClient.connect();
     // database and collection code goes here
     const db = mongoDBClient.db("Todo");
-    const coll = db.collection("users");
+    const usersCollection = db.collection("users");
+    const tasksCollection = db.collection("tasks");
     // find code goes here
-    const cursor = coll.find();
+    const usersCursor = usersCollection.find();
+    const tasksCursor = tasksCollection.find();
     // iterate code goes here
     users.length = 0;
-    await cursor.forEach(element => users.push(element));
+    tasks.length = 0;
+
+    await usersCursor.forEach(element => users.push(element));
+    await tasksCursor.forEach(element => tasks.push(element));
+
   } finally {
     // Ensures that the client will close when you finish/error
     await mongoDBClient.close();

@@ -10,20 +10,6 @@ import mongoose from "mongoose";
 import { MongoClient } from "mongodb";
 
 // Create mongoose model
-const Schema = mongoose.Schema;
-
-const messageSchema = new Schema({
-  user: {
-    type: String,
-    required: true
-  },
-  content: {
-    type: String,
-    required: true
-  }
-});
-
-const mongooseMessage = mongoose.model("Message", messageSchema);
 
 // Set up server
 let users = [];

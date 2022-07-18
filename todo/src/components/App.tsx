@@ -11,6 +11,8 @@ import TodoList from './TodoList'
 import { useNavigate } from "react-router-dom";
 
 interface ITask {
+  _id?: string
+  UUID: string | undefined
   id: number
   complete: boolean,
   content: string
@@ -34,7 +36,8 @@ const App: React.FC<IPropsApp> = (props: IPropsApp) => {
 
   const addTask = (text: string) => {
     const newTask: ITask = {
-      id: taskArray.length - 1,
+      UUID: props.UUID,
+      id: taskArray.length,
       complete: false,
       content: text
     };
@@ -61,7 +64,7 @@ const App: React.FC<IPropsApp> = (props: IPropsApp) => {
       alignItems: "center"
     }}>
       <Typography variant="h4" color="text.secondary" gutterBottom>
-        TODOS
+        TODOS ${props.UUID}
       </Typography>
       <Box sx={{ width: "100%", maxWidth: 450 }}>
         <InputForm addProp={addTask} />

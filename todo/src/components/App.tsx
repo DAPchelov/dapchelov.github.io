@@ -9,13 +9,16 @@ import { Container } from "@mui/system";
 import Typography from '@mui/material/Typography';
 import TodoList from './TodoList'
 import { useNavigate } from "react-router-dom";
+import { gql, useQuery } from "@apollo/client";
+
 
 interface ITask {
-  _id?: string
-  UUID: string | undefined
-  id: number
+  _id?: string,
+  UUID?: string | undefined,
+  __typename?: string,
+  id: number,
   complete: boolean,
-  content: string
+  content: string,
 }
 interface IPropsApp {
   UUID: string | undefined;
@@ -26,15 +29,33 @@ const App: React.FC<IPropsApp> = (props: IPropsApp) => {
   const [completed, setCompleted] = useState<boolean | undefined>(undefined);
 
   const navigate = useNavigate();
-
   useEffect(() => {
     if (!props.UUID) {
       navigate("../login", { replace: true });
     };
   })
 
+  //get data from server
+  const QUERY_MESSAGES = gql`
+    query TasksCollection {
+      tasks (UUID: "${props.UUID}") {
+        id
+        complete
+        content
+      }
+    }
+  `;
 
-  const addTask = (text: string) => {
+  const queryData = useQuery(QUERY_MESSAGES);
+  useEffect(() => {
+    if (queryData.data) {
+      setTaskArray(queryData.data.tasks);
+    }
+  });
+  
+
+
+  const addTask = (text: string) => { 
     const newTask: ITask = {
       UUID: props.UUID,
       id: taskArray.length,
@@ -64,7 +85,7 @@ const App: React.FC<IPropsApp> = (props: IPropsApp) => {
       alignItems: "center"
     }}>
       <Typography variant="h4" color="text.secondary" gutterBottom>
-        TODOS ${props.UUID}
+        TODOS
       </Typography>
       <Box sx={{ width: "100%", maxWidth: 450 }}>
         <InputForm addProp={addTask} />

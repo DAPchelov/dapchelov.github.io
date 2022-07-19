@@ -52,8 +52,6 @@ const App: React.FC<IPropsApp> = (props: IPropsApp) => {
       setTaskArray(queryData.data.tasks);
     }
   });
-  
-
 
   const addTask = (text: string) => { 
     const newTask: ITask = {
@@ -88,7 +86,7 @@ const App: React.FC<IPropsApp> = (props: IPropsApp) => {
         TODOS
       </Typography>
       <Box sx={{ width: "100%", maxWidth: 450 }}>
-        <InputForm addProp={addTask} />
+        <InputForm addProp={addTask} UUID={props.UUID} />
         <TodoList taskArray={taskArray} completed={completed} handleToggle={handleToggle} />
         <Paper
           elevation={1}

@@ -10,6 +10,28 @@ import mongoose from "mongoose";
 import { MongoClient } from "mongodb";
 
 // Create mongoose model
+const Schema = mongoose.Schema;
+
+const TaskSchema = new Schema({
+  UUID: {
+    type: String,
+    required: true,
+  },
+  id: {
+    type: String,
+    required: true,
+  },
+  complete: {
+    type: Boolean,
+    required: true,
+  },
+  content: {
+    type: String,
+    required: true,
+  },
+});
+
+const mongooseTask = mongoose.model("Task", TaskSchema);
 
 // Set up server
 let users = [];
@@ -40,10 +62,10 @@ const typeDefs = gql`
     tasks(UUID: String!): [Task!]!
   }
 
-  # type Mutation {
-  #   postMessage(postUser: String!, postContent: String!): ID!
-  #   # deleteMessage(id: ID!): Message!
-  # }
+  type Mutation {
+    postTask(UUID: String!, content: String!): ID!
+    # deleteMessage(id: ID!): Message!
+  }
   # type Subscription {
   #   newMessages: [Message!]!
   # }
@@ -65,37 +87,39 @@ const resolvers = {
     },
   },
 
-  // Mutation: {
-  //   postMessage: (parent, { postUser, postContent }, context, info) => {
-  //     const messageNumber = messages.length;
+  Mutation: {
+    postTask: (parent, { UUID, content }, context, info) => {
+      const taskNumber = tasks.length;
 
-  //     //push message to MongoDB
-  //     const message = new mongooseMessage({
-  //       user: postUser,
-  //       content: postContent
-  //     });
-  //     message
-  //       .save()
-  //       .then(result => {
-  //         messages.push(result);
-  //         pubsub.publish("POST_CREATED", { newMessages: messages });
-  //       })
-  //       .catch(error => {
-  //         console.log(error);
-  //         throw error;
-  //       });
-  //     return messageNumber;
-  //   }
-  //   // deleteMessage: (parent, { id }, context, info) => {
-  //   //   const messageIndex = messages.findIndex(message => message.id == id);
+      //push message to MongoDB
+      const task = new mongooseTask({
+        UUID: UUID,
+        id: taskNumber,
+        complete: false,
+        content: content
+      });
+      task
+        .save()
+        .then(result => {
+          tasks.push(result);
+          pubsub.publish("TASK_CREATED", { newTasks: tasks });
+        })
+        .catch(error => {
+          console.log(error);
+          throw error;
+        });
+      return taskNumber;
+    }
+    // deleteMessage: (parent, { id }, context, info) => {
+    //   const messageIndex = messages.findIndex(message => message.id == id);
 
-  //   //   if (messageIndex === -1) throw new Error("Message not found.");
+    //   if (messageIndex === -1) throw new Error("Message not found.");
 
-  //   //   const deletedMessages = messages.splice(messageIndex, 1);
+    //   const deletedMessages = messages.splice(messageIndex, 1);
 
-  //   //   return deletedMessages[0];
-  //   // }
-  // },
+    //   return deletedMessages[0];
+    // }
+  },
   // Subscription: {
   //   newMessages: {
   //     subscribe: () => pubsub.asyncIterator(["POST_CREATED"])
@@ -141,9 +165,9 @@ const server = new ApolloServer({
 
 // Connect to MongoDB
 const mongoUriPullData = `mongodb+srv://simpledb:simpledbpassword@cluster0.qfdf4.mongodb.net/Todo?proxyHost=192.168.1.100&proxyPort=9050`;
-const mongoUriPushData = `mongodb+srv://simpledb:simpledbpassword@cluster0.qfdf4.mongodb.net/test?proxyHost=192.168.1.100&proxyPort=9050`;
+const mongoUriDB = `mongodb+srv://simpledb:simpledbpassword@cluster0.qfdf4.mongodb.net/test?proxyHost=192.168.1.100&proxyPort=9050`;
 
-const mongoDBClient = new MongoClient(mongoUriPushData);
+const mongoDBClient = new MongoClient(mongoUriDB);
 mongoose
   .connect(mongoUriPullData)
   .then(() => {
@@ -183,7 +207,7 @@ const corsOptions = {
   origin: ["http://localhost:3000", "https://studio.apollographql.com"]
 };
 
-server.applyMiddleware({ app, cors: corsOptions, });
+server.applyMiddleware({ app, cors: corsOptions });
 
 // Now that our HTTP server is fully set up, actually listen.
 httpServer.listen(PORT, () => {

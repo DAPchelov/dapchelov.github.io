@@ -22,7 +22,7 @@ const InputForm: React.FC<IPropsInputForm> = (props: IPropsInputForm) => {
 
   const POST_TASK = gql`
     mutation($UUID: String!, $content: String!) {
-      postMessage(UUID: $UUID, content: $content)
+      postTask(UUID: $UUID, content: $content)
     }
   `;
 

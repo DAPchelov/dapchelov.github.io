@@ -35,7 +35,7 @@ const mongooseTask = mongoose.model("Task", TaskSchema);
 
 // Set up server
 let users = [];
-let tasks =[];
+let tasks = [];
 
 const PORT = 4000;
 const pubsub = new PubSub();
@@ -46,11 +46,10 @@ const typeDefs = gql`
     _id: ID!
     login: String!
     password: String!
+    tasks:[Task]!
   }
 
   type Task {
-    _id: ID!
-    UUID: String!
     id: String!
     complete: Boolean!
     content: String!
@@ -59,16 +58,16 @@ const typeDefs = gql`
   type Query {
     user(login: String! password: String!): User!
     users: [User!]!
-    tasks(UUID: String!): [Task!]!
+    tasks(UUID: ID!): [Task!]!
   }
 
   type Mutation {
     postTask(UUID: String!, content: String!): ID!
     # deleteMessage(id: ID!): Message!
   }
-  # type Subscription {
-  #   newMessages: [Message!]!
-  # }
+  type Subscription {
+    newTasks(UUID: String!): [Task!]!
+  }
 `;
 
 // Resolver map
@@ -83,7 +82,7 @@ const resolvers = {
       return users;
     },
     tasks: (parent, { UUID }, context, info) => {
-      return tasks.filter(task => task.UUID == UUID);
+      return users.find(user => user._id == UUID).tasks;
     },
   },
 
@@ -93,7 +92,6 @@ const resolvers = {
 
       //push message to MongoDB
       const task = new mongooseTask({
-        UUID: UUID,
         id: taskNumber,
         complete: false,
         content: content
@@ -120,11 +118,15 @@ const resolvers = {
     //   return deletedMessages[0];
     // }
   },
-  // Subscription: {
-  //   newMessages: {
-  //     subscribe: () => pubsub.asyncIterator(["POST_CREATED"])
-  //   }
-  // }
+  Subscription: {
+    newTasks: {
+      subscribe: (parent, { UUID }, context, info) => {
+        const tasks = pubsub.asyncIterator(["TASK_CREATED"]);
+        console.log(tasks);
+        return (tasks.filter(task => task.UUID == UUID));
+      }
+    }
+  }
 };
 
 // Create schema, which will be used separately by ApolloServer and

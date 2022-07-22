@@ -12,30 +12,33 @@ import { MongoClient } from "mongodb";
 // Create mongoose model
 const Schema = mongoose.Schema;
 
-const TaskSchema = new Schema({
+const UserTasksSchema = new Schema({
   UUID: {
     type: String,
     required: true,
   },
-  id: {
-    type: String,
-    required: true,
-  },
-  complete: {
-    type: Boolean,
-    required: true,
-  },
-  content: {
-    type: String,
-    required: true,
-  },
+  tasks: [{
+    id: {
+      type: String,
+      required: true,
+    },
+    complete: {
+      type: Boolean,
+      required: true,
+    },
+    content: {
+      type: String,
+      required: true,
+    },
+  }],
+
 });
 
-const mongooseTask = mongoose.model("Task", TaskSchema);
+const mongooseUserTasks = mongoose.model("Task", UserTasksSchema);
 
 // Set up server
 let users = [];
-let tasks =[];
+let tasks = [];
 
 const PORT = 4000;
 const pubsub = new PubSub();
@@ -49,26 +52,29 @@ const typeDefs = gql`
   }
 
   type Task {
-    _id: ID!
-    UUID: String!
     id: String!
     complete: Boolean!
     content: String!
   }
 
+  type UserTasks {
+    UUID: ID!
+    tasks: [Task!]!
+  }
+
   type Query {
     user(login: String! password: String!): User!
     users: [User!]!
-    tasks(UUID: String!): [Task!]!
+    tasks(UUID: ID!): [Task!]!
   }
 
   type Mutation {
     postTask(UUID: String!, content: String!): ID!
     # deleteMessage(id: ID!): Message!
   }
-  # type Subscription {
-  #   newMessages: [Message!]!
-  # }
+  type Subscription {
+    newTasks(UUID: String!): [Task!]!
+  }
 `;
 
 // Resolver map
@@ -83,26 +89,31 @@ const resolvers = {
       return users;
     },
     tasks: (parent, { UUID }, context, info) => {
-      return tasks.filter(task => task.UUID == UUID);
+      console.log(tasks);
+      return tasks.find(tasksArray => tasksArray.UUID == UUID).tasks
     },
   },
 
   Mutation: {
     postTask: (parent, { UUID, content }, context, info) => {
-      const taskNumber = tasks.length;
+      const userTasks = tasks.find(tasksArray => tasksArray.UUID == UUID).tasks;
+      const taskNumber = userTasks.length;
 
       //push message to MongoDB
-      const task = new mongooseTask({
+      const tasks = new mongooseUserTasks({
         UUID: UUID,
-        id: taskNumber,
-        complete: false,
-        content: content
+        tasks: [...userTasks,
+        {
+          id: taskNumber,
+          complete: false,
+          content: content
+        }],
       });
-      task
+      tasks
         .save()
         .then(result => {
-          tasks.push(result);
-          pubsub.publish("TASK_CREATED", { newTasks: tasks });
+          userTasks.push(result);
+          pubsub.publish(`TASK_CREATED${UUID}`, { newTasks: tasks });
         })
         .catch(error => {
           console.log(error);
@@ -120,11 +131,15 @@ const resolvers = {
     //   return deletedMessages[0];
     // }
   },
-  // Subscription: {
-  //   newMessages: {
-  //     subscribe: () => pubsub.asyncIterator(["POST_CREATED"])
-  //   }
-  // }
+  Subscription: {
+    newTasks: {
+      subscribe: (parent, { UUID }, context, info) => {
+        const tasks = pubsub.asyncIterator([`TASK_CREATED${UUID}`]);
+        console.log(tasks);
+        return (tasks);
+      }
+    }
+  }
 };
 
 // Create schema, which will be used separately by ApolloServer and

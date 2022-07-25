@@ -98,7 +98,7 @@ const mutationData = async (mutationUUID, content, id) => {
   )
 
   console.log(await tasksCollection.findOne({UUID: `${mutationUUID}`}));
-  await mongoDBClient.close();
+  // await mongoDBClient.close();
 }
 
 const PORT = 4000;

@@ -40,6 +40,67 @@ const mongooseUserTasks = mongoose.model("Task", UserTasksSchema);
 let users = [];
 let tasks = [];
 
+// Connect to MongoDB
+const mongoUriPushData = `mongodb+srv://simpledb:simpledbpassword@cluster0.qfdf4.mongodb.net/Todo?proxyHost=192.168.1.100&proxyPort=9050`;
+const mongoUriDB = `mongodb+srv://simpledb:simpledbpassword@cluster0.qfdf4.mongodb.net/test?proxyHost=192.168.1.100&proxyPort=9050`;
+
+const mongoDBClient = new MongoClient(mongoUriDB);
+mongoose
+  .connect(mongoUriPushData)
+  .then(() => {
+    console.log("Mongoose client connect sucsessful");
+  })
+  .catch(error => {
+    console.log(error);
+  });
+
+const reFillLocalStorage = async () => {
+  try {
+    await mongoDBClient.connect();
+    // database and collection code goes here
+    const db = mongoDBClient.db("Todo");
+    const usersCollection = db.collection("users");
+    const tasksCollection = db.collection("tasks");
+
+    // find code goes here
+    const usersCursor = usersCollection.find();
+    const tasksCursor = tasksCollection.find();
+    // iterate code goes here
+    users.length = 0;
+    tasks.length = 0;
+
+    await usersCursor.forEach(element => users.push(element));
+    await tasksCursor.forEach(element => tasks.push(element));
+
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await mongoDBClient.close();
+  }
+};
+
+reFillLocalStorage().catch(console.dir);
+
+const mutationData = async (mutationUUID, content, id) => {
+  await mongoDBClient.connect();
+  const db = mongoDBClient.db("Todo");
+  const tasksCollection = db.collection("tasks");
+
+  tasksCollection.updateOne(
+    {UUID:`${mutationUUID}`},
+    {$push: {
+      tasks: {
+        id: id,
+        complete: false,
+        content: content
+      }
+    }}
+    // {$set: {name: `${content}`}}
+  )
+
+  console.log(await tasksCollection.findOne({UUID: `${mutationUUID}`}));
+  await mongoDBClient.close();
+}
+
 const PORT = 4000;
 const pubsub = new PubSub();
 
@@ -52,7 +113,7 @@ const typeDefs = gql`
   }
 
   type Task {
-    id: String!
+    id: Int!
     complete: Boolean!
     content: String!
   }
@@ -89,36 +150,17 @@ const resolvers = {
       return users;
     },
     tasks: (parent, { UUID }, context, info) => {
-      console.log(tasks);
       return tasks.find(tasksArray => tasksArray.UUID == UUID).tasks
     },
   },
 
   Mutation: {
     postTask: (parent, { UUID, content }, context, info) => {
-      const userTasks = tasks.find(tasksArray => tasksArray.UUID == UUID).tasks;
+      const userTasks = tasks.find(usersTasksArray => usersTasksArray.UUID == UUID).tasks;
       const taskNumber = userTasks.length;
+      mutationData(UUID, content, taskNumber);
+      reFillLocalStorage();
 
-      //push message to MongoDB
-      const tasks = new mongooseUserTasks({
-        UUID: UUID,
-        tasks: [...userTasks,
-        {
-          id: taskNumber,
-          complete: false,
-          content: content
-        }],
-      });
-      tasks
-        .save()
-        .then(result => {
-          userTasks.push(result);
-          pubsub.publish(`TASK_CREATED${UUID}`, { newTasks: tasks });
-        })
-        .catch(error => {
-          console.log(error);
-          throw error;
-        });
       return taskNumber;
     }
     // deleteMessage: (parent, { id }, context, info) => {
@@ -135,7 +177,6 @@ const resolvers = {
     newTasks: {
       subscribe: (parent, { UUID }, context, info) => {
         const tasks = pubsub.asyncIterator([`TASK_CREATED${UUID}`]);
-        console.log(tasks);
         return (tasks);
       }
     }
@@ -178,43 +219,7 @@ const server = new ApolloServer({
   ]
 });
 
-// Connect to MongoDB
-const mongoUriPullData = `mongodb+srv://simpledb:simpledbpassword@cluster0.qfdf4.mongodb.net/Todo?proxyHost=192.168.1.100&proxyPort=9050`;
-const mongoUriDB = `mongodb+srv://simpledb:simpledbpassword@cluster0.qfdf4.mongodb.net/test?proxyHost=192.168.1.100&proxyPort=9050`;
 
-const mongoDBClient = new MongoClient(mongoUriDB);
-mongoose
-  .connect(mongoUriPullData)
-  .then(() => {
-    console.log("MongoDB connect sucsessful");
-  })
-  .catch(error => {
-    console.log(error);
-  });
-
-const reFillLocalStorage = async () => {
-  try {
-    await mongoDBClient.connect();
-    // database and collection code goes here
-    const db = mongoDBClient.db("Todo");
-    const usersCollection = db.collection("users");
-    const tasksCollection = db.collection("tasks");
-    // find code goes here
-    const usersCursor = usersCollection.find();
-    const tasksCursor = tasksCollection.find();
-    // iterate code goes here
-    users.length = 0;
-    tasks.length = 0;
-
-    await usersCursor.forEach(element => users.push(element));
-    await tasksCursor.forEach(element => tasks.push(element));
-
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await mongoDBClient.close();
-  }
-};
-reFillLocalStorage().catch(console.dir);
 
 await server.start();
 

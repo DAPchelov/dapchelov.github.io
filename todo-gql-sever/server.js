@@ -96,14 +96,13 @@ const mutationData = async (mutationUUID, content, id) => {
         }
       }
     }
-  ).then((data)=> {
+  ).then(()=> {
     reFillLocalStorage().catch(console.dir).then(() => {
-      console.log('refilling storage')
       pubsub.publish(`TASK_CREATED${mutationUUID}`, {newTasks: tasks.find(usersTasksArray => usersTasksArray.UUID == mutationUUID).tasks});
+      mongoDBClient.close();
     });
   });
   
-  // await mongoDBClient.close();
 }
 
 const PORT = 4000;
@@ -165,9 +164,7 @@ const resolvers = {
       const userTasks = tasks.find(usersTasksArray => usersTasksArray.UUID == UUID).tasks;
       const taskNumber = userTasks.length;
       mutationData(UUID, content, taskNumber);
-
-      
-      
+     
       return taskNumber;
     }
     // deleteMessage: (parent, { id }, context, info) => {

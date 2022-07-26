@@ -85,19 +85,24 @@ const mutationData = async (mutationUUID, content, id) => {
   const db = mongoDBClient.db("Todo");
   const tasksCollection = db.collection("tasks");
 
-  tasksCollection.updateOne(
-    {UUID:`${mutationUUID}`},
-    {$push: {
-      tasks: {
-        id: id,
-        complete: false,
-        content: content
+  await tasksCollection.updateOne(
+    { UUID: `${mutationUUID}` },
+    {
+      $push: {
+        tasks: {
+          id: id,
+          complete: false,
+          content: content
+        }
       }
-    }}
-    // {$set: {name: `${content}`}}
-  )
-
-  console.log(await tasksCollection.findOne({UUID: `${mutationUUID}`}));
+    }
+  ).then((data)=> {
+    reFillLocalStorage().catch(console.dir).then(() => {
+      console.log('refilling storage')
+      pubsub.publish(`TASK_CREATED${mutationUUID}`, {newTasks: tasks.find(usersTasksArray => usersTasksArray.UUID == mutationUUID).tasks});
+    });
+  });
+  
   // await mongoDBClient.close();
 }
 
@@ -135,6 +140,7 @@ const typeDefs = gql`
   }
   type Subscription {
     newTasks(UUID: String!): [Task!]!
+
   }
 `;
 
@@ -159,8 +165,9 @@ const resolvers = {
       const userTasks = tasks.find(usersTasksArray => usersTasksArray.UUID == UUID).tasks;
       const taskNumber = userTasks.length;
       mutationData(UUID, content, taskNumber);
-      reFillLocalStorage();
 
+      
+      
       return taskNumber;
     }
     // deleteMessage: (parent, { id }, context, info) => {

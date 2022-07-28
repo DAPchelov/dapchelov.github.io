@@ -1,4 +1,4 @@
-import './LoginPage.css';
+import './SingUpPage.css';
 import React, { useState } from 'react';
 import { Card, CardContent, Typography, CardActions, Button, TextField } from '@mui/material';
 import { gql, useQuery } from "@apollo/client";

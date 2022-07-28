@@ -19,7 +19,7 @@ const InputForm: React.FC<IPropsInputForm> = (props: IPropsInputForm) => {
     UUID: props.UUID,
     content: "NoMessage"
   });
-
+ 
   const POST_TASK = gql`
     mutation($UUID: String!, $content: String!) {
       postTask(UUID: $UUID, content: $content)

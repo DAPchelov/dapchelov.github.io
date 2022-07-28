@@ -8,6 +8,7 @@ import type {
   DefaultValues
 } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { getByTitle } from '@testing-library/react';
 
 
 interface IPropsLoginPage {
@@ -16,12 +17,14 @@ interface IPropsLoginPage {
 
 interface IFormInputs {
   Password: string,
+  CPassword: string,
   Login: string,
 }
 
 type FormValues = {
   Password: string;
   Login: string;
+  CPassword: string;
 };
 
 const defaultValues: DefaultValues<FormValues> = {
@@ -29,12 +32,13 @@ const defaultValues: DefaultValues<FormValues> = {
   Login: '',
 };
 
-const LoginPage: React.FC<IPropsLoginPage> = (props: IPropsLoginPage) => {
+const SingUpPage: React.FC<IPropsLoginPage> = (props: IPropsLoginPage) => {
 
   const {
     register,
     handleSubmit,
     control,
+    getValues,
     formState: {isValid}
   } = useForm<FormValues>({
     defaultValues,
@@ -68,7 +72,7 @@ const LoginPage: React.FC<IPropsLoginPage> = (props: IPropsLoginPage) => {
     <div className="loginPage">
       <Card className="loginFrame">
         <form onSubmit={handleSubmit(onSubmit)} className="loginContent">
-          <Typography color="text.secondary" sx={{ fontSize: 28 }} gutterBottom>Sing in</Typography>
+          <Typography color="text.secondary" sx={{ fontSize: 28 }} gutterBottom>Sing UP</Typography>
           <TextField {...register('Login', {
             required: true,
             minLength: 3,
@@ -88,17 +92,23 @@ const LoginPage: React.FC<IPropsLoginPage> = (props: IPropsLoginPage) => {
             type="password"
             autoComplete="current-password"
           />
-          <Button type="submit" variant={isValid ? "contained" : "outlined"} color="success" disabled={!isValid} sx={{ width: 200 }}>SIGN IN</Button>
+          <TextField
+            {...register('CPassword', {
+              required: true,
+              minLength: 6,
+              validate: (value) => value === getValues("Password"),
+            })}
+            id="standard-password-input"
+            label="Repeat password"
+            variant="standard"
+            type="password"
+            autoComplete="current-password"
+          />
+          <Button type="submit" variant={isValid ? "contained" : "outlined"} color="secondary" disabled={!isValid} sx={{ width: 200 }}>SIGN UP</Button>
         </form>
-        <CardActions className="loginActions" sx={{ '& button': { m: 1 } }}>
-          <div className='sinbgUpBlock'>
-            <Typography color="text.secondary" sx={{ fontSize: 28 }} gutterBottom>Create account</Typography>
-            <Button variant="contained" color="secondary" sx={{ width: 200 }}>SING UP</Button>
-          </div>
-        </CardActions>
       </Card>
     </div>
   );
 }
 
-export default LoginPage;
+export default SingUpPage;

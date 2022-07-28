@@ -48,6 +48,7 @@
     height: 60%;
     row-gap: 10%;
     align-items: center;
+    padding-top: 5%;
 }
 
 .loginActions {

@@ -9,7 +9,7 @@ import { Container } from "@mui/system";
 import Typography from '@mui/material/Typography';
 import TodoList from './TodoList'
 import { useNavigate } from "react-router-dom";
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, useSubscription } from "@apollo/client";
 
 
 interface ITask {
@@ -46,14 +46,32 @@ const App: React.FC<IPropsApp> = (props: IPropsApp) => {
     }
   `;
 
+  const WS_TASKS = gql`
+  subscription Subscription {
+    newTasks (UUID: "${props.UUID}") {
+      id
+      complete
+      content
+    }
+  }
+  `;
+
   const queryData = useQuery(QUERY_MESSAGES);
+  const { data } = useSubscription(WS_TASKS);
+
   useEffect(() => {
-    if (queryData.data) {
+    if (!data && !queryData.data) {
+      setTaskArray([]);
+    } else
+    if (data) {
+      setTaskArray(data.newTasks);
+      
+    } else {
       setTaskArray(queryData.data.tasks);
     }
   });
 
-  const addTask = (text: string) => { 
+  const addTask = (text: string) => {
     const newTask: ITask = {
       UUID: props.UUID,
       id: taskArray.length,

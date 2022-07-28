@@ -35,7 +35,7 @@ const App: React.FC<IPropsApp> = (props: IPropsApp) => {
     };
   })
 
-  //get data from server
+  // get data from server
   const QUERY_MESSAGES = gql`
     query TasksCollection {
       tasks (UUID: "${props.UUID}") {

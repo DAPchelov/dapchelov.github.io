@@ -29,10 +29,7 @@ const InputForm: React.FC<IPropsInputForm> = (props: IPropsInputForm) => {
   const [postTask] = useMutation(POST_TASK);
 
   const onPush = (keyKode: string) => {
-    console.log(task.content);
     if (keyKode === "Enter" && task.content.length > 0) {
-      console.log('PUSH!');
-
       postTask({
         variables: task
       });

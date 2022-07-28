@@ -48,6 +48,7 @@
     height: 60%;
     row-gap: 10%;
     align-items: center;
+    justify-content: center;
     padding-top: 5%;
 }
 
@@ -59,7 +60,7 @@
     justify-content: center;
 }
 
-.sinbgUpBlock {
+.signUpBlock {
     display: flex;
     flex-direction: column;
     align-items: center;

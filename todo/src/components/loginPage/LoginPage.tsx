@@ -1,8 +1,8 @@
 import './LoginPage.css';
 import React, { useState } from 'react';
-import { Card, CardContent, Typography, CardActions, Button, TextField } from '@mui/material';
+import { Card, Typography, CardActions, Button, TextField } from '@mui/material';
 import { gql, useQuery } from "@apollo/client";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import type {
   SubmitHandler,
   DefaultValues
@@ -68,7 +68,7 @@ const LoginPage: React.FC<IPropsLoginPage> = (props: IPropsLoginPage) => {
     <div className="loginPage">
       <Card className="loginFrame">
         <form onSubmit={handleSubmit(onSubmit)} className="loginContent">
-          <Typography color="text.secondary" sx={{ fontSize: 28 }} gutterBottom>Sing in</Typography>
+          <Typography color="text.secondary" sx={{ fontSize: 28 }} gutterBottom>Sign in</Typography>
           <TextField {...register('Login', {
             required: true,
             minLength: 3,
@@ -91,9 +91,9 @@ const LoginPage: React.FC<IPropsLoginPage> = (props: IPropsLoginPage) => {
           <Button type="submit" variant={isValid ? "contained" : "outlined"} color="success" disabled={!isValid} sx={{ width: 200 }}>SIGN IN</Button>
         </form>
         <CardActions className="loginActions" sx={{ '& button': { m: 1 } }}>
-          <div className='sinbgUpBlock'>
+          <div className='signUpBlock'>
             <Typography color="text.secondary" sx={{ fontSize: 28 }} gutterBottom>Create account</Typography>
-            <Button variant="contained" color="secondary" sx={{ width: 200 }}>SING UP</Button>
+            <Button variant="contained" color="secondary" sx={{ width: 200 }}>SIGN UP</Button>
           </div>
         </CardActions>
       </Card>

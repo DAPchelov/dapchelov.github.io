@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Source+Sans+Pro:wght@600&display=swap');
 
-.loginPage {
+.signUpPage {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15,7 +15,7 @@
     left: 0;
 }
 
-.loginPage::after {
+.signUpPage::after {
     content: "";
     display: block;
     width: 100%;
@@ -28,7 +28,7 @@
     z-index: 1;
 }
 
-.loginFrame {
+.signUpFrame {
     min-width: 300px;
     width: 40vw;
     max-width: 435px;
@@ -41,25 +41,12 @@
     justify-content: center;
 }
 
-.loginContent {
+.signUpContent {
     display: flex;
     flex-direction: column;
     min-height: 250px;
     height: 60%;
     row-gap: 10%;
     align-items: center;
-}
-
-.loginActions {
-    display: flex;
-    flex-direction: column;
-    height: 40%;
-    min-height: 100px;
     justify-content: center;
-}
-
-.sinbgUpBlock {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }

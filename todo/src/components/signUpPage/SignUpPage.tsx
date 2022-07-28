@@ -1,14 +1,13 @@
-import './SingUpPage.css';
+import './SignUpPage.css';
 import React, { useState } from 'react';
-import { Card, CardContent, Typography, CardActions, Button, TextField } from '@mui/material';
+import { Card, Typography, Button, TextField } from '@mui/material';
 import { gql, useQuery } from "@apollo/client";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import type {
   SubmitHandler,
   DefaultValues
 } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { getByTitle } from '@testing-library/react';
 
 
 interface IPropsLoginPage {
@@ -32,7 +31,7 @@ const defaultValues: DefaultValues<FormValues> = {
   Login: '',
 };
 
-const SingUpPage: React.FC<IPropsLoginPage> = (props: IPropsLoginPage) => {
+const SignUpPage: React.FC<IPropsLoginPage> = (props: IPropsLoginPage) => {
 
   const {
     register,
@@ -69,10 +68,10 @@ const SingUpPage: React.FC<IPropsLoginPage> = (props: IPropsLoginPage) => {
   };
 
   return (
-    <div className="loginPage">
-      <Card className="loginFrame">
-        <form onSubmit={handleSubmit(onSubmit)} className="loginContent">
-          <Typography color="text.secondary" sx={{ fontSize: 28 }} gutterBottom>Sing UP</Typography>
+    <div className="signUpPage">
+      <Card className="signUpFrame">
+        <form onSubmit={handleSubmit(onSubmit)} className="signUpContent">
+          <Typography color="text.secondary" sx={{ fontSize: 28 }} gutterBottom>Sign UP</Typography>
           <TextField {...register('Login', {
             required: true,
             minLength: 3,
@@ -111,4 +110,4 @@ const SingUpPage: React.FC<IPropsLoginPage> = (props: IPropsLoginPage) => {
   );
 }
 
-export default SingUpPage;
+export default SignUpPage;

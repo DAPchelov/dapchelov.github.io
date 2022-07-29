@@ -13,7 +13,7 @@ import { MongoClient } from "mongodb";
 const Schema = mongoose.Schema;
 
 const UserTasksSchema = new Schema({
-  UUID: {
+  login: {
     type: String,
     required: true,
   },
@@ -80,7 +80,7 @@ const reFillLocalStorage = async () => {
 
 reFillLocalStorage().catch(console.dir);
 
-const mutationData = async (mutationUUID, content, id) => {
+const pushTaskToBD = async (mutationUUID, content, id) => {
   await mongoDBClient.connect();
   const db = mongoDBClient.db("Todo");
   const tasksCollection = db.collection("tasks");
@@ -96,13 +96,27 @@ const mutationData = async (mutationUUID, content, id) => {
         }
       }
     }
-  ).then(()=> {
+  ).then(() => {
     reFillLocalStorage().catch(console.dir).then(() => {
-      pubsub.publish(`TASK_CREATED${mutationUUID}`, {newTasks: tasks.find(usersTasksArray => usersTasksArray.UUID == mutationUUID).tasks});
+      pubsub.publish(`TASK_CREATED${mutationUUID}`, { newTasks: tasks.find(usersTasksArray => usersTasksArray.UUID == mutationUUID).tasks });
       mongoDBClient.close();
     });
   });
-  
+}
+
+const pushNewUserToDB = async (userLogin, userPassword) => {
+  await mongoDBClient.connect();
+  const db = mongoDBClient.db("Todo");
+  const usersCollection = db.collection("users");
+
+  await usersCollection.insertOne({
+    login: userLogin,
+    password: userPassword,
+  }).then(() => {
+    reFillLocalStorage().catch(console.dir)
+    mongoDBClient.close();
+  });
+  return (users.find(user => user.login === userLogin).UUID);
 }
 
 const PORT = 4000;
@@ -135,6 +149,8 @@ const typeDefs = gql`
 
   type Mutation {
     postTask(UUID: String!, content: String!): ID!
+    newUser(userLogin: String!, userPassword: String!): ID!
+
     # deleteMessage(id: ID!): Message!
   }
   type Subscription {
@@ -163,9 +179,23 @@ const resolvers = {
     postTask: (parent, { UUID, content }, context, info) => {
       const userTasks = tasks.find(usersTasksArray => usersTasksArray.UUID == UUID).tasks;
       const taskNumber = userTasks.length;
-      mutationData(UUID, content, taskNumber);
-     
+      pushTaskToBD(UUID, content, taskNumber);
       return taskNumber;
+    },
+    newUser: async (parent, { userLogin, userPassword }, context, info) => {
+      await mongoDBClient.connect();
+      const db = mongoDBClient.db("Todo");
+      const usersCollection = db.collection("users");
+
+      await usersCollection.insertOne({
+        login: userLogin,
+        password: userPassword,
+      }).then(() => {
+        reFillLocalStorage().catch(console.dir)
+        mongoDBClient.close();
+      });
+      return (users.find(user => user.login === userLogin).UUID);
+
     }
     // deleteMessage: (parent, { id }, context, info) => {
     //   const messageIndex = messages.findIndex(message => message.id == id);

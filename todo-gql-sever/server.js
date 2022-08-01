@@ -149,7 +149,7 @@ const typeDefs = gql`
 
   type Mutation {
     postTask(UUID: String!, content: String!): ID!
-    newUser(userLogin: String!, userPassword: String!): ID!
+    newUserUUID(userLogin: String!, userPassword: String!): ID!
 
     # deleteMessage(id: ID!): Message!
   }
@@ -162,10 +162,10 @@ const typeDefs = gql`
 // Resolver map
 const resolvers = {
   Query: {
-    user: (parent, { login, password }, context, info) => {
+    user: (parent, { userLogin, userPassword }, context, info) => {
       // returns userObject, filtered users array from DB by login and found one by password
       // errors not handled!
-      return users.filter(user => user.login == login).find(user => user.password == password);
+      return users.filter(user => user.login == userLogin).find(user => user.password == userPassword);
     },
     users: (parent, args, context, info) => {
       return users;
@@ -182,7 +182,11 @@ const resolvers = {
       pushTaskToBD(UUID, content, taskNumber);
       return taskNumber;
     },
-    newUser: (parent, { userLogin, userPassword }, context, info) => {
+    newUserUUID: (parent, { userLogin, userPassword }, context, info) => {
+      const existingUser = users.filter(user => user.login === userLogin).find(user => user.password === userPassword);
+      if (existingUser) {
+        return (existingUser._id);
+      }
       return (pushNewUserToDB(userLogin, userPassword));
     }
     // deleteMessage: (parent, { id }, context, info) => {

@@ -112,11 +112,11 @@ const pushNewUserToDB = async (userLogin, userPassword) => {
   await usersCollection.insertOne({
     login: userLogin,
     password: userPassword,
-  }).then(() => {
-    reFillLocalStorage().catch(console.dir)
-    mongoDBClient.close();
-  });
-  return (users.find(user => user.login === userLogin).UUID);
+  }).then(async () => {
+    await reFillLocalStorage().catch(console.dir);
+    await mongoDBClient.close();
+  })
+  return (users.find(user => user.login === userLogin)._id);
 }
 
 const PORT = 4000;
@@ -182,20 +182,8 @@ const resolvers = {
       pushTaskToBD(UUID, content, taskNumber);
       return taskNumber;
     },
-    newUser: async (parent, { userLogin, userPassword }, context, info) => {
-      await mongoDBClient.connect();
-      const db = mongoDBClient.db("Todo");
-      const usersCollection = db.collection("users");
-
-      await usersCollection.insertOne({
-        login: userLogin,
-        password: userPassword,
-      }).then(() => {
-        reFillLocalStorage().catch(console.dir)
-        mongoDBClient.close();
-      });
-      return (users.find(user => user.login === userLogin).UUID);
-
+    newUser: (parent, { userLogin, userPassword }, context, info) => {
+      return (pushNewUserToDB(userLogin, userPassword));
     }
     // deleteMessage: (parent, { id }, context, info) => {
     //   const messageIndex = messages.findIndex(message => message.id == id);

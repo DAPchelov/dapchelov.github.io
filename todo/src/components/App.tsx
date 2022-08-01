@@ -69,7 +69,7 @@ const App: React.FC<IPropsApp> = (props: IPropsApp) => {
     } else {
       setTaskArray(queryData.data.tasks);
     }
-  });
+  },[queryData, data]);
 
   const addTask = (text: string) => {
     const newTask: ITask = {

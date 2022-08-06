@@ -1,0 +1,28 @@
+.CardArea {
+    display: grid;
+    grid-template-columns: repeat(2, 467px);
+    grid-template-rows: repeat(auto-fill, 388px);
+    column-gap: 13px;
+    row-gap: 20px;
+    margin-top: 20px;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+}
+
+@media (max-width: 990px) {
+    .CardArea {
+        grid-template-columns: repeat(2, 325px);
+        grid-template-rows: repeat(auto-fill, 470px);
+        row-gap: 25px;
+        margin-top: 25px;
+    }
+}
+
+@media (max-width: 700px) {
+    .CardArea {
+        grid-template-columns: 292px;
+        grid-template-rows: repeat(auto-fill, 200px);
+        row-gap: 10px;
+    }
+}

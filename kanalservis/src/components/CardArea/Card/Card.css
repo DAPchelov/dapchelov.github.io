@@ -1,0 +1,101 @@
+@import url('https://rsms.me/inter/inter.css');
+
+html {
+    font-family: 'Inter', sans-serif;
+}
+
+@supports (font-variation-settings: normal) {
+    html {
+        font-family: 'Inter var', sans-serif;
+    }
+}
+
+.Card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    border: solid 5px #27569C;
+    border-radius: 4px;
+    box-sizing: border-box;
+    padding: 20px 16px 20px 16px;
+    box-shadow: 0px 6px 4px -1px rgba(81, 81, 81, 0.23);
+
+    font-family: Inter;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.Card-header {
+    display: flex;
+    height: 150px;
+    width: 100%;
+}
+
+.Header-annotation {
+    margin-left: 30px;
+    display: block;
+    padding-top: 3px;
+}
+
+.Header-item {
+    padding-bottom: 20px;
+}
+
+.Card-annotation,
+.Description {
+    padding-bottom: 21px;
+    padding-top: 22px;
+}
+
+@media (max-width: 990px) {
+    .Card-header {
+        flex-direction: column;
+    }
+
+    .Header-annotation {
+        margin-left: 0;
+    }
+
+    .Header-item {
+        padding-bottom: 0;
+        padding-top: 18px;
+    }
+
+    .Card-header {
+        height: 246px;
+    }
+
+    .Card-annotation,
+    .description {
+        padding-bottom: 8px;
+        padding-top: 0;
+    }
+}
+
+@media (max-width: 700px) {
+    .Card {
+        padding: 12px 12px 10px 12px;
+    }
+
+    .Card-header {
+        height: 88px;
+    }
+
+    .Header-annotation {
+        padding-top: 0;
+        display: flex;
+        flex-direction: column;
+        row-gap: 28px;
+    }
+
+    .Header-item {
+        padding-top: 0;
+    }
+
+    .Description,
+    .Card-image {
+        display: none;
+    }
+}

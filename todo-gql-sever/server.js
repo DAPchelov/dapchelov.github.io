@@ -10,31 +10,31 @@ import mongoose from "mongoose";
 import { MongoClient } from "mongodb";
 
 // Create mongoose model
-const Schema = mongoose.Schema;
+// const Schema = mongoose.Schema;
 
-const UserTasksSchema = new Schema({
-  login: {
-    type: String,
-    required: true,
-  },
-  tasks: [{
-    id: {
-      type: String,
-      required: true,
-    },
-    complete: {
-      type: Boolean,
-      required: true,
-    },
-    content: {
-      type: String,
-      required: true,
-    },
-  }],
+// const UserTasksSchema = new Schema({
+//   login: {
+//     type: String,
+//     required: true,
+//   },
+//   tasks: [{
+//     id: {
+//       type: String,
+//       required: true,
+//     },
+//     complete: {
+//       type: Boolean,
+//       required: true,
+//     },
+//     content: {
+//       type: String,
+//       required: true,
+//     },
+//   }],
 
-});
+// });
 
-const mongooseUserTasks = mongoose.model("Task", UserTasksSchema);
+// const mongooseUserTasks = mongoose.model("Task", UserTasksSchema);
 
 // Set up server
 let users = [];
@@ -80,7 +80,7 @@ const reFillLocalStorage = async () => {
 
 reFillLocalStorage().catch(console.dir);
 
-const pushTaskToBD = async (mutationUUID, content, id) => {
+const pushTaskToTasksDocument = async (mutationUUID, content, id) => {
   await mongoDBClient.connect();
   const db = mongoDBClient.db("Todo");
   const tasksCollection = db.collection("tasks");
@@ -103,6 +103,19 @@ const pushTaskToBD = async (mutationUUID, content, id) => {
     });
   });
 }
+const createNewTasksDocument = async (UUID) => {
+  await mongoDBClient.connect();
+  const db = mongoDBClient.db("Todo");
+  const tasksCollection = db.collection("tasks");
+
+  await tasksCollection.insertOne ({
+    "UUID": `${UUID}`,
+    tasks:[]
+  }).then(async () => {
+    await reFillLocalStorage().catch(console.dir);
+    await mongoDBClient.close()
+  })
+}
 
 const pushNewUserToDB = async (userLogin, userPassword) => {
   await mongoDBClient.connect();
@@ -114,9 +127,14 @@ const pushNewUserToDB = async (userLogin, userPassword) => {
     password: userPassword,
   }).then(async () => {
     await reFillLocalStorage().catch(console.dir);
-    await mongoDBClient.close();
+    await mongoDBClient.close()
   })
-  return (users.find(user => user.login === userLogin)._id);
+
+  const userID = users.find(user => user.login === userLogin)._id
+
+  await createNewTasksDocument(userID);
+  
+  return (userID);
 }
 
 const PORT = 4000;
@@ -142,7 +160,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    user(login: String! password: String!): User!
+    user(userLogin: String! userPassword: String!): User!
     users: [User!]!
     tasks(UUID: ID!): [Task!]!
   }
@@ -164,8 +182,7 @@ const resolvers = {
   Query: {
     user: (parent, { userLogin, userPassword }, context, info) => {
       // returns userObject, filtered users array from DB by login and found one by password
-      // errors not handled!
-      return users.filter(user => user.login == userLogin).find(user => user.password == userPassword);
+      return users.filter(user => user.login === userLogin).find(user => user.password === userPassword);
     },
     users: (parent, args, context, info) => {
       return users;
@@ -179,7 +196,7 @@ const resolvers = {
     postTask: (parent, { UUID, content }, context, info) => {
       const userTasks = tasks.find(usersTasksArray => usersTasksArray.UUID == UUID).tasks;
       const taskNumber = userTasks.length;
-      pushTaskToBD(UUID, content, taskNumber);
+      pushTaskToTasksDocument(UUID, content, taskNumber);
       return taskNumber;
     },
     newUserUUID: (parent, { userLogin, userPassword }, context, info) => {

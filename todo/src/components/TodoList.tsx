@@ -1,3 +1,4 @@
+import Stack from '@mui/material/Stack';
 import React from 'react';
 import { ITask } from './App'
 import Todo from './Todo'
@@ -20,7 +21,7 @@ const filterTask = (task: ITask, state:IPropsTodoList['completed'] ) => {
 
 const TodoList: React.FC<IPropsTodoList> = (props: IPropsTodoList) => {
     return (
-        <div>
+        <Stack>
             {props.taskArray
                 .filter(task => filterTask(task, props.completed))
                 .map(task => {
@@ -28,7 +29,7 @@ const TodoList: React.FC<IPropsTodoList> = (props: IPropsTodoList) => {
                         <Todo key={task.id} task={task} handleToggle={props.handleToggle} />
                     );
                 })}
-        </div>
+        </Stack>
     );
 }
 

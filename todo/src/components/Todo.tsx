@@ -14,17 +14,21 @@ interface IPropsTodo {
 
 const Todo: React.FC<IPropsTodo> = (props: IPropsTodo) => {
     return (
-        <Paper elevation={1}>
+        <Paper elevation={1} sx={{
+            '&:hover': {
+                // background: 'linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,120,28,0.4) 100%)',
+                cursor: 'pointer'
+            }}}
+            onClick={() => props.handleToggle(props.task.id)}>
             <ListItem disablePadding aria-multiline>
                 <Checkbox
                     checked={props.task.complete}
-                    onClick={() => props.handleToggle(props.task.id)}
                 />
                 <Typography sx={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
                     {props.task.content}
                 </Typography>
             </ListItem>
-        </Paper>
+         </Paper>
     );
 }
 

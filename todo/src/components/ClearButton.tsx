@@ -1,12 +1,12 @@
 import Button from '@mui/material/Button';
 
 interface IPropsClearButton {
-    clearFinished: () => void;
+    clearCompleted: () => void;
 }
 
 const ClearButton: React.FC<IPropsClearButton> = (props: IPropsClearButton) => {
     return (
-        <Button variant="text" sx={{ fontSize: 10 }} onClick={() => props.clearFinished()}>clear completed</Button>
+        <Button variant="text" sx={{ fontSize: 10 }} onClick={() => props.clearCompleted()}>clear completed</Button>
     );
 }
 

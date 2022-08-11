@@ -7,7 +7,7 @@ import type {
   SubmitHandler,
   DefaultValues
 } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 interface IPropsLoginPage {
@@ -48,7 +48,7 @@ const LoginPage: React.FC<IPropsLoginPage> = (props: IPropsLoginPage) => {
 
   const QUERY_USER_UUID = gql`
     query UserUUID {
-      user(login: "${login}", password: "${password}") {
+      user(userLogin: "${login}", userPassword: "${password}") {
     _id
   }
   }`;
@@ -93,7 +93,7 @@ const LoginPage: React.FC<IPropsLoginPage> = (props: IPropsLoginPage) => {
         <CardActions className="loginActions" sx={{ '& button': { m: 1 } }}>
           <div className='signUpBlock'>
             <Typography color="text.secondary" sx={{ fontSize: 28 }} gutterBottom>Create account</Typography>
-            <Button variant="contained" color="secondary" sx={{ width: 200 }}>SIGN UP</Button>
+            <Link to="../signup"><Button variant="contained" color="secondary" sx={{ width: 200 }}>SIGN UP</Button></Link>
           </div>
         </CardActions>
       </Card>

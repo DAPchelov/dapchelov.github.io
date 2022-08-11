@@ -89,7 +89,7 @@ const App: React.FC<IPropsApp> = (props: IPropsApp) => {
     ]);
   };
 
-  const clearFinished = () => {
+  const clearCompleted = () => {
     setTaskArray([...taskArray.filter(task => task.complete === false)]);
   };
 
@@ -103,7 +103,7 @@ const App: React.FC<IPropsApp> = (props: IPropsApp) => {
       <Typography variant="h4" color="text.secondary" gutterBottom>
         TODOS
       </Typography>
-      <Box sx={{ width: "100%", maxWidth: 450 }}>
+      <Box sx={{ width: "100%", maxWidth: 600 }}>
         <InputForm addProp={addTask} UUID={props.UUID} />
         <TodoList taskArray={taskArray} completed={completed} handleToggle={handleToggle} />
         <Paper
@@ -121,7 +121,7 @@ const App: React.FC<IPropsApp> = (props: IPropsApp) => {
             variant="outlined"
           />
           <SelectButtons setCompleted={setCompleted} completed={completed} />
-          <ClearButton clearFinished={clearFinished} />
+          <ClearButton clearCompleted={clearCompleted} />
         </Paper>
       </Box>
     </Container>

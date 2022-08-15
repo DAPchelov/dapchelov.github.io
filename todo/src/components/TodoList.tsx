@@ -6,7 +6,7 @@ import Todo from './Todo'
 interface IPropsTodoList {
     taskArray: ITask[],
     completed: boolean | undefined,
-    handleToggle: (taskNumber: ITask["id"]) => void;
+    handleToggle: (taskNumber: ITask["id"], state: boolean) => void;
 }
 
 const filterTask = (task: ITask, state:IPropsTodoList['completed'] ) => {

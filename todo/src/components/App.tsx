@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import InputForm from "./InputForm";
 import SelectButtons from "./SelectButtons";
-import Chip from "@mui/material/Chip";
 import ClearButton from "./ClearButton";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -63,25 +62,15 @@ const App: React.FC<IPropsApp> = (props: IPropsApp) => {
     if (!data && !queryData.data) {
       setTaskArray([]);
     } else
-    if (data) {
-      setTaskArray(data.newTasks);
-      
-    } else {
-      setTaskArray(queryData.data.tasks);
-    }
-  },[queryData, data]);
+      if (data) {
+        setTaskArray(data.newTasks);
 
-  const addTask = (text: string) => {
-    const newTask: ITask = {
-      UUID: props.UUID,
-      id: taskArray.length,
-      complete: false,
-      content: text
-    };
-    setTaskArray([...taskArray, newTask]);
-  };
+      } else {
+        setTaskArray(queryData.data.tasks);
+      }
+  }, [queryData, data]);
 
-  const handleToggle = (id: number) => {
+  const handleToggle = (id: number, state: boolean) => {
     setTaskArray([
       ...taskArray.map(task =>
         task.id === id ? { ...task, complete: !task.complete } : { ...task }
@@ -104,7 +93,7 @@ const App: React.FC<IPropsApp> = (props: IPropsApp) => {
         TODOS
       </Typography>
       <Box sx={{ width: "100%", maxWidth: 600 }}>
-        <InputForm addProp={addTask} UUID={props.UUID} />
+        <InputForm UUID={props.UUID} />
         <TodoList taskArray={taskArray} completed={completed} handleToggle={handleToggle} />
         <Paper
           elevation={1}
@@ -114,12 +103,9 @@ const App: React.FC<IPropsApp> = (props: IPropsApp) => {
             alignItems: "center"
           }}
         >
-          <Chip
-            label={`${taskArray.filter(task => task.complete === false).length
-              }`.concat(" items left")}
-            size="small"
-            variant="outlined"
-          />
+          <Typography color="text.secondary" ml={1} sx={{ fontSize: 14 }}>
+            {`${taskArray.filter(task => task.complete === false).length}`.concat(" items left")}
+          </Typography>
           <SelectButtons setCompleted={setCompleted} completed={completed} />
           <ClearButton clearCompleted={clearCompleted} />
         </Paper>

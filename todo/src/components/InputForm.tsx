@@ -1,11 +1,10 @@
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
-import { gql, OperationVariables, useMutation, useQuery } from "@apollo/client";
+import { gql, useMutation} from "@apollo/client";
 import { useState } from "react";
 
 
 interface IPropsInputForm {
-  addProp: (value: string) => void;
   UUID: string | undefined;
 }
 

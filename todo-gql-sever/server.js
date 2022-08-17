@@ -80,13 +80,13 @@ const reFillLocalStorage = async () => {
 
 reFillLocalStorage().catch(console.dir);
 
-const pushTaskToTasksDocument = async (mutationUUID, content, id) => {
+const pushTaskToTasksDocument = async (UUID, content, id) => {
   await mongoDBClient.connect();
   const db = mongoDBClient.db("Todo");
   const tasksCollection = db.collection("tasks");
 
   await tasksCollection.updateOne(
-    { UUID: `${mutationUUID}` },
+    { UUID: `${UUID}` },
     {
       $push: {
         tasks: {
@@ -98,7 +98,7 @@ const pushTaskToTasksDocument = async (mutationUUID, content, id) => {
     }
   ).then(() => {
     reFillLocalStorage().catch(console.dir).then(() => {
-      pubsub.publish(`TASK_CREATED${mutationUUID}`, { newTasks: tasks.find(usersTasksArray => usersTasksArray.UUID == mutationUUID).tasks });
+      pubsub.publish(`TASK_UPDATE${UUID}`, { newTasks: tasks.find(usersTasksArray => usersTasksArray.UUID == UUID).tasks });
       mongoDBClient.close();
     });
   });
@@ -108,9 +108,9 @@ const createNewTasksDocument = async (UUID) => {
   const db = mongoDBClient.db("Todo");
   const tasksCollection = db.collection("tasks");
 
-  await tasksCollection.insertOne ({
+  await tasksCollection.insertOne({
     "UUID": `${UUID}`,
-    tasks:[]
+    tasks: []
   }).then(async () => {
     await reFillLocalStorage().catch(console.dir);
     await mongoDBClient.close()
@@ -133,8 +133,28 @@ const pushNewUserToDB = async (userLogin, userPassword) => {
   const userID = users.find(user => user.login === userLogin)._id
 
   await createNewTasksDocument(userID);
-  
+
   return (userID);
+}
+
+const switchTaskComplete = async (UUID, taskID, taskComplete) => {
+  await mongoDBClient.connect();
+  const db = mongoDBClient.db("Todo");
+  const tasksCollection = db.collection("tasks");
+
+  await tasksCollection.updateOne(
+    {
+      UUID: `${UUID}`, "tasks.id": taskID
+    },
+    {
+      $set: {"tasks.$.complete": taskComplete}
+    }
+  ).then(() => {
+    reFillLocalStorage().catch(console.dir).then(() => {
+      mongoDBClient.close();
+      console.log("taskCompleteSwitch!");
+    });
+  });
 }
 
 const PORT = 4000;
@@ -168,6 +188,7 @@ const typeDefs = gql`
   type Mutation {
     postTask(UUID: String!, content: String!): ID!
     newUserUUID(userLogin: String!, userPassword: String!): ID!
+    switchComplete(UUID: String!, taskID: Int!): Boolean!
 
     # deleteMessage(id: ID!): Message!
   }
@@ -205,6 +226,13 @@ const resolvers = {
         return (existingUser._id);
       }
       return (pushNewUserToDB(userLogin, userPassword));
+    },
+    switchComplete: (parent, { UUID, taskID }, context, info) => {
+      //invert task complete state
+      tasks.find(usersTasksArray => usersTasksArray.UUID == UUID).tasks[taskID].complete = !tasks.find(usersTasksArray => usersTasksArray.UUID == UUID).tasks[taskID].complete;
+      switchTaskComplete(UUID, taskID, tasks.find(usersTasksArray => usersTasksArray.UUID == UUID).tasks[taskID].complete);
+      pubsub.publish(`TASK_UPDATE${UUID}`, { newTasks: tasks.find(usersTasksArray => usersTasksArray.UUID == UUID).tasks });
+      return(true);
     }
     // deleteMessage: (parent, { id }, context, info) => {
     //   const messageIndex = messages.findIndex(message => message.id == id);
@@ -219,7 +247,7 @@ const resolvers = {
   Subscription: {
     newTasks: {
       subscribe: (parent, { UUID }, context, info) => {
-        const tasks = pubsub.asyncIterator([`TASK_CREATED${UUID}`]);
+        const tasks = pubsub.asyncIterator([`TASK_UPDATE${UUID}`]);
         return (tasks);
       }
     }

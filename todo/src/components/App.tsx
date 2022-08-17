@@ -13,14 +13,13 @@ import { gql, useQuery, useSubscription } from "@apollo/client";
 
 interface ITask {
   _id?: string,
-  UUID?: string | undefined,
   __typename?: string,
   id: number,
   complete: boolean,
   content: string,
 }
 interface IPropsApp {
-  UUID: string | undefined;
+  UUID: string;
 }
 
 const App: React.FC<IPropsApp> = (props: IPropsApp) => {
@@ -70,13 +69,13 @@ const App: React.FC<IPropsApp> = (props: IPropsApp) => {
       }
   }, [queryData, data]);
 
-  const handleToggle = (id: number, state: boolean) => {
-    setTaskArray([
-      ...taskArray.map(task =>
-        task.id === id ? { ...task, complete: !task.complete } : { ...task }
-      )
-    ]);
-  };
+  // const handleToggle = (id: number, state: boolean) => {
+  //   setTaskArray([
+  //     ...taskArray.map(task =>
+  //       task.id === id ? { ...task, complete: !task.complete } : { ...task }
+  //     )
+  //   ]);
+  // };
 
   const clearCompleted = () => {
     setTaskArray([...taskArray.filter(task => task.complete === false)]);
@@ -94,7 +93,7 @@ const App: React.FC<IPropsApp> = (props: IPropsApp) => {
       </Typography>
       <Box sx={{ width: "100%", maxWidth: 600 }}>
         <InputForm UUID={props.UUID} />
-        <TodoList taskArray={taskArray} completed={completed} handleToggle={handleToggle} />
+        <TodoList taskArray={taskArray} completed={completed} UUID={props.UUID} />
         <Paper
           elevation={1}
           sx={{

@@ -6,7 +6,8 @@ import Todo from './Todo'
 interface IPropsTodoList {
     taskArray: ITask[],
     completed: boolean | undefined,
-    handleToggle: (taskNumber: ITask["id"], state: boolean) => void;
+    UUID: String;
+    // handleToggle: (taskNumber: ITask["id"], state: boolean) => void;
 }
 
 const filterTask = (task: ITask, state:IPropsTodoList['completed'] ) => {
@@ -26,7 +27,7 @@ const TodoList: React.FC<IPropsTodoList> = (props: IPropsTodoList) => {
                 .filter(task => filterTask(task, props.completed))
                 .map(task => {
                     return (
-                        <Todo key={task.id} task={task} handleToggle={props.handleToggle} />
+                        <Todo key={task.id} task={task} UUID={props.UUID} />
                     );
                 })}
         </Stack>

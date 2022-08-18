@@ -21,7 +21,7 @@ const filterTask = (task: ITask, state:IPropsTodoList['completed'] ) => {
   };
 
   const SWITCH_COMPLETE = gql`
-    mutation($UUID: String!, $taskID: Int!) {
+    mutation($UUID: String!, $taskID: String!) {
       switchComplete(UUID: $UUID, taskID: $taskID)
     }
   `;
@@ -30,7 +30,7 @@ const TodoList: React.FC<IPropsTodoList> = (props: IPropsTodoList) => {
 
     const [switchTask] = useMutation(SWITCH_COMPLETE);
 
-    const handleToggle = (UUID: String, taskID: Number) => {
+    const handleToggle = (UUID: String, taskID: String) => {
         console.log(taskID);
         switchTask({
             variables: {taskID, UUID}

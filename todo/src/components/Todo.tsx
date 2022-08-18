@@ -4,12 +4,11 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import { ITask } from './App'
-import { gql, useMutation } from "@apollo/client";
 
 interface IPropsTodo {
     task: ITask,
     UUID: String,
-    handleToggle(UUID: String, taskID: Number): void;
+    handleToggle(UUID: String, taskID: String): void;
 }
 
 const Todo: React.FC<IPropsTodo> = (props: IPropsTodo) => {

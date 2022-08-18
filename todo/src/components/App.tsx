@@ -14,7 +14,7 @@ import { gql, useQuery, useSubscription } from "@apollo/client";
 interface ITask {
   _id?: string,
   __typename?: string,
-  id: number,
+  id: string,
   complete: boolean,
   content: string,
 }

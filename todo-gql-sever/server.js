@@ -8,6 +8,7 @@ import { WebSocketServer } from "ws";
 import { useServer } from "graphql-ws/lib/use/ws";
 import mongoose from "mongoose";
 import { MongoClient } from "mongodb";
+import {v4 as uuidv4} from 'uuid';
 
 // Create mongoose model
 // const Schema = mongoose.Schema;
@@ -98,7 +99,7 @@ const pushTaskToTasksDocument = async (UUID, content, id) => {
     }
   ).then(() => {
     reFillLocalStorage().catch(console.dir).then(() => {
-      pubsub.publish(`TASK_UPDATE${UUID}`, { newTasks: tasks.find(usersTasksArray => usersTasksArray.UUID == UUID).tasks });
+      pubsub.publish(`TASKS_UPDATE${UUID}`, { newTasks: tasks.find(usersTasksArray => usersTasksArray.UUID == UUID).tasks });
       mongoDBClient.close();
     });
   });
@@ -157,6 +158,27 @@ const switchTaskComplete = async (UUID, taskID, taskComplete) => {
   });
 }
 
+const clearCompletedTasks = async (UUID) => {
+  await mongoDBClient.connect();
+  const db = mongoDBClient.db("Todo");
+  const tasksCollection = db.collection("tasks");
+
+  await tasksCollection.updateOne(
+    {
+      UUID: `${UUID}`
+    },
+    {
+      $pull: {tasks: {complete: {$eq: true}}}
+    }
+  ).then(() => {
+    reFillLocalStorage().catch(console.dir).then(() => {
+      mongoDBClient.close();
+      console.log("Clear", `UUID:${UUID}`);
+    });
+  });
+
+}
+
 const PORT = 4000;
 const pubsub = new PubSub();
 
@@ -169,7 +191,7 @@ const typeDefs = gql`
   }
 
   type Task {
-    id: Int!
+    id: String!
     complete: Boolean!
     content: String!
   }
@@ -188,9 +210,8 @@ const typeDefs = gql`
   type Mutation {
     postTask(UUID: String!, content: String!): ID!
     newUserUUID(userLogin: String!, userPassword: String!): ID!
-    switchComplete(UUID: String!, taskID: Int!): Boolean!
-
-    # deleteMessage(id: ID!): Message!
+    switchComplete(UUID: String!, taskID: String!): Boolean
+    clearCompleted(UUID: String!): Boolean
   }
   type Subscription {
     newTasks(UUID: String!): [Task!]!
@@ -215,10 +236,9 @@ const resolvers = {
 
   Mutation: {
     postTask: (parent, { UUID, content }, context, info) => {
-      const userTasks = tasks.find(usersTasksArray => usersTasksArray.UUID == UUID).tasks;
-      const taskNumber = userTasks.length;
-      pushTaskToTasksDocument(UUID, content, taskNumber);
-      return taskNumber;
+      const taskUUID = uuidv4();
+      pushTaskToTasksDocument(UUID, content, taskUUID);
+      return taskUUID;
     },
     newUserUUID: (parent, { userLogin, userPassword }, context, info) => {
       const existingUser = users.filter(user => user.login === userLogin).find(user => user.password === userPassword);
@@ -229,25 +249,22 @@ const resolvers = {
     },
     switchComplete: (parent, { UUID, taskID }, context, info) => {
       //invert task complete state
-      tasks.find(usersTasksArray => usersTasksArray.UUID == UUID).tasks[taskID].complete = !tasks.find(usersTasksArray => usersTasksArray.UUID == UUID).tasks[taskID].complete;
-      switchTaskComplete(UUID, taskID, tasks.find(usersTasksArray => usersTasksArray.UUID == UUID).tasks[taskID].complete);
-      pubsub.publish(`TASK_UPDATE${UUID}`, { newTasks: tasks.find(usersTasksArray => usersTasksArray.UUID == UUID).tasks });
-      return(true);
+      const taskCompleteState = tasks.find(usersTasksArray => usersTasksArray.UUID === UUID).tasks.find(task => task.id === taskID).complete;
+      tasks.find(usersTasksArray => usersTasksArray.UUID === UUID).tasks.find(task => task.id === taskID).complete = !taskCompleteState;
+
+      switchTaskComplete(UUID, taskID, !taskCompleteState);
+      pubsub.publish(`TASKS_UPDATE${UUID}`, { newTasks: tasks.find(usersTasksArray => usersTasksArray.UUID == UUID).tasks });
+    },
+    clearCompleted: (parent, { UUID }, context, info) => {
+      clearCompletedTasks(UUID);
+      tasks.find(usersTasksArray => usersTasksArray.UUID == UUID).tasks = tasks.find(usersTasksArray => usersTasksArray.UUID == UUID).tasks.filter(task => task.complete !== true);
+      pubsub.publish(`TASKS_UPDATE${UUID}`, { newTasks: tasks.find(usersTasksArray => usersTasksArray.UUID == UUID).tasks });
     }
-    // deleteMessage: (parent, { id }, context, info) => {
-    //   const messageIndex = messages.findIndex(message => message.id == id);
-
-    //   if (messageIndex === -1) throw new Error("Message not found.");
-
-    //   const deletedMessages = messages.splice(messageIndex, 1);
-
-    //   return deletedMessages[0];
-    // }
   },
   Subscription: {
     newTasks: {
       subscribe: (parent, { UUID }, context, info) => {
-        const tasks = pubsub.asyncIterator([`TASK_UPDATE${UUID}`]);
+        const tasks = pubsub.asyncIterator([`TASKS_UPDATE${UUID}`]);
         return (tasks);
       }
     }

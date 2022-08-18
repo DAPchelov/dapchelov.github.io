@@ -56,7 +56,7 @@ const LoginPage: React.FC<IPropsLoginPage> = (props: IPropsLoginPage) => {
   const queryUserID = useQuery(QUERY_USER_UUID);
   if (queryUserID.data) {
     props.setUUID(queryUserID.data.user._id);
-    navigate("../", { replace: true });
+    navigate("../tasks", { replace: true });
   };
 
   const onSubmit: SubmitHandler<IFormInputs> = (data) => {

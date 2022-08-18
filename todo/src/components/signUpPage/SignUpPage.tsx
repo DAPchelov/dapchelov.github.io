@@ -61,7 +61,7 @@ const SignUpPage: React.FC<IPropsLoginPage> = (props: IPropsLoginPage) => {
   });
   if (data) {
     props.setUUID(data.newUserUUID);
-    navigate("../", { replace: true });
+    navigate("../tasks", { replace: true });
   };
 
   useEffect (()=> {

@@ -54,8 +54,8 @@ const Main: React.FC = () => {
         <ApolloProvider client={client}>
             <BrowserRouter>
                 <Routes>
-                    {UUID && <Route path="/" element={<App UUID={UUID} />} />}
-                    <Route path="/login" element={<LoginPage setUUID={setUUID} />} />
+                    {UUID && <Route path="/tasks" element={<App UUID={UUID} />} />}
+                    <Route path="/" element={<LoginPage setUUID={setUUID} />} />
                     <Route path="/signup" element={<SignUpPage setUUID={setUUID} />} />
                 </Routes>
             </BrowserRouter>

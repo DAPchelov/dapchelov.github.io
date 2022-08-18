@@ -152,7 +152,7 @@ const switchTaskComplete = async (UUID, taskID, taskComplete) => {
   ).then(() => {
     reFillLocalStorage().catch(console.dir).then(() => {
       mongoDBClient.close();
-      console.log("taskCompleteSwitch!");
+      console.log("Switch", `UUID:${UUID}`, `id:${taskID}`, `status:${taskComplete}`);
     });
   });
 }

@@ -8,12 +8,6 @@ import type {
   DefaultValues
 } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-
-
-interface IPropsLoginPage {
-  setUUID: (UUID: string) => void;
-}
-
 interface IFormInputs {
   Password: string,
   CPassword: string,
@@ -31,12 +25,11 @@ const defaultValues: DefaultValues<FormValues> = {
   Login: '',
 };
 
-const SignUpPage: React.FC<IPropsLoginPage> = (props: IPropsLoginPage) => {
+const SignUpPage: React.FC = () => {
 
   const {
     register,
     handleSubmit,
-    control,
     getValues,
     formState: { isValid }
   } = useForm<FormValues>({
@@ -54,21 +47,23 @@ const SignUpPage: React.FC<IPropsLoginPage> = (props: IPropsLoginPage) => {
       newUserUUID(userLogin: "${login}", userPassword: "${password}")
   }`;
 
-  const [mutationNewUser, {error, data}] = useMutation<
+  const [mutationNewUser, { data }] = useMutation<
     { newUserUUID: string }
   >(MUTATION_NEW_USER, {
     variables: { newUserUUID: String }
   });
   if (data) {
-    props.setUUID(data.newUserUUID);
-    navigate("../tasks", { replace: true });
+    navigate({
+      pathname: '/tasks',
+      search: `?id=${data.newUserUUID}`
+    });
   };
 
-  useEffect (()=> {
+  useEffect(() => {
     if (login && password) {
       mutationNewUser();
     }
-  },[login, password])
+  }, [login, password])
 
   const onSubmit: SubmitHandler<IFormInputs> = (data) => {
     setLogin(data.Login);

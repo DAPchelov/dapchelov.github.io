@@ -8,12 +8,6 @@ import type {
   DefaultValues
 } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-
-
-interface IPropsLoginPage {
-  setUUID: (UUID: string) => void;
-}
-
 interface IFormInputs {
   Password: string,
   Login: string,
@@ -29,7 +23,7 @@ const defaultValues: DefaultValues<FormValues> = {
   Login: '',
 };
 
-const LoginPage: React.FC<IPropsLoginPage> = (props: IPropsLoginPage) => {
+const LoginPage: React.FC = () => {
 
   const {
     register,
@@ -55,8 +49,10 @@ const LoginPage: React.FC<IPropsLoginPage> = (props: IPropsLoginPage) => {
 
   const queryUserID = useQuery(QUERY_USER_UUID);
   if (queryUserID.data) {
-    props.setUUID(queryUserID.data.user._id);
-    navigate("../tasks", { replace: true });
+    navigate({
+      pathname: '/tasks',
+      search: `?id=${queryUserID.data.user._id}`
+    });
   };
 
   const onSubmit: SubmitHandler<IFormInputs> = (data) => {

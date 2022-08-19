@@ -5,12 +5,12 @@ import { useState } from "react";
 
 
 interface IPropsInputForm {
-  UUID: string;
+  UUID: string | null;
 }
 
 const InputForm: React.FC<IPropsInputForm> = (props: IPropsInputForm) => {
   interface INewTask {
-    UUID: string;
+    UUID: string | null;
     content: string;
   }
 

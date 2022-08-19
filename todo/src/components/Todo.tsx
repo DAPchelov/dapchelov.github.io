@@ -7,8 +7,8 @@ import { ITask } from './App'
 
 interface IPropsTodo {
     task: ITask,
-    UUID: String,
-    handleToggle(UUID: String, taskID: String): void;
+    UUID: string | null,
+    handleToggle(UUID: string | null, taskID: string): void;
 }
 
 const Todo: React.FC<IPropsTodo> = (props: IPropsTodo) => {

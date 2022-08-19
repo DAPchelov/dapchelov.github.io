@@ -7,7 +7,7 @@ import Paper from "@mui/material/Paper";
 import { Container } from "@mui/system";
 import Typography from '@mui/material/Typography';
 import TodoList from './TodoList'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { gql, useQuery, useSubscription } from "@apollo/client";
 
 
@@ -18,25 +18,17 @@ interface ITask {
   complete: boolean,
   content: string,
 }
-interface IPropsApp {
-  UUID: string;
-}
 
-const App: React.FC<IPropsApp> = (props: IPropsApp) => {
+const App: React.FC = () => {
   const [taskArray, setTaskArray] = useState<ITask[]>([]);
   const [completed, setCompleted] = useState<boolean | undefined>(undefined);
-
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!props.UUID) {
-      navigate("../login", { replace: true });
-    };
-  })
+  const [searchParams, setSearchParams] = useSearchParams();
+  const UUID: string | null = searchParams.get('id');
 
   // get data from server
   const QUERY_MESSAGES = gql`
     query TasksCollection {
-      tasks (UUID: "${props.UUID}") {
+      tasks (UUID: "${UUID}") {
         id
         complete
         content
@@ -46,7 +38,7 @@ const App: React.FC<IPropsApp> = (props: IPropsApp) => {
 
   const WS_TASKS = gql`
   subscription Subscription {
-    newTasks (UUID: "${props.UUID}") {
+    newTasks (UUID: "${UUID}") {
       id
       complete
       content
@@ -69,14 +61,6 @@ const App: React.FC<IPropsApp> = (props: IPropsApp) => {
       }
   }, [queryData, data]);
 
-  // const handleToggle = (id: number, state: boolean) => {
-  //   setTaskArray([
-  //     ...taskArray.map(task =>
-  //       task.id === id ? { ...task, complete: !task.complete } : { ...task }
-  //     )
-  //   ]);
-  // };
-
   const clearCompleted = () => {
     setTaskArray([...taskArray.filter(task => task.complete === false)]);
   };
@@ -92,8 +76,8 @@ const App: React.FC<IPropsApp> = (props: IPropsApp) => {
         TODOS
       </Typography>
       <Box sx={{ width: "100%", maxWidth: 600 }}>
-        <InputForm UUID={props.UUID} />
-        <TodoList taskArray={taskArray} completed={completed} UUID={props.UUID} />
+        <InputForm UUID={UUID} />
+        <TodoList taskArray={taskArray} completed={completed} UUID={UUID} />
         <Paper
           elevation={1}
           sx={{

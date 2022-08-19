@@ -7,7 +7,7 @@ import Todo from './Todo'
 interface IPropsTodoList {
     taskArray: ITask[],
     completed: boolean | undefined,
-    UUID: String;
+    UUID: string | null;
 }
 
 const filterTask = (task: ITask, state:IPropsTodoList['completed'] ) => {
@@ -30,8 +30,7 @@ const TodoList: React.FC<IPropsTodoList> = (props: IPropsTodoList) => {
 
     const [switchTask] = useMutation(SWITCH_COMPLETE);
 
-    const handleToggle = (UUID: String, taskID: String) => {
-        console.log(taskID);
+    const handleToggle = (UUID: string | null, taskID: string) => {
         switchTask({
             variables: {taskID, UUID}
         });

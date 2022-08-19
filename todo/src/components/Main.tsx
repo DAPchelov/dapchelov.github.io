@@ -48,15 +48,14 @@ const client = new ApolloClient({
 
 
 const Main: React.FC = () => {
-    const [UUID, setUUID] = useState<string>();
 
     return (
         <ApolloProvider client={client}>
             <BrowserRouter>
                 <Routes>
-                    {UUID && <Route path="/tasks" element={<App UUID={UUID} />} />}
-                    <Route path="/" element={<LoginPage setUUID={setUUID} />} />
-                    <Route path="/signup" element={<SignUpPage setUUID={setUUID} />} />
+                    <Route path="/tasks" element={<App/>} />
+                    <Route path="/" element={<LoginPage/>} />
+                    <Route path="/signup" element={<SignUpPage/>} />
                 </Routes>
             </BrowserRouter>
         </ApolloProvider>

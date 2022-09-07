@@ -4,17 +4,17 @@ import tokenService from "../service/token-service";
 const authMiddleware = (req, res, next) => {
     try {
         const authorizationHeader = req.headers.authorization;
-        
+
         if (!authorizationHeader) {
             return next(ApiError.UnautorizedError());
         }
 
-        const accesToken =authorizationHeader.split(' ')[1];
-        if (!accesToken) {
+        const accessToken = authorizationHeader.split(' ')[1];
+        if (!accessToken) {
             return next(ApiError.UnautorizedError());
         }
 
-        const userData = tokenService.validateAccessToken(accesToken);
+        const userData = tokenService.validateAccessToken(accessToken);
         if (!userData) {
             return next(ApiError.UnautorizedError());
         }

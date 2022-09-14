@@ -8,8 +8,8 @@ class MailService {
             port: 465,
             secure: true,
             auth: {
-                user: 'dapchelov@gmail.com',
-                pass: 'cptwtzeudffdpzkf '
+                user: 'some@gmail.com',
+                pass: 'somepass'
             }
         })
     }

@@ -57,9 +57,16 @@ class userController {
             next(e);
         }
     }
-    async getUsers(req, res, next) {
+    async getUserTodos(req, res, next) {
         try {
-            res.json(await userService.getAllUsers()); 
+            res.json(await userService.getUserTodos(req.user.id)); 
+        } catch (e) {
+            next(e);
+        }
+    }
+    async getUser(req, res, next) {
+        try {
+            res.json(await userService.getUser(req.user.id)); 
         } catch (e) {
             next(e);
         }

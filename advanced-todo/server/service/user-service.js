@@ -6,6 +6,7 @@ import TokenService from './token-service'
 import UserDto from '../dtos/user-dto'
 import ApiError from '../exeptions/api-error'
 import tokenService from './token-service';
+import { response } from 'express';
 
 class UserService {
     async registration(email, password) {
@@ -16,7 +17,7 @@ class UserService {
         const hashPassword = await bcrypt.hash(password, 3);
         const activationLink = uuidv4();
 
-        const user = await UserModel.create({ email, password: hashPassword, activationLink });
+        const user = await UserModel.create({ email, password: hashPassword, activationLink, todos: [{id: 0, message: 'Добавить задачи в список задач', isCompleted: false}] });
         await MailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
 
         const userDto = new UserDto(user);
@@ -59,7 +60,7 @@ class UserService {
         return token;
     }
     async refresh(refreshToken) {
-        if(!refreshToken) {
+        if (!refreshToken) {
             throw ApiError.UnautorizedError();
         }
         const userData = tokenService.validateRefreshToken(refreshToken);
@@ -79,8 +80,12 @@ class UserService {
             user: userDto
         }
     }
-    async getAllUsers() {
-        return await UserModel.find();
+    async getUserTodos(userId) {
+        const response = await UserModel.findById(userId);
+        return response.todos;
+    }
+    async getUser(userId) {
+        return await UserModel.findById(userId);
     }
 }
 

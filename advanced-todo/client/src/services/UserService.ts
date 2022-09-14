@@ -3,8 +3,11 @@ import { AxiosResponse } from "axios";
 import { IUser } from "../models/IUser";
 
 class UserService {
-    static async fetchUsers(): Promise<AxiosResponse<IUser[]>> {
-        return $api.get<IUser[]>('/users');
+    static async fetchUser(): Promise<AxiosResponse<IUser>> {
+        return $api.get<IUser>('/user');
+    }
+    static async fetchTodos(): Promise<AxiosResponse<IUser>> {
+        return $api.get<IUser>('/user');
     }
 }
 

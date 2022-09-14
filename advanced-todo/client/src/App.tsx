@@ -8,7 +8,7 @@ import UserService from './services/UserService';
 
 const App: FC = () => {
   const { store } = useContext(Context);
-  const [users, setUsers] = useState<IUser[]>([]);
+  const [user, setUser] = useState<IUser>();
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -18,8 +18,8 @@ const App: FC = () => {
 
   async function getUsers() {
     try {
-      const response = await UserService.fetchUsers();
-      setUsers(response.data);
+      const response = await UserService.fetchUser();
+      setUser(response.data);
     } catch (e: any) {
       console.log(e);
     }
@@ -40,7 +40,7 @@ const App: FC = () => {
       <button onClick={() => store.logout()}>Logout</button>
       <button onClick={() => getUsers()}>Get Users</button>
       <div>
-        {users.map(user => <div key={user.email}>{user.email}</div>)}
+        {user && <div>{user.todos[0].message}</div>}
       </div>
     </div>
 

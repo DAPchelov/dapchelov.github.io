@@ -2,6 +2,7 @@ import UserService from "../service/user-service";
 import { validationResult } from "express-validator";
 import ApiError from "../exeptions/api-error";
 import userService from "../service/user-service";
+import todoService from "../service/todo-service";
 
 class userController {
     async registration(req, res, next) {
@@ -67,6 +68,20 @@ class userController {
     async getUser(req, res, next) {
         try {
             res.json(await userService.getUser(req.user.id)); 
+        } catch (e) {
+            next(e);
+        }
+    }
+    async postTodo (req, res, next) {
+        try {
+            res.json(await todoService.postNewTodo(req.user.id, req.body.message)); 
+        } catch (e) {
+            next(e);
+        }
+    }
+    async removeCompletedTodos (req, res, next) {
+        try {
+            res.json(await todoService.removeCompletedTodos(req.user.id)); 
         } catch (e) {
             next(e);
         }

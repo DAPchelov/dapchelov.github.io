@@ -86,6 +86,13 @@ class userController {
             next(e);
         }
     }
+    async setTodoCompleted (req, res, next) {
+        try {
+            res.json(await todoService.setTodoCompleted(req.user.id, req.body.todoId, req.body.isCompleted)); 
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 export default new userController();

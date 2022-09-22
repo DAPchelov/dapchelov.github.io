@@ -13,6 +13,8 @@ router.post('/registration',
 router.post('/login', userController.login);
 router.post('/logout', userController.logout);
 router.post('/posttodo', authMiddleware, userController.postTodo);
+router.post('/setcompleted', authMiddleware, userController.setTodoCompleted);
+
 router.get('/activate/:link', userController.activate);
 router.get('/refresh', userController.refresh);
 router.get('/todos', authMiddleware, userController.getUserTodos);

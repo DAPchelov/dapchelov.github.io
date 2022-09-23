@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import TodoList from './TodoList'
 
 
-
+const deleteMe: string = 'deleteMe';
 
 const Main:React.FC = () => {
   const [completed, setCompleted] = useState<boolean | undefined>(undefined);

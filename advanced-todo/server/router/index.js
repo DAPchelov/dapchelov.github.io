@@ -12,13 +12,13 @@ router.post('/registration',
 );
 router.post('/login', userController.login);
 router.post('/logout', userController.logout);
-router.post('/posttodo', authMiddleware, userController.postTodo);
-router.post('/setcompleted', authMiddleware, userController.setTodoCompleted);
-
 router.get('/activate/:link', userController.activate);
 router.get('/refresh', userController.refresh);
+
+router.post('/posttodo', authMiddleware, userController.postTodo);
+router.post('/setcompleted', authMiddleware, userController.setTodoCompleted);
 router.get('/todos', authMiddleware, userController.getUserTodos);
-router.get('/user', authMiddleware, userController.getUser);
 router.get('/removecompleted', authMiddleware, userController.removeCompletedTodos);
+router.get('/user', authMiddleware, userController.getUser);
 
 export default router;

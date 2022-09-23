@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React, { FC, useContext, useEffect, useState } from 'react';
 import { Context } from '.';
-import LoginForm from './components/LoginForm';
+import LoginForm from './components/loginForm/LoginForm';
 import { IUser } from './models/IUser';
 import UserService from './services/UserService';
 
@@ -16,7 +16,7 @@ const App: FC = () => {
     }
   }, [])
 
-  async function getUsers() {
+  const getUsers = async() => {
     try {
       const response = await UserService.fetchUser();
       setUser(response.data);

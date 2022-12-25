@@ -6,6 +6,7 @@ import { AuthResponse } from "../models/response/AuthResponse";
 import AuthService from "../services/AuthService";
 
 class Store {
+    
     user: IUser = {} as IUser;
     isAuth: boolean = false;
     isLoading: boolean = false;
@@ -73,4 +74,4 @@ class Store {
     }
 }
 
-export default Store;
+export default new Store;

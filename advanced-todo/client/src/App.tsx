@@ -4,15 +4,15 @@ import { Context } from '.';
 import LoginForm from './components/loginForm/LoginForm';
 import { IUser } from './models/IUser';
 import UserService from './services/UserService';
+import Store from './store/store';
 
 
 const App: FC = () => {
-  const { store } = useContext(Context);
   const [user, setUser] = useState<IUser>();
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      store.checkAuth()
+      Store.checkAuth()
     }
   }, [])
 
@@ -25,19 +25,19 @@ const App: FC = () => {
     }
   }
 
-  if (store.isLoading) {
+  if (Store.isLoading) {
     return (<div>Загрузка...</div>)
   }
 
-  if (!store.isAuth) {
+  if (!Store.isAuth) {
     return (<LoginForm />)
   }
 
   return (
     <div>
-      <h2>{store.isAuth ? `Пользователь авторизован ${store.user.email}` : 'Авторизуйтесь!'}</h2>
-      <h2>{store.user.isActivated ? 'Аккаунт подтверждён' : 'Подтвердите аккаунт'}</h2>
-      <button onClick={() => store.logout()}>Logout</button>
+      <h2>{Store.isAuth ? `Пользователь авторизован ${Store.user.email}` : 'Авторизуйтесь!'}</h2>
+      <h2>{Store.user.isActivated ? 'Аккаунт подтверждён' : 'Подтвердите аккаунт'}</h2>
+      <button onClick={() => Store.logout()}>Logout</button>
       <button onClick={() => getUsers()}>Get Users</button>
       <div>
         {user && <div>{user.todos[0].message}</div>}

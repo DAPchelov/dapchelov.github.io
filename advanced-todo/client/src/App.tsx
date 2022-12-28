@@ -34,7 +34,7 @@ const App: FC = () => {
   }
 
   return (
-    <Main />
+    <Main user = {Store.user}/>
   );
 }
 

@@ -7,13 +7,14 @@ import Paper from "@mui/material/Paper";
 import { Container } from "@mui/system";
 import Typography from '@mui/material/Typography';
 import TodoList from './TodoList'
+import { IUser } from "../models/IUser";
 
+interface IMain {
+  user: IUser
+}
 
-
-
-const Main:React.FC = () => {
+const Main: React.FC<IMain> = () => {
   const [completed, setCompleted] = useState<boolean | undefined>(undefined);
-
 
   return (
     <Container maxWidth="sm" sx={{
@@ -27,7 +28,7 @@ const Main:React.FC = () => {
       </Typography>
       <Box sx={{ width: "100%", maxWidth: 600 }}>
         <InputForm />
-        <TodoList/>
+        <TodoList />
         <Paper
           elevation={1}
           sx={{
@@ -40,11 +41,11 @@ const Main:React.FC = () => {
             {/* {`${taskArray.filter(task => task.complete === false).length}`.concat(" items left")} */}
           </Typography>
           <SelectButtons setCompleted={setCompleted} completed={completed} />
-          <ClearButton/>
+          <ClearButton />
         </Paper>
       </Box>
     </Container>
   );
 };
 
-export default Main ;
+export default Main;

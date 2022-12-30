@@ -87,7 +87,7 @@ class UserService {
         const todoList = await TodoListModel.findOne({ userId: reqUserId });
         const todoListDto = new TodosDto(todoList);
 
-        return { todoList: todoListDto }
+        return { todos: todoListDto.todos }
     }
     async getUser(userId) {
         return await UserModel.findById(userId);

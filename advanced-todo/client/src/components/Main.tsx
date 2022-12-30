@@ -8,13 +8,17 @@ import { Container } from "@mui/system";
 import Typography from '@mui/material/Typography';
 import TodoList from './TodoList'
 import { IUser } from "../models/IUser";
+import userEvent from "@testing-library/user-event";
+import { ITodo } from "../models/ITodo";
 
 interface IMain {
   user: IUser
+  todos: [ITodo]
 }
 
-const Main: React.FC<IMain> = () => {
+const Main: React.FC<IMain> = (props: IMain) => {
   const [completed, setCompleted] = useState<boolean | undefined>(undefined);
+  
 
   return (
     <Container maxWidth="sm" sx={{

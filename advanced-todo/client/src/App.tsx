@@ -34,7 +34,7 @@ const App: FC = () => {
   }
 
   return (
-    <Main user = {Store.user}/>
+    <Main user = {Store.user} todos = {Store.todos}/>
   );
 }
 

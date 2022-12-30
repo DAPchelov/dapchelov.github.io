@@ -1,13 +1,16 @@
 import axios from "axios";
 import { makeAutoObservable } from "mobx";
 import { API_URL } from "../http";
+import { ITodo } from "../models/ITodo";
 import { IUser } from "../models/IUser";
 import { AuthResponse } from "../models/response/AuthResponse";
 import AuthService from "../services/AuthService";
+import UserService from "../services/UserService";
 
 class Store {
     
     user: IUser = {} as IUser;
+    todos: [ITodo] = {} as [ITodo];
     isAuth: boolean = false;
     isLoading: boolean = false;
 
@@ -23,6 +26,9 @@ class Store {
     }
     setLoading(bool: boolean) {
         this.isLoading = bool;
+    }
+    setTodos(todos:[ITodo]) {
+        this.todos = todos;
     }
 
     async login(email: string, password: string) {
@@ -71,6 +77,15 @@ class Store {
         }
 
         this.setLoading(false);
+    }
+
+    async receiveTodos() {
+        try {
+            const response = await UserService.fetchTodos();
+            this.setTodos(response.data);
+        } catch(e: any) {
+            console.log(e.response?.data?.message);
+        }
     }
 }
 

@@ -9,7 +9,7 @@ const LoginForm: React.FC = () => {
   const [password, setPassword] = useState<string>('');
   const [isValid, setIsValid] = useState<boolean>(false);
 
-  const { store } = useContext(Context);
+  const store = useContext(Context);
   const regEmail = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
 
   useEffect(()=> {

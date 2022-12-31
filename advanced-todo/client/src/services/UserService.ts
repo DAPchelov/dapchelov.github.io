@@ -10,6 +10,9 @@ class UserService {
     static async fetchTodos(): Promise<AxiosResponse<[ITodo]>> {
         return $api.get<[ITodo]>('/todos');
     }
+    static async checkTodo(todoId: string, isCompleted: boolean): Promise<void> {
+        return $api.post('/setcompleted', {todoId,isCompleted});
+    }
 }
 
 export default UserService;

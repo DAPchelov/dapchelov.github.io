@@ -8,9 +8,7 @@ import { Container } from "@mui/system";
 import Typography from '@mui/material/Typography';
 import TodoList from './TodoList'
 import { Context } from '../../src/index'
-import { IUser } from "../models/IUser";
-import userEvent from "@testing-library/user-event";
-import { ITodo } from "../models/ITodo";
+
 
 const Main: React.FC = () => {
   const [completed, setCompleted] = useState<boolean | undefined>(undefined);
@@ -39,7 +37,7 @@ const Main: React.FC = () => {
           }}
         >
           <Typography color="text.secondary" ml={1} sx={{ fontSize: 14 }}>
-            {/* {`${taskArray.filter(task => task.complete === false).length}`.concat(" items left")} */}
+            {`${store.todos.filter(task => task.isCompleted === false).length}`.concat(" items left")}
           </Typography>
           <SelectButtons setCompleted={setCompleted} completed={completed} />
           <ClearButton />

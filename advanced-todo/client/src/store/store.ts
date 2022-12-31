@@ -14,6 +14,8 @@ class Store {
     isAuth: boolean = false;
     isLoading: boolean = false;
 
+    isCompletedDisplayMode: boolean | undefined = undefined;
+
     constructor() {
         makeAutoObservable(this);
     }
@@ -29,6 +31,9 @@ class Store {
     }
     setTodos(todos:[ITodo]) {
         this.todos = todos;
+    }
+    setIsCompletedDisplayMode (mode: boolean | undefined) {
+        this.isCompletedDisplayMode = mode;
     }
 
     async login(email: string, password: string) {
@@ -83,6 +88,15 @@ class Store {
         try {
             const response = await UserService.fetchTodos();
             this.setTodos(response.data);
+        } catch(e: any) {
+            console.log(e.response?.data?.message);
+        }
+    }
+
+    async checkTodo(todoId: string, isCompleted: boolean) {
+        try {
+            const response = await UserService.checkTodo(todoId, isCompleted);
+            // this.setTodos(response.data);
         } catch(e: any) {
             console.log(e.response?.data?.message);
         }

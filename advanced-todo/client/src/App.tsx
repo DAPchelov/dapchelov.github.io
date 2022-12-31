@@ -5,14 +5,16 @@ import Main from './components/Main';
 import { IUser } from './models/IUser';
 import UserService from './services/UserService';
 import Store from './store/store';
+import { Context } from '../src/index'
 
 
 const App: FC = () => {
   // const [user, setUser] = useState<IUser>();
+  const store = useContext(Context);
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      Store.checkAuth()
+      store.checkAuth()
     }
   }, [])
 
@@ -25,16 +27,16 @@ const App: FC = () => {
   //   }
   // }
 
-  if (Store.isLoading) {
+  if (store.isLoading) {
     return (<div>Загрузка...</div>)
   }
 
-  if (!Store.isAuth) {
+  if (!store.isAuth) {
     return (<LoginForm />)
   }
 
   return (
-    <Main user = {Store.user} todos = {Store.todos}/>
+    <Main/>
   );
 }
 

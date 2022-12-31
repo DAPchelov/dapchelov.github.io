@@ -12,14 +12,15 @@ import Store from './store/store';
 // );
 
 const store = new Store();
+export const Context = createContext(store);
 
-export const Context = createContext < State > ({
-  store,
-})
+// export const Context = createContext < State > ({
+//   store,
+// })
 
 root.render(
   <React.StrictMode>
-    <Context.Provider value={{ store }}>
+    <Context.Provider value={ store }>
       <App />
     </Context.Provider>
   </React.StrictMode>

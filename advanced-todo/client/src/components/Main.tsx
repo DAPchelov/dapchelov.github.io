@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import InputForm from "./InputForm";
 import SelectButtons from "./SelectButtons";
 import ClearButton from "./ClearButton";
@@ -7,19 +7,16 @@ import Paper from "@mui/material/Paper";
 import { Container } from "@mui/system";
 import Typography from '@mui/material/Typography';
 import TodoList from './TodoList'
+import { Context } from '../../src/index'
 import { IUser } from "../models/IUser";
 import userEvent from "@testing-library/user-event";
 import { ITodo } from "../models/ITodo";
 
-interface IMain {
-  user: IUser
-  todos: [ITodo]
-}
-
-const Main: React.FC<IMain> = (props: IMain) => {
+const Main: React.FC = () => {
   const [completed, setCompleted] = useState<boolean | undefined>(undefined);
-  
 
+  const store = useContext(Context);
+  
   return (
     <Container maxWidth="sm" sx={{
       pt: "100px",

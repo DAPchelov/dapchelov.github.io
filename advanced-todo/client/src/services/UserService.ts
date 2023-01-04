@@ -15,7 +15,7 @@ class UserService {
         return $api.get<ITodos>('/todos');
     }
     static async checkTodo(todoId: string, isCompleted: boolean): Promise<void> {
-        return $api.post('/setcompleted', {todoId,isCompleted});
+        return $api.post('/setcompleted', { todoId, isCompleted });
     }
 }
 

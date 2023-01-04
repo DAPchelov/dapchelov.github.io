@@ -16,15 +16,6 @@ const App: FC = () => {
     }
   }, [] )
 
-  // const getUsers = async() => {
-  //   try {
-  //     const response = await UserService.fetchUser();
-  //     setUser(response.data);
-  //   } catch (e: any) {
-  //     console.log(e);
-  //   }
-  // }
-
   if (store.isLoading) {
     return (<div>Загрузка...</div>)
   }

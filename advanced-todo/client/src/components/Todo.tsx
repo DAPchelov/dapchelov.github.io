@@ -2,16 +2,12 @@ import ListItem from '@mui/material/ListItem';
 import Checkbox from '@mui/material/Checkbox';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import React from 'react';
-// import { Context } from '../../src/index'
-
-interface ITodo {
-    message: string
-    isCompleted: boolean
-}
+import React, { useContext } from 'react';
+import { Context } from '../../src/index'
+import { ITodo } from "../models/ITodo";
 
 const Todo: React.FC<ITodo> = (props: ITodo) => {
-    // const store = useContext(Context);
+    const store = useContext(Context);
 
     return (
         <Paper elevation={1} sx={{
@@ -19,8 +15,8 @@ const Todo: React.FC<ITodo> = (props: ITodo) => {
             '&:hover': {
                 background: 'linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 83%, rgba(21,101,192,0.15) 100%);'
             }
-        }}>
-            {/* onClick={()=> props.handleToggle(props.UUID, props.task.id)}> */}
+        }}
+        onClick={()=> store.checkTodo(props._id, !props.isCompleted)}>
             <ListItem disablePadding aria-multiline>
                 <Checkbox
                     checked={props.isCompleted}

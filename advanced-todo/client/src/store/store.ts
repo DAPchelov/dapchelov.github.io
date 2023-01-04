@@ -1,6 +1,5 @@
 import axios from "axios";
 import { makeAutoObservable, observable } from "mobx";
-import { observer } from "mobx-react-lite";
 import { API_URL } from "../http";
 import { ITodo } from "../models/ITodo";
 import { IUser } from "../models/IUser";
@@ -98,16 +97,19 @@ class Store {
     }
 
     async checkTodo(todoId: string, isCompleted: boolean) {
+        this.setLoading(true);
         try {
             await UserService.checkTodo(todoId, isCompleted);
             let todo = this.todos.find(todo => todo._id === todoId);
             if (todo) {
                 todo.isCompleted = isCompleted;
             }
-            // this.setTodos(response.data);
+            console.log(this.todos[0].isCompleted);
         } catch(e: any) {
             console.log(e.response?.data?.message);
         }
+
+        this.setLoading(false);
     }
 }
 

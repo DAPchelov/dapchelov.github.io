@@ -22,7 +22,7 @@ const TodoList: React.FC = () => {
                 // .filter((todo) => {todo.isCompleted === store.isCompletedDisplayMode})
                 .map(todo => {
                     return (
-                        <Todo key={todo._id} message={todo.message} isCompleted={todo.isCompleted}/>
+                        <Todo key={todo._id} _id={todo._id} message={todo.message} isCompleted={todo.isCompleted}/>
                     );
                 })}
         </Stack>

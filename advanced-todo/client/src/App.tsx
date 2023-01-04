@@ -1,10 +1,7 @@
 import { observer } from 'mobx-react-lite';
-import React, { FC, useContext, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect } from 'react';
 import LoginForm from './components/loginForm/LoginForm';
 import Main from './components/Main';
-import { IUser } from './models/IUser';
-import UserService from './services/UserService';
-import Store from './store/store';
 import { Context } from '../src/index'
 
 
@@ -14,9 +11,10 @@ const App: FC = () => {
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      store.checkAuth()
+      store.checkAuth();
+      store.receiveTodos();
     }
-  }, [])
+  }, [] )
 
   // const getUsers = async() => {
   //   try {

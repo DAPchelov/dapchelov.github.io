@@ -1,5 +1,6 @@
 import axios from "axios";
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, observable } from "mobx";
+import { observer } from "mobx-react-lite";
 import { API_URL } from "../http";
 import { ITodo } from "../models/ITodo";
 import { IUser } from "../models/IUser";
@@ -10,14 +11,14 @@ import UserService from "../services/UserService";
 class Store {
     
     user: IUser = {} as IUser;
-    todos: [ITodo] = {} as [ITodo];
+    @observable todos: [ITodo] = {} as [ITodo];
     isAuth: boolean = false;
     isLoading: boolean = false;
 
     isCompletedDisplayMode: boolean | undefined = undefined;
 
     constructor() {
-        makeAutoObservable(this);
+        makeAutoObservable(this, {}, {deep: true});
     }
 
     setAuth(bool: boolean) {
@@ -85,17 +86,24 @@ class Store {
     }
 
     async receiveTodos() {
+        this.setLoading(true);
         try {
-            const response = await UserService.fetchTodos();
-            this.setTodos(response.data);
+            const response = await UserService.getTodos();
+            this.setTodos(response.data.todos);
         } catch(e: any) {
             console.log(e.response?.data?.message);
         }
+
+        this.setLoading(false);
     }
 
     async checkTodo(todoId: string, isCompleted: boolean) {
         try {
-            const response = await UserService.checkTodo(todoId, isCompleted);
+            await UserService.checkTodo(todoId, isCompleted);
+            let todo = this.todos.find(todo => todo._id === todoId);
+            if (todo) {
+                todo.isCompleted = isCompleted;
+            }
             // this.setTodos(response.data);
         } catch(e: any) {
             console.log(e.response?.data?.message);

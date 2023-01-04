@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import InputForm from "./InputForm";
 import SelectButtons from "./SelectButtons";
 import ClearButton from "./ClearButton";
@@ -14,6 +14,7 @@ const Main: React.FC = () => {
   const [completed, setCompleted] = useState<boolean | undefined>(undefined);
 
   const store = useContext(Context);
+  
   
   return (
     <Container maxWidth="sm" sx={{
@@ -37,7 +38,7 @@ const Main: React.FC = () => {
           }}
         >
           <Typography color="text.secondary" ml={1} sx={{ fontSize: 14 }}>
-            {`${store.todos.filter(task => task.isCompleted === false).length}`.concat(" items left")}
+            {/* {`${store.todos.filter(task => task.isCompleted === false).length}`.concat(" items left")} */}
           </Typography>
           <SelectButtons setCompleted={setCompleted} completed={completed} />
           <ClearButton />

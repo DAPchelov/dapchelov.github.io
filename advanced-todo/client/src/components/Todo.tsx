@@ -2,8 +2,8 @@ import ListItem from '@mui/material/ListItem';
 import Checkbox from '@mui/material/Checkbox';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import React, { useContext } from 'react';
-import { Context } from '../../src/index'
+import React from 'react';
+// import { Context } from '../../src/index'
 
 interface ITodo {
     message: string
@@ -11,7 +11,7 @@ interface ITodo {
 }
 
 const Todo: React.FC<ITodo> = (props: ITodo) => {
-    const store = useContext(Context);
+    // const store = useContext(Context);
 
     return (
         <Paper elevation={1} sx={{

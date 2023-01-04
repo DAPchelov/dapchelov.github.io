@@ -7,7 +7,7 @@ import { Context } from '../../src/index'
 
 const TodoList: React.FC = () => {
     const store = useContext(Context);
-
+    // console.log();
     return (
         <Stack>
             {/* {store.todos
@@ -19,9 +19,10 @@ const TodoList: React.FC = () => {
                 })} */}
 
                 {store.todos
+                // .filter((todo) => {todo.isCompleted === store.isCompletedDisplayMode})
                 .map(todo => {
                     return (
-                        <Todo key={todo.id} message={todo.message} isCompleted={todo.isCompleted}/>
+                        <Todo key={todo._id} message={todo.message} isCompleted={todo.isCompleted}/>
                     );
                 })}
         </Stack>

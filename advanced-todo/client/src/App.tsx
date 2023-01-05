@@ -6,7 +6,6 @@ import { Context } from '../src/index'
 
 
 const App: FC = () => {
-  // const [user, setUser] = useState<IUser>();
   const store = useContext(Context);
 
   useEffect(() => {

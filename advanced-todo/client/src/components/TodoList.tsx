@@ -2,12 +2,14 @@ import Stack from '@mui/material/Stack';
 import React, { useContext } from 'react';
 import Todo from './Todo'
 import { Context } from '../../src/index'
+import { observer } from 'mobx-react-lite';
+
 
 
 
 const TodoList: React.FC = () => {
     const store = useContext(Context);
-    // console.log();
+    
     return (
         <Stack>
             {/* {store.todos
@@ -29,4 +31,4 @@ const TodoList: React.FC = () => {
     );
 }
 
-export default TodoList;
+export default observer(TodoList);

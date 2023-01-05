@@ -10,14 +10,16 @@ import UserService from "../services/UserService";
 class Store {
     
     user: IUser = {} as IUser;
-    @observable todos: [ITodo] = {} as [ITodo];
+    todos: [ITodo] = {} as [ITodo];
+
     isAuth: boolean = false;
     isLoading: boolean = false;
+    isTodosLoading: boolean = false;
 
     isCompletedDisplayMode: boolean | undefined = undefined;
 
     constructor() {
-        makeAutoObservable(this, {}, {deep: true});
+        makeAutoObservable(this);
     }
 
     setAuth(bool: boolean) {
@@ -29,11 +31,20 @@ class Store {
     setLoading(bool: boolean) {
         this.isLoading = bool;
     }
+    setTodosLoading(bool: boolean) {
+        this.isTodosLoading = bool;
+    }
     setTodos(todos:[ITodo]) {
         this.todos = todos;
     }
     setIsCompletedDisplayMode (mode: boolean | undefined) {
         this.isCompletedDisplayMode = mode;
+    }
+    setCheckTodo(todoId: string, isCompleted: boolean) {
+        let todo = this.todos.find(todo => todo._id === todoId);
+            if (todo) {
+                todo.isCompleted = isCompleted;
+            }
     }
 
     async login(email: string, password: string) {
@@ -85,7 +96,6 @@ class Store {
     }
 
     async receiveTodos() {
-        this.setLoading(true);
         try {
             const response = await UserService.getTodos();
             this.setTodos(response.data.todos);
@@ -93,23 +103,16 @@ class Store {
             console.log(e.response?.data?.message);
         }
 
-        this.setLoading(false);
     }
 
     async checkTodo(todoId: string, isCompleted: boolean) {
-        this.setLoading(true);
         try {
             await UserService.checkTodo(todoId, isCompleted);
-            let todo = this.todos.find(todo => todo._id === todoId);
-            if (todo) {
-                todo.isCompleted = isCompleted;
-            }
-            console.log(this.todos[0].isCompleted);
+            this.setCheckTodo(todoId, isCompleted);
         } catch(e: any) {
             console.log(e.response?.data?.message);
         }
 
-        this.setLoading(false);
     }
 }
 

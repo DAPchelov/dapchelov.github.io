@@ -14,7 +14,6 @@ class Store {
 
     isAuth: boolean = false;
     isLoading: boolean = false;
-    isTodosLoading: boolean = false;
 
     isCompletedDisplayMode: boolean | undefined = undefined;
 
@@ -30,9 +29,6 @@ class Store {
     }
     setLoading(bool: boolean) {
         this.isLoading = bool;
-    }
-    setTodosLoading(bool: boolean) {
-        this.isTodosLoading = bool;
     }
     setTodos(todos:[ITodo]) {
         this.todos = todos;
@@ -102,7 +98,6 @@ class Store {
         } catch(e: any) {
             console.log(e.response?.data?.message);
         }
-
     }
 
     async checkTodo(todoId: string, isCompleted: boolean) {

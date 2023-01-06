@@ -20,6 +20,9 @@ class UserService {
     static async postTodo(todoMessage: string): Promise<void> {
         return $api.post('/posttodo', { message: todoMessage });
     }
+    static async removeCompletedTodos() {
+        return $api.post('/removecompleted');
+    }
 }
 
 export default UserService;

@@ -12,9 +12,7 @@ const InputForm: React.FC = () => {
   const onPush = (keyKode: string) => {
     if (keyKode === "Enter" && task.length > 0) {
       store.postTodo(task);
-      store.setTodosLoading(true);
       store.receiveTodos();
-      store.setTodosLoading(false);
     }
   };
 

@@ -8,6 +8,7 @@ import { Container } from "@mui/system";
 import Typography from '@mui/material/Typography';
 import TodoList from './TodoList'
 import { Context } from '../../src/index'
+import { observer } from "mobx-react-lite";
 
 
 const Main: React.FC = () => {
@@ -38,7 +39,7 @@ const Main: React.FC = () => {
           }}
         >
           <Typography color="text.secondary" ml={1} sx={{ fontSize: 14 }}>
-            {/* {`${store.todos.filter(task => task.isCompleted === false).length}`.concat(" items left")} */}
+            {`${store.todos.filter(task => task.isCompleted === false).length}`.concat(" items left")}
           </Typography>
           <SelectButtons />
           <ClearButton />
@@ -48,4 +49,4 @@ const Main: React.FC = () => {
   );
 };
 
-export default Main;
+export default observer(Main);

@@ -17,6 +17,9 @@ class UserService {
     static async checkTodo(todoId: string, isCompleted: boolean): Promise<void> {
         return $api.post('/setcompleted', { todoId, isCompleted });
     }
+    static async postTodo(todoMessage: string): Promise<void> {
+        return $api.post('/posttodo', { message: todoMessage });
+    }
 }
 
 export default UserService;

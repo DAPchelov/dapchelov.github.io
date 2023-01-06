@@ -114,6 +114,14 @@ class Store {
         }
 
     }
+
+    async postTodo(todoMessage: string) {
+        try {
+            await UserService.postTodo(todoMessage);
+        } catch(e: any) {
+            console.log(e.response?.data?.message);
+        }
+    }
 }
 
 export default Store;

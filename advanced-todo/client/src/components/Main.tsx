@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import InputForm from "./InputForm";
 import SelectButtons from "./SelectButtons";
 import ClearButton from "./ClearButton";
@@ -12,11 +12,9 @@ import { observer } from "mobx-react-lite";
 
 
 const Main: React.FC = () => {
-  const [completed, setCompleted] = useState<boolean | undefined>(undefined);
 
   const store = useContext(Context);
-  
-  
+    
   return (
     <Container maxWidth="sm" sx={{
       pt: "100px",

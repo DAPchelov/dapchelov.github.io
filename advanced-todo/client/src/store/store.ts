@@ -117,6 +117,14 @@ class Store {
             console.log(e.response?.data?.message);
         }
     }
+
+    async removeCompletedTodos() {
+        try {
+            await UserService.removeCompletedTodos();
+        } catch(e: any) {
+            console.log(e.response?.data?.message);
+        }
+    }
 }
 
 export default Store;

@@ -59,15 +59,15 @@ class UserService {
         }
     }
     async logout(refreshToken) {
-        const token = await tokenService.removeToken(refreshToken);
+        const token = await TokenService.removeToken(refreshToken);
         return token;
     }
     async refresh(refreshToken) {
         if (!refreshToken) {
             throw ApiError.UnautorizedError();
         }
-        const userData = tokenService.validateRefreshToken(refreshToken);
-        const tokenFromDb = await tokenService.findToken(refreshToken);
+        const userData = TokenService.validateRefreshToken(refreshToken);
+        const tokenFromDb = await TokenService.findToken(refreshToken);
 
         if (!userData || !tokenFromDb) {
             throw ApiError.UnautorizedError();

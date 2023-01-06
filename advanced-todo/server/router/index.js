@@ -17,8 +17,8 @@ router.get('/refresh', userController.refresh);
 
 router.post('/posttodo', authMiddleware, userController.postTodo);
 router.post('/setcompleted', authMiddleware, userController.setTodoCompleted);
+router.post('/removecompleted', authMiddleware, userController.removeCompletedTodos);
 router.get('/todos', authMiddleware, userController.getUserTodos);
-router.get('/removecompleted', authMiddleware, userController.removeCompletedTodos);
 router.get('/user', authMiddleware, userController.getUser);
 
 export default router;

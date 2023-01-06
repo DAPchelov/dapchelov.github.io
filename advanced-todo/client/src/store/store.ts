@@ -1,5 +1,5 @@
 import axios from "axios";
-import { makeAutoObservable, observable } from "mobx";
+import { makeAutoObservable } from "mobx";
 import { API_URL } from "../http";
 import { ITodo } from "../models/ITodo";
 import { IUser } from "../models/IUser";

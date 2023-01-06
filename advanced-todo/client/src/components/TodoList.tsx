@@ -6,26 +6,24 @@ import { observer } from 'mobx-react-lite';
 
 
 
-
 const TodoList: React.FC = () => {
     const store = useContext(Context);
-    
+
     return (
         <Stack>
-            {/* {store.todos
-                .filter(todo => filterTask(todo, props.completed))
+            {store.todos
                 .map(todo => {
-                    return (
-                        <Todo key={todo.id} todo={todo}/>
-                    );
-                })} */}
+                    if (store.isCompletedDisplayMode === undefined) {
+                        return (
+                            <Todo key={todo._id} _id={todo._id} message={todo.message} isCompleted={todo.isCompleted} />
+                        )
+                    }
+                    if (todo.isCompleted === store.isCompletedDisplayMode) {
+                        return (
+                            <Todo key={todo._id} _id={todo._id} message={todo.message} isCompleted={todo.isCompleted} />
+                        )
+                    }
 
-                {store.todos
-                // .filter((todo) => {todo.isCompleted === store.isCompletedDisplayMode})
-                .map(todo => {
-                    return (
-                        <Todo key={todo._id} _id={todo._id} message={todo.message} isCompleted={todo.isCompleted}/>
-                    );
                 })}
         </Stack>
     );

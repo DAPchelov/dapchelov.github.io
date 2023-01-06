@@ -1,26 +1,30 @@
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import { useContext } from 'react';
+import { Context } from '../../src/index'
+import { observer } from 'mobx-react-lite';
 
-interface IPropsSelectButtons {
-    setCompleted: (value: undefined | false | true) => void;
-    completed: boolean | undefined;
+interface IoutlinedButton {
+    buttonOutlined: boolean | undefined,
 }
 
-const outlineButton = (value: IPropsSelectButtons["completed"], state: IPropsSelectButtons["completed"]) => {
+const outlineButton = (value: IoutlinedButton['buttonOutlined'], state: IoutlinedButton['buttonOutlined']) => {
     if (value === state) {
         return ("contained")
     }
     return ("text")
 }
 
-const SelectButtons: React.FC<IPropsSelectButtons> = (props: IPropsSelectButtons) => {
+const SelectButtons: React.FC = () => {
+    const store = useContext(Context);
+
     return (
         <ButtonGroup variant="text" aria-label="text button group">
-            <Button variant={outlineButton(undefined, props.completed)} sx={{fontSize: 10}} size="small" onClick={() => props.setCompleted(undefined)}>All</Button>
-            <Button variant={outlineButton(false, props.completed)} sx={{fontSize: 10}} size="small" onClick={() => props.setCompleted(false)}>Active</Button>
-            <Button variant={outlineButton(true, props.completed)} sx={{fontSize: 10}} size="small" onClick={() => props.setCompleted(true)}>Completed</Button>
+            <Button variant={outlineButton(undefined, store.isCompletedDisplayMode)} sx={{fontSize: 10}} size="small" onClick={() => store.setIsCompletedDisplayMode(undefined)}>All</Button>
+            <Button variant={outlineButton(false, store.isCompletedDisplayMode)} sx={{fontSize: 10}} size="small" onClick={() => store.setIsCompletedDisplayMode(false)}>Active</Button>
+            <Button variant={outlineButton(true, store.isCompletedDisplayMode)} sx={{fontSize: 10}} size="small" onClick={() => store.setIsCompletedDisplayMode(true)}>Completed</Button>
         </ButtonGroup>
     );
 }
 
-export default SelectButtons;
+export default observer(SelectButtons);

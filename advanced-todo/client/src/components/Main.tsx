@@ -9,7 +9,8 @@ import ControlPanel from "./ControlPanel";
 const Main: React.FC = () => {
     
   return (
-    <Container maxWidth="sm" sx={{
+    <Container sx={{
+      maxWidth: "800px",
       pt: "100px",
       display: "flex",
       flexDirection: "column",
@@ -18,7 +19,7 @@ const Main: React.FC = () => {
       <Typography variant="h4" color="text.secondary" gutterBottom>
         TODOS
       </Typography>
-      <Box sx={{ width: "100%", maxWidth: 600 }}>
+      <Box sx={{ width: "100%" }}>
         <InputForm />
         <ControlPanel />
         <TodoList />

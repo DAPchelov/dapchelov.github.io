@@ -2,13 +2,11 @@ import ListItem from '@mui/material/ListItem';
 import Checkbox from '@mui/material/Checkbox';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import React, { useContext } from 'react';
 import { Context } from '../../src/index'
 import { ITodo } from "../models/ITodo";
-import { height, width } from '@mui/system';
 
 const Todo: React.FC<ITodo> = (props: ITodo) => {
     const store = useContext(Context);

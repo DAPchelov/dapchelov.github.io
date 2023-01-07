@@ -23,6 +23,9 @@ class UserService {
     static async removeCompletedTodos() {
         return $api.post('/removecompleted');
     }
+    static async removeOneTodo(todoId: string) {
+        return $api.post('/removeonetodo', { todoId });
+    }
 }
 
 export default UserService;

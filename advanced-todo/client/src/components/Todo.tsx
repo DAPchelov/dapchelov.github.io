@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import React, { useContext } from 'react';
 import { Context } from '../../src/index'
 import { ITodo } from "../models/ITodo";
+import { observer } from 'mobx-react-lite';
 
 const Todo: React.FC<ITodo> = (props: ITodo) => {
     const store = useContext(Context);
@@ -29,6 +30,10 @@ const Todo: React.FC<ITodo> = (props: ITodo) => {
                     {props.message}
                 </Typography>
                 <DeleteIcon fontSize="small"
+                onClick={()=> {
+                    store.removeOneTodo(props._id);
+                    store.receiveTodos();
+                }}
                 sx={{
                     cursor: 'pointer',
                     position: 'absolute',
@@ -39,4 +44,4 @@ const Todo: React.FC<ITodo> = (props: ITodo) => {
     );
 }
 
-export default Todo;
+export default observer(Todo);

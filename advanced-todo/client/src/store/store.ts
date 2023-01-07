@@ -124,6 +124,14 @@ class Store {
             console.log(e.response?.data?.message);
         }
     }
+
+    async removeOneTodo(todoId: string) {
+        try {
+            await TodoService.removeOneTodo(todoId);
+        } catch(e: any) {
+            console.log(e.response?.data?.message);
+        }
+    }
 }
 
 export default Store;

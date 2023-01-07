@@ -5,8 +5,7 @@ import { ITodo } from "../models/ITodo";
 import { IUser } from "../models/IUser";
 import { AuthResponse } from "../models/response/AuthResponse";
 import AuthService from "../services/AuthService";
-import UserService from "../services/UserService";
-
+import TodoService from "../services/TodoService";
 class Store {
     
     user: IUser = {} as IUser;
@@ -93,7 +92,7 @@ class Store {
 
     async receiveTodos() {
         try {
-            const response = await UserService.getTodos();
+            const response = await TodoService.getTodos();
             this.setTodos(response.data.todos);
         } catch(e: any) {
             console.log(e.response?.data?.message);
@@ -102,7 +101,7 @@ class Store {
 
     async checkTodo(todoId: string, isCompleted: boolean) {
         try {
-            await UserService.checkTodo(todoId, isCompleted);
+            await TodoService.checkTodo(todoId, isCompleted);
             this.setCheckTodo(todoId, isCompleted);
         } catch(e: any) {
             console.log(e.response?.data?.message);
@@ -112,7 +111,7 @@ class Store {
 
     async postTodo(todoMessage: string) {
         try {
-            await UserService.postTodo(todoMessage);
+            await TodoService.postTodo(todoMessage);
         } catch(e: any) {
             console.log(e.response?.data?.message);
         }
@@ -120,7 +119,7 @@ class Store {
 
     async removeCompletedTodos() {
         try {
-            await UserService.removeCompletedTodos();
+            await TodoService.removeCompletedTodos();
         } catch(e: any) {
             console.log(e.response?.data?.message);
         }

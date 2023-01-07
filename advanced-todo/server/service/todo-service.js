@@ -1,7 +1,4 @@
 import TodoListModel from "../models/todoList-model";
-import { v4 as uuidv4 } from 'uuid';
-
-
 class TodoService {
     async postNewTodo(reqUserId, postMessage) {
         const newTodo = {
@@ -15,6 +12,9 @@ class TodoService {
     }
     async setTodoCompleted(reqUserId, todoId, isCompleted) {
         await TodoListModel.updateOne({ userId: reqUserId, 'todos._id': todoId }, {$set: {"todos.$.isCompleted": isCompleted}});
+    }
+    async removeOneTodo(reqUserId, todoId) {
+        await TodoListModel.updateOne({ userId: reqUserId }, { $pull: { todos: { _id: todoId } } });
     }
 };
 

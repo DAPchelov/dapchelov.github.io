@@ -93,6 +93,13 @@ class userController {
             next(e);
         }
     }
+    async removeOneTodo (req, res, next) {
+        try {
+            res.json(await todoService.removeOneTodo(req.user.id, req.body.todoId)); 
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 export default new userController();

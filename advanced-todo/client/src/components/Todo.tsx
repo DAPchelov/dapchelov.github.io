@@ -17,8 +17,7 @@ const Todo: React.FC<ITodo> = (props: ITodo) => {
             '&:hover': {
                 background: 'linear-gradient(270deg, rgba(255,85,0,0.15) 0%, rgba(0,0,0,0) 17%, rgba(0,0,0,0) 83%, rgba(21,101,192,0.15) 100%)'
             }
-        }}
-        >
+        }}>
             <ListItem disablePadding aria-multiline>
                 <Checkbox
                     checked={props.isCompleted}

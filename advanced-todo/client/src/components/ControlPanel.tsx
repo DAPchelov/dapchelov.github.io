@@ -6,6 +6,7 @@ import SelectButtons from "./SelectButtons";
 import ClearButton from "./ClearButton";
 import Paper from "@mui/material/Paper";
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
 const ControlPanel: React.FC = () => {
     const store = useContext(Context);
@@ -24,6 +25,7 @@ const ControlPanel: React.FC = () => {
           </Typography>
           <SelectButtons />
           <ClearButton />
+          <Button variant="text" sx={{fontSize: 10}} size="small" color="error" onClick={() => store.logout()}>Logout</Button>
         </Paper>
     );
 }

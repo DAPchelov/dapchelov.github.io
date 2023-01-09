@@ -48,7 +48,7 @@ const LoginForm: React.FC = () => {
         <CardActions className="loginActions" sx={{ '& button': { m: 1 } }}>
           <div className='signUpBlock'>
             <Typography color="text.secondary" sx={{ fontSize: 28 }} gutterBottom>Create account</Typography>
-            <Button type="submit" variant={isValid ? "contained" : "outlined"} color="secondary" disabled={!isValid} sx={{ width: 200 }} onClick={() => store.registration(email, password)}>SIGN IN</Button>
+            <Button type="submit" variant={isValid ? "contained" : "outlined"} color="secondary" disabled={!isValid} sx={{ width: 200 }} onClick={() => store.registration(email, password)}>SIGN UP</Button>
           </div>
         </CardActions>
       </Card>

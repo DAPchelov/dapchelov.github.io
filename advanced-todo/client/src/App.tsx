@@ -13,7 +13,7 @@ const App: FC = () => {
       store.checkAuth();
       store.receiveTodos();
     }
-  }, [] )
+  }, [])
 
   if (store.isLoading) {
     return (<div>Загрузка...</div>)
@@ -23,8 +23,12 @@ const App: FC = () => {
     return (<LoginForm />)
   }
 
+  if (store.isTodosLoading) {
+    return (<div>Задачи загружаются...</div>);
+  }
+
   return (
-    <Main/>
+    <Main />
   );
 }
 

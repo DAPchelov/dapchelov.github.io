@@ -13,6 +13,7 @@ class Store {
 
     isAuth: boolean = false;
     isLoading: boolean = false;
+    isTodosLoading: boolean = false;
 
     isCompletedDisplayMode: boolean | undefined = undefined;
 
@@ -29,6 +30,9 @@ class Store {
     setLoading(bool: boolean) {
         this.isLoading = bool;
     }
+    setTodosLoading(bool: boolean) {
+        this.isTodosLoading = bool;
+    }
     setTodos(todos:[ITodo]) {
         this.todos = todos;
     }
@@ -44,10 +48,13 @@ class Store {
 
     async login(email: string, password: string) {
         try {
+            this.setLoading(true);
             const response = await AuthService.login(email, password);
             localStorage.setItem('token', response.data.accessToken);
-            this.setAuth(true);
+            this.receiveTodos();
             this.setUser(response.data.user);
+            this.setAuth(true);
+            this.setLoading(false);
         } catch(e: any) {
             console.log(e.response?.data?.message);
         }
@@ -57,8 +64,9 @@ class Store {
         try {
             const response = await AuthService.registration(email, password);
             localStorage.setItem('token', response.data.accessToken);
-            this.setAuth(true);
+            this.receiveTodos();
             this.setUser(response.data.user);
+            this.setAuth(true);
         } catch(e: any) {
             console.log(e.response?.data?.message);
         }
@@ -70,6 +78,7 @@ class Store {
             localStorage.removeItem('token');
             this.setAuth(false);
             this.setUser({} as IUser);
+            this.setTodos({} as [ITodo]);
         } catch(e: any) {
             console.log(e.response?.data?.message);
         }
@@ -77,7 +86,6 @@ class Store {
 
     async checkAuth() {
         this.setLoading(true);
-
         try {
             const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {withCredentials: true});
             localStorage.setItem('token', response.data.accessToken);
@@ -86,14 +94,17 @@ class Store {
         } catch(e: any) {
             console.log(e.response?.data?.message);
         }
-
         this.setLoading(false);
     }
 
     async receiveTodos() {
         try {
-            const response = await TodoService.getTodos();
-            this.setTodos(response.data.todos);
+            this.setTodosLoading(true);
+            await TodoService.getTodos().then((response) => {
+                this.setTodos(response.data.todos);
+                this.setTodosLoading(false);
+            });
+            
         } catch(e: any) {
             console.log(e.response?.data?.message);
         }

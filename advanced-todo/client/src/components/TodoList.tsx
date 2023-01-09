@@ -8,7 +8,7 @@ import { observer } from 'mobx-react-lite';
 
 const TodoList: React.FC = () => {
     const store = useContext(Context);
-
+    
     return (
         <Stack>
             {store.todos
@@ -30,3 +30,7 @@ const TodoList: React.FC = () => {
 }
 
 export default observer(TodoList);
+
+function useEffect(arg0: () => void) {
+    throw new Error('Function not implemented.');
+}

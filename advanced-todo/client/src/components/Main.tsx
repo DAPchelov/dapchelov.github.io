@@ -5,9 +5,13 @@ import Box from "@mui/material/Box";
 import TodoList from './TodoList'
 import InputForm from "./InputForm";
 import ControlPanel from "./ControlPanel";
+import { Context } from '../../src/index'
+import { useContext } from "react";
+import { observer } from "mobx-react-lite";
 
 const Main: React.FC = () => {
-    
+  const store = useContext(Context);
+
   return (
     <Container sx={{
       maxWidth: "800px",
@@ -28,4 +32,4 @@ const Main: React.FC = () => {
   );
 };
 
-export default Main;
+export default observer(Main);

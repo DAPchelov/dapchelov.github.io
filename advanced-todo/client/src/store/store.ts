@@ -110,6 +110,17 @@ class Store {
         }
     }
 
+    async pullTodos() {
+        try {
+            await TodoService.getTodos().then((response) => {
+                this.setTodos(response.data.todos);
+            });
+            
+        } catch(e: any) {
+            console.log(e.response?.data?.message);
+        }
+    }
+
     async checkTodo(todoId: string, isCompleted: boolean) {
         try {
             await TodoService.checkTodo(todoId, isCompleted);

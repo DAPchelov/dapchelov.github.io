@@ -10,7 +10,7 @@ const ClearButton: React.FC = () => {
 
     const removeCallback = () => {
         store.removeCompletedTodos();
-        store.receiveTodos();
+        store.pullTodos();
     }
 
     return (

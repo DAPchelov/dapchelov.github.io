@@ -3,15 +3,14 @@ import React, { useContext } from 'react';
 import Todo from './Todo'
 import { Context } from '../../src/index'
 import { observer } from 'mobx-react-lite';
-
-
+import ActivationTodo from './ActivationTodo';
 
 const TodoList: React.FC = () => {
     const store = useContext(Context);
-    
+
     return (
         <Stack>
-            {store.todos
+            {store.user.isActivated ? store.todos
                 .map(todo => {
                     if (store.isCompletedDisplayMode === undefined) {
                         return (
@@ -24,7 +23,7 @@ const TodoList: React.FC = () => {
                         )
                     }
 
-                })}
+                }) : <ActivationTodo />}
         </Stack>
     );
 }

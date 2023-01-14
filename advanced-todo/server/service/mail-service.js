@@ -26,7 +26,6 @@ class MailService {
                 <a href="${link}">${link}</a>
             </div>
             `
-
         })
     };
 };

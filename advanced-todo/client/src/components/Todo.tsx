@@ -31,7 +31,7 @@ const Todo: React.FC<ITodo> = (props: ITodo) => {
                 <DeleteIcon fontSize="small"
                 onClick={()=> {
                     store.removeOneTodo(props._id);
-                    store.receiveTodos();
+                    store.pullTodos();
                 }}
                 sx={{
                     cursor: 'pointer',

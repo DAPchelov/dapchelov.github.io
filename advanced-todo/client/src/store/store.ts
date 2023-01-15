@@ -8,29 +8,48 @@ import AuthService from "../services/AuthService";
 import TodoService from "../services/TodoService";
 class Store {
     
-    user: IUser = {} as IUser;
-    todos: [ITodo] = {} as [ITodo];
+    private user: IUser = {} as IUser;
+    private todos: [ITodo] = {} as [ITodo];
 
-    isAuth: boolean = false;
-    isLoading: boolean = false;
-    isTodosLoading: boolean = false;
+    private isAuth: boolean = false;
+    private isLoading: boolean = false;
+    private isTodosLoading: boolean = false;
 
-    isCompletedDisplayMode: boolean | undefined = undefined;
+    private isCompletedDisplayMode: boolean | undefined = undefined;
 
     constructor() {
         makeAutoObservable(this);
     }
 
-    setAuth(bool: boolean) {
+    getIsAuth() {
+        return this.isAuth
+    }
+    getUser() {
+        return this.user
+    }
+    getIsLoading() {
+        return this.isLoading
+    }
+    getIsTodosLoading() {
+        return this.isTodosLoading
+    }
+    getTodos() {
+        return this.todos
+    }
+    getIsCompletedDisplayMode() {
+        return this.isCompletedDisplayMode
+    }
+
+    setIsAuth(bool: boolean) {
         this.isAuth = bool;
     }
     setUser(user: IUser) {
         this.user = user;
     }
-    setLoading(bool: boolean) {
+    setIsLoading(bool: boolean) {
         this.isLoading = bool;
     }
-    setTodosLoading(bool: boolean) {
+    setIsTodosLoading(bool: boolean) {
         this.isTodosLoading = bool;
     }
     setTodos(todos:[ITodo]) {
@@ -48,13 +67,13 @@ class Store {
 
     async login(email: string, password: string) {
         try {
-            this.setLoading(true);
+            this.setIsLoading(true);
             const response = await AuthService.login(email, password);
             localStorage.setItem('token', response.data.accessToken);
             this.receiveTodos();
             this.setUser(response.data.user);
-            this.setAuth(true);
-            this.setLoading(false);
+            this.setIsAuth(true);
+            this.setIsLoading(false);
         } catch(e: any) {
             console.log(e.response?.data?.message);
         }
@@ -66,7 +85,7 @@ class Store {
             localStorage.setItem('token', response.data.accessToken);
             this.receiveTodos();
             this.setUser(response.data.user);
-            this.setAuth(true);
+            this.setIsAuth(true);
         } catch(e: any) {
             console.log(e.response?.data?.message);
         }
@@ -76,7 +95,7 @@ class Store {
         try {
             await AuthService.logout;
             localStorage.removeItem('token');
-            this.setAuth(false);
+            this.setIsAuth(false);
             this.setUser({} as IUser);
             this.setTodos({} as [ITodo]);
         } catch(e: any) {
@@ -85,24 +104,24 @@ class Store {
     }
 
     async checkAuth() {
-        this.setLoading(true);
+        this.setIsLoading(true);
         try {
             const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {withCredentials: true});
             localStorage.setItem('token', response.data.accessToken);
-            this.setAuth(true);
+            this.setIsAuth(true);
             this.setUser(response.data.user);
         } catch(e: any) {
             console.log(e.response?.data?.message);
         }
-        this.setLoading(false);
+        this.setIsLoading(false);
     }
 
     async receiveTodos() {
         try {
-            this.setTodosLoading(true);
+            this.setIsTodosLoading(true);
             await TodoService.getTodos().then((response) => {
                 this.setTodos(response.data.todos);
-                this.setTodosLoading(false);
+                this.setIsTodosLoading(false);
             });
             
         } catch(e: any) {

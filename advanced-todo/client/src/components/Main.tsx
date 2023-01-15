@@ -7,12 +7,9 @@ import InputForm from "./InputForm";
 import ControlPanel from "./ControlPanel";
 import ActivationTodo from "./ActivationTodo";
 
-import { Context } from '../../src/index'
-import { useContext } from "react";
 import { observer } from "mobx-react-lite";
 
 const Main: React.FC = () => {
-  const store = useContext(Context);
 
   return (
     <Container sx={{

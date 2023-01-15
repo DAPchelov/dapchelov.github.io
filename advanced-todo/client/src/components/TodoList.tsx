@@ -10,14 +10,14 @@ const TodoList: React.FC = () => {
 
     return (
         <Stack>
-            {store.user.isActivated ? store.todos
+            {store.getUser().isActivated ? store.getTodos()
                 .map(todo => {
-                    if (store.isCompletedDisplayMode === undefined) {
+                    if (store.getIsCompletedDisplayMode() === undefined) {
                         return (
                             <Todo key={todo._id} _id={todo._id} message={todo.message} isCompleted={todo.isCompleted} />
                         )
                     }
-                    if (todo.isCompleted === store.isCompletedDisplayMode) {
+                    if (todo.isCompleted === store.getIsCompletedDisplayMode()) {
                         return (
                             <Todo key={todo._id} _id={todo._id} message={todo.message} isCompleted={todo.isCompleted} />
                         )
@@ -29,7 +29,3 @@ const TodoList: React.FC = () => {
 }
 
 export default observer(TodoList);
-
-function useEffect(arg0: () => void) {
-    throw new Error('Function not implemented.');
-}

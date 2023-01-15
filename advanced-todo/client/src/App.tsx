@@ -15,15 +15,15 @@ const App: FC = () => {
     }
   }, [])
 
-  if (store.isLoading) {
+  if (store.getIsLoading()) {
     return (<div>Загрузка...</div>)
   }
 
-  if (!store.isAuth) {
+  if (!store.getIsAuth()) {
     return (<LoginForm />)
   }
 
-  if (store.isTodosLoading) {
+  if (store.getIsTodosLoading()) {
     return (<div>Задачи загружаются...</div>);
   }
 

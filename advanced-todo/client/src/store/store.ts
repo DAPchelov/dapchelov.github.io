@@ -7,7 +7,7 @@ import { AuthResponse } from "../models/response/AuthResponse";
 import AuthService from "../services/AuthService";
 import TodoService from "../services/TodoService";
 class Store {
-    
+
     private user: IUser = {} as IUser;
     private todos: [ITodo] = {} as [ITodo];
 
@@ -52,17 +52,17 @@ class Store {
     setIsTodosLoading(bool: boolean) {
         this.isTodosLoading = bool;
     }
-    setTodos(todos:[ITodo]) {
+    setTodos(todos: [ITodo]) {
         this.todos = todos;
     }
-    setIsCompletedDisplayMode (mode: boolean | undefined) {
+    setIsCompletedDisplayMode(mode: boolean | undefined) {
         this.isCompletedDisplayMode = mode;
     }
     setCheckTodo(todoId: string, isCompleted: boolean) {
         let todo = this.todos.find(todo => todo._id === todoId);
-            if (todo) {
-                todo.isCompleted = isCompleted;
-            }
+        if (todo) {
+            todo.isCompleted = isCompleted;
+        }
     }
 
     async login(email: string, password: string) {
@@ -74,7 +74,7 @@ class Store {
             this.setUser(response.data.user);
             this.setIsAuth(true);
             this.setIsLoading(false);
-        } catch(e: any) {
+        } catch (e: any) {
             console.log(e.response?.data?.message);
         }
     }
@@ -86,7 +86,7 @@ class Store {
             this.receiveTodos();
             this.setUser(response.data.user);
             this.setIsAuth(true);
-        } catch(e: any) {
+        } catch (e: any) {
             console.log(e.response?.data?.message);
         }
     }
@@ -98,7 +98,7 @@ class Store {
             this.setIsAuth(false);
             this.setUser({} as IUser);
             this.setTodos({} as [ITodo]);
-        } catch(e: any) {
+        } catch (e: any) {
             console.log(e.response?.data?.message);
         }
     }
@@ -106,11 +106,11 @@ class Store {
     async checkAuth() {
         this.setIsLoading(true);
         try {
-            const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {withCredentials: true});
+            const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, { withCredentials: true });
             localStorage.setItem('token', response.data.accessToken);
             this.setIsAuth(true);
             this.setUser(response.data.user);
-        } catch(e: any) {
+        } catch (e: any) {
             console.log(e.response?.data?.message);
         }
         this.setIsLoading(false);
@@ -123,8 +123,8 @@ class Store {
                 this.setTodos(response.data.todos);
                 this.setIsTodosLoading(false);
             });
-            
-        } catch(e: any) {
+
+        } catch (e: any) {
             console.log(e.response?.data?.message);
         }
     }
@@ -134,8 +134,8 @@ class Store {
             await TodoService.getTodos().then((response) => {
                 this.setTodos(response.data.todos);
             });
-            
-        } catch(e: any) {
+
+        } catch (e: any) {
             console.log(e.response?.data?.message);
         }
     }
@@ -144,7 +144,7 @@ class Store {
         try {
             await TodoService.checkTodo(todoId, isCompleted);
             this.setCheckTodo(todoId, isCompleted);
-        } catch(e: any) {
+        } catch (e: any) {
             console.log(e.response?.data?.message);
         }
 
@@ -153,7 +153,7 @@ class Store {
     async postTodo(todoMessage: string) {
         try {
             await TodoService.postTodo(todoMessage);
-        } catch(e: any) {
+        } catch (e: any) {
             console.log(e.response?.data?.message);
         }
     }
@@ -161,7 +161,7 @@ class Store {
     async removeCompletedTodos() {
         try {
             await TodoService.removeCompletedTodos();
-        } catch(e: any) {
+        } catch (e: any) {
             console.log(e.response?.data?.message);
         }
     }
@@ -169,7 +169,7 @@ class Store {
     async removeOneTodo(todoId: string) {
         try {
             await TodoService.removeOneTodo(todoId);
-        } catch(e: any) {
+        } catch (e: any) {
             console.log(e.response?.data?.message);
         }
     }

@@ -21,6 +21,8 @@ class UserService {
         const user = await UserModel.create({ email, password: hashPassword, activationLink });
         const userDto = new UserDto(user);
 
+        TodoListModel.create({userId: userDto.id, todos: []});
+
         await MailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
 
         const tokens = TokenService.generateTokens({ ...userDto });

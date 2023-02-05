@@ -60,42 +60,42 @@ class userController {
     }
     async getUserTodos(req, res, next) {
         try {
-            res.json(await userService.getUserTodos(req.user.id)); 
+            res.json(await userService.getUserTodos(req.user._id)); 
         } catch (e) {
             next(e);
         }
     }
     async getUser(req, res, next) {
         try {
-            res.json(await userService.getUser(req.user.id)); 
+            res.json(await userService.getUser(req.user._id)); 
         } catch (e) {
             next(e);
         }
     }
     async postTodo (req, res, next) {
         try {
-            res.json(await todoService.postNewTodo(req.user.id, req.body.message)); 
+            res.json(await todoService.postNewTodo(req.user._id, req.body.message)); 
         } catch (e) {
             next(e);
         }
     }
     async removeCompletedTodos (req, res, next) {
         try {
-            res.json(await todoService.removeCompletedTodos(req.user.id)); 
+            res.json(await todoService.removeCompletedTodos(req.user._id)); 
         } catch (e) {
             next(e);
         }
     }
     async setTodoCompleted (req, res, next) {
         try {
-            res.json(await todoService.setTodoCompleted(req.user.id, req.body.todoId, req.body.isCompleted)); 
+            res.json(await todoService.setTodoCompleted(req.user._id, req.body.todoId, req.body.isCompleted)); 
         } catch (e) {
             next(e);
         }
     }
     async removeOneTodo (req, res, next) {
         try {
-            res.json(await todoService.removeOneTodo(req.user.id, req.body.todoId)); 
+            res.json(await todoService.removeOneTodo(req.user._id, req.body.todoId)); 
         } catch (e) {
             next(e);
         }

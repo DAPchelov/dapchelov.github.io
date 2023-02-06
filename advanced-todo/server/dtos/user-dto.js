@@ -1,11 +1,11 @@
 class UserDto {
-    email;
     _id;
+    email;
     isActivated;
 
     constructor(model) {
-        this.email = model.email;
         this._id = model._id;
+        this.email = model.email;
         this.isActivated = model.isActivated;
     };
 };

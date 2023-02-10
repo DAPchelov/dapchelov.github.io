@@ -15,11 +15,11 @@ router.post('/logout', userController.logout);
 router.get('/activate/:link', userController.activate);
 router.get('/refresh', userController.refresh);
 
-router.post('/posttodo', authMiddleware, userController.postTodo);
-router.post('/setcompleted', authMiddleware, userController.setTodoCompleted);
-router.post('/removecompleted', authMiddleware, userController.removeCompletedTodos);
-router.post('/removeonetodo', authMiddleware, userController.removeOneTodo);
-router.get('/todos', authMiddleware, userController.getUserTodos);
+router.post('/postcard', authMiddleware, userController.postCard);
+router.post('/setcompleted', authMiddleware, userController.setCardCompleted);
+router.post('/removecompleted', authMiddleware, userController.removeCompletedCards);
+router.post('/removeonecard', authMiddleware, userController.removeOneCard);
+router.get('/cards', authMiddleware, userController.getUserCards);
 router.get('/user', authMiddleware, userController.getUser);
 
 export default router;

@@ -5,8 +5,8 @@ import MailService from './mail-service'
 import TokenService from './token-service'
 import UserDto from '../dtos/user-dto'
 import ApiError from '../exeptions/api-error'
-import TodoListModel from '../models/todoList-model';
-import TodosDto from '../dtos/todo-dto';
+import CardsListModel from '../models/cardsList-model';
+import CardsDto from '../dtos/cards-dto';
 
 class UserService {
     async registration(email, password) {
@@ -18,12 +18,14 @@ class UserService {
         const hashPassword = await bcrypt.hash(password, 3);
         const activationLink = uuidv4();
 
+        // set isActivated in user-model default false if need activation by email
         const user = await UserModel.create({ email, password: hashPassword, activationLink });
         const userDto = new UserDto(user);
 
-        TodoListModel.create({userId: userDto._id, todos: []});
+        CardsListModel.create({userId: userDto._id, cards: []});
 
-        await MailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
+        // turn on if need mail service
+        // await MailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
 
         const tokens = TokenService.generateTokens({ ...userDto });
         await TokenService.saveToken(userDto._id, tokens.refreshToken);
@@ -75,7 +77,7 @@ class UserService {
             throw ApiError.UnautorizedError();
         }
 
-        const user = await UserModel.findById(userData.id);
+        const user = await UserModel.findById(userData._id);
         const userDto = new UserDto(user);
         const tokens = TokenService.generateTokens({ ...userDto });
         await TokenService.saveToken(userDto._id, tokens.refreshToken);
@@ -84,12 +86,6 @@ class UserService {
             ...tokens,
             user: userDto
         }
-    }
-    async getUserTodos(reqUserId) {
-        const todoList = await TodoListModel.findOne({ userId: reqUserId });
-        const todoListDto = new TodosDto(todoList);
- c
-        return { todos: todoListDto.todos }
     }
     async getUser(userId) {
         return await UserModel.findById(userId);

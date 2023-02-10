@@ -30,7 +30,7 @@ const start = async () => {
             useNewUrlParser: true,
             useUnifiedTopology: true
         })
-        app.listen(PORT, '0.0.0.0', () => console.log("Server started on port: ", PORT))
+        app.listen(PORT, '0.0.0.0', () => console.log("Server CarToDo started on port: ", PORT))
     } catch (e) {
         console.log (e);
     }

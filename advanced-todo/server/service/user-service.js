@@ -21,9 +21,11 @@ class UserService {
         const user = await UserModel.create({ email, password: hashPassword, activationLink });
         const userDto = new UserDto(user);
 
-        TodoListModel.create({userId: userDto._id, todos: []});
+        // set isActivated: false if need activation by email
+        TodoListModel.create({userId: userDto._id, todos: [], isActivated: true});
 
-        await MailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
+        // turn on if need mail service
+        // await MailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
 
         const tokens = TokenService.generateTokens({ ...userDto });
         await TokenService.saveToken(userDto._id, tokens.refreshToken);
@@ -88,7 +90,7 @@ class UserService {
     async getUserTodos(reqUserId) {
         const todoList = await TodoListModel.findOne({ userId: reqUserId });
         const todoListDto = new TodosDto(todoList);
- c
+ 
         return { todos: todoListDto.todos }
     }
     async getUser(userId) {

@@ -18,11 +18,11 @@ class UserService {
         const hashPassword = await bcrypt.hash(password, 3);
         const activationLink = uuidv4();
 
+        // set isActivated in user-model default false if need activation by email
         const user = await UserModel.create({ email, password: hashPassword, activationLink });
         const userDto = new UserDto(user);
 
-        // set isActivated: false if need activation by email
-        TodoListModel.create({userId: userDto._id, todos: [], isActivated: true});
+        TodoListModel.create({userId: userDto._id, todos: []});
 
         // turn on if need mail service
         // await MailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);

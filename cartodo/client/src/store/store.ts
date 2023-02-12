@@ -1,7 +1,7 @@
 import axios from "axios";
 import { makeAutoObservable } from "mobx";
 import { API_URL } from "../http";
-import { ITodo } from "../models/ITodo";
+import { ICard } from "../models/ICard";
 import { IUser } from "../models/IUser";
 import { AuthResponse } from "../models/response/AuthResponse";
 import AuthService from "../services/AuthService";
@@ -9,7 +9,7 @@ import TodoService from "../services/TodoService";
 class Store {
 
     private user: IUser = {} as IUser;
-    private todos: [ITodo] = {} as [ITodo];
+    private todos: [ICard] = {} as [ICard];
 
     private isAuth: boolean = false;
     private isLoading: boolean = false;
@@ -52,7 +52,7 @@ class Store {
     setIsTodosLoading(bool: boolean) {
         this.isTodosLoading = bool;
     }
-    setTodos(todos: [ITodo]) {
+    setTodos(todos: [ICard]) {
         this.todos = todos;
     }
     setIsCompletedDisplayMode(mode: boolean | undefined) {
@@ -97,7 +97,7 @@ class Store {
             localStorage.removeItem('token');
             this.setIsAuth(false);
             this.setUser({} as IUser);
-            this.setTodos({} as [ITodo]);
+            this.setTodos({} as [ICard]);
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }
@@ -120,7 +120,7 @@ class Store {
         try {
             this.setIsTodosLoading(true);
             await TodoService.getTodos().then((response) => {
-                this.setTodos(response.data.todos);
+                this.setTodos(response.data.cards);
                 this.setIsTodosLoading(false);
             });
 
@@ -132,7 +132,7 @@ class Store {
     async pullTodos() {
         try {
             await TodoService.getTodos().then((response) => {
-                this.setTodos(response.data.todos);
+                this.setTodos(response.data.cards);
             });
 
         } catch (e: any) {

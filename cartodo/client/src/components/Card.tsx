@@ -5,11 +5,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import React, { useContext } from 'react';
-import { Context } from '../../src/index'
-import { ITodo } from "../models/ITodo";
+import { Context } from '../index'
+import { ICard } from "../models/ICard";
 import { observer } from 'mobx-react-lite';
 
-const Todo: React.FC<ITodo> = (props: ITodo) => {
+const Card: React.FC<ICard> = (props: ICard) => {
     const store = useContext(Context);
 
     return (
@@ -43,4 +43,4 @@ const Todo: React.FC<ITodo> = (props: ITodo) => {
     );
 }
 
-export default observer(Todo);
+export default observer(Card);

@@ -1,6 +1,6 @@
 import Stack from '@mui/material/Stack';
 import React, { useContext } from 'react';
-import Todo from './Todo'
+import Card from './Card'
 import { Context } from '../../src/index'
 import { observer } from 'mobx-react-lite';
 import ActivationTodo from './ActivationTodo';
@@ -11,18 +11,17 @@ const TodoList: React.FC = () => {
     return (
         <Stack>
             {store.getUser().isActivated ? store.getTodos()
-                .map(todo => {
+                .map(card => {
                     if (store.getIsCompletedDisplayMode() === undefined) {
                         return (
-                            <Todo key={todo._id} _id={todo._id} message={todo.message} isCompleted={todo.isCompleted} />
+                            <Card key={card._id} _id={card._id} isAccepted={card.isAccepted} isCompleted={card.isCompleted} message={card.message} todos={card.todos}/>
                         )
                     }
-                    if (todo.isCompleted === store.getIsCompletedDisplayMode()) {
+                    if (card.isCompleted === store.getIsCompletedDisplayMode()) {
                         return (
-                            <Todo key={todo._id} _id={todo._id} message={todo.message} isCompleted={todo.isCompleted} />
+                            <Card key={card._id} _id={card._id} isAccepted={card.isAccepted} isCompleted={card.isCompleted} message={card.message} todos={card.todos}/>
                         )
                     }
-
                 }) : <ActivationTodo />}
         </Stack>
     );

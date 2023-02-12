@@ -1,18 +1,14 @@
 import $api from "../http";
 import { AxiosResponse } from "axios";
-import { IUser } from "../models/IUser";
-import { ITodo } from "../models/ITodo";
+import { ICard } from "../models/ICard";
 
-interface ITodos {
-    todos: [ITodo],
+interface ICards {
+    cards: [ICard],
 }
 
 class UserService {
-    static async getUser(): Promise<AxiosResponse<IUser>> {
-        return $api.get<IUser>('/user');
-    }
-    static async getTodos(): Promise<AxiosResponse<ITodos>> {
-        return $api.get<ITodos>('/todos');
+    static async getTodos(): Promise<AxiosResponse<ICards>> {
+        return $api.get<ICards>('/cards');
     }
     static async checkTodo(todoId: string, isCompleted: boolean): Promise<void> {
         return $api.post('/setcompleted', { todoId, isCompleted });

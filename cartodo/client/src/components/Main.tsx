@@ -5,7 +5,6 @@ import Box from "@mui/material/Box";
 import TodoList from './TodoList'
 import InputForm from "./InputForm";
 import ControlPanel from "./ControlPanel";
-import ActivationTodo from "./ActivationTodo";
 
 import { observer } from "mobx-react-lite";
 

@@ -33,7 +33,7 @@ class Store {
     getIsTodosLoading() {
         return this.isTodosLoading
     }
-    getTodos() {
+    getCards() {
         return this.todos
     }
     getIsCompletedDisplayMode() {
@@ -58,10 +58,10 @@ class Store {
     setIsCompletedDisplayMode(mode: boolean | undefined) {
         this.isCompletedDisplayMode = mode;
     }
-    setCheckTodo(todoId: string, isCompleted: boolean) {
-        let todo = this.todos.find(todo => todo._id === todoId);
-        if (todo) {
-            todo.isCompleted = isCompleted;
+    setCheckCard(cardId: string, isCompleted: boolean) {
+        let card = this.todos.find(card => card._id === cardId);
+        if (card) {
+            card.isCompleted = isCompleted;
         }
     }
 
@@ -119,7 +119,7 @@ class Store {
     async receiveTodos() {
         try {
             this.setIsTodosLoading(true);
-            await TodoService.getTodos().then((response) => {
+            await TodoService.getCards().then((response) => {
                 this.setTodos(response.data.cards);
                 this.setIsTodosLoading(false);
             });
@@ -131,7 +131,7 @@ class Store {
 
     async pullTodos() {
         try {
-            await TodoService.getTodos().then((response) => {
+            await TodoService.getCards().then((response) => {
                 this.setTodos(response.data.cards);
             });
 
@@ -140,10 +140,10 @@ class Store {
         }
     }
 
-    async checkTodo(todoId: string, isCompleted: boolean) {
+    async checkCard(cardId: string, isCompleted: boolean) {
         try {
-            await TodoService.checkTodo(todoId, isCompleted);
-            this.setCheckTodo(todoId, isCompleted);
+            await TodoService.checkCard(cardId, isCompleted);
+            this.setCheckCard(cardId, isCompleted);
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }

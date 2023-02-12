@@ -1,16 +1,16 @@
 import Stack from '@mui/material/Stack';
 import React, { useContext } from 'react';
 import Card from './Card'
-import { Context } from '../../src/index'
+import { Context } from '../index'
 import { observer } from 'mobx-react-lite';
 import ActivationTodo from './ActivationTodo';
 
-const TodoList: React.FC = () => {
+const CardsList: React.FC = () => {
     const store = useContext(Context);
 
     return (
         <Stack>
-            {store.getUser().isActivated ? store.getTodos()
+            {store.getUser().isActivated ? store.getCards()
                 .map(card => {
                     if (store.getIsCompletedDisplayMode() === undefined) {
                         return (
@@ -27,4 +27,4 @@ const TodoList: React.FC = () => {
     );
 }
 
-export default observer(TodoList);
+export default observer(CardsList);

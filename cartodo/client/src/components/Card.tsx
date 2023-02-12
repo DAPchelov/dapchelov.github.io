@@ -21,7 +21,7 @@ const Card: React.FC<ICard> = (props: ICard) => {
             <ListItem disablePadding aria-multiline>
                 <Checkbox
                     checked={props.isCompleted}
-                    onClick={()=> store.checkTodo(props._id, !props.isCompleted)}
+                    onClick={()=> store.checkCard(props._id, !props.isCompleted)}
                     sx={{
                         cursor: 'pointer',
                     }}/>

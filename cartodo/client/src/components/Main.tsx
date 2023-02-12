@@ -2,7 +2,7 @@ import { Container } from "@mui/system";
 import Typography from '@mui/material/Typography';
 import Box from "@mui/material/Box";
 
-import TodoList from './TodoList'
+import CardsList from './CardsList'
 import InputForm from "./InputForm";
 import ControlPanel from "./ControlPanel";
 
@@ -24,7 +24,7 @@ const Main: React.FC = () => {
       <Box sx={{ width: "100%" }}>
         <InputForm />
         <ControlPanel />
-        <TodoList />
+        <CardsList />
       </Box>
     </Container>
   );

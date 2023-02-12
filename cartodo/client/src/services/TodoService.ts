@@ -7,11 +7,11 @@ interface ICards {
 }
 
 class UserService {
-    static async getTodos(): Promise<AxiosResponse<ICards>> {
+    static async getCards(): Promise<AxiosResponse<ICards>> {
         return $api.get<ICards>('/cards');
     }
-    static async checkTodo(todoId: string, isCompleted: boolean): Promise<void> {
-        return $api.post('/setcompleted', { todoId, isCompleted });
+    static async checkCard(cardId: string, isCompleted: boolean): Promise<void> {
+        return $api.post('/setcompleted', { cardId, isCompleted });
     }
     static async postTodo(todoMessage: string): Promise<void> {
         return $api.post('/posttodo', { message: todoMessage });

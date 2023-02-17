@@ -10,6 +10,7 @@ import { ICard } from "../models/ICard";
 import { observer } from 'mobx-react-lite';
 
 const Card: React.FC<ICard> = (props: ICard) => {
+
     const store = useContext(Context);
 
     return (

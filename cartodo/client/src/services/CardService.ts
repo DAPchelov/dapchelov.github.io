@@ -6,7 +6,7 @@ interface ICards {
     cards: [ICard],
 }
 
-class UserService {
+class CardService {
     static async getCards(): Promise<AxiosResponse<ICards>> {
         return $api.get<ICards>('/cards');
     }
@@ -24,4 +24,4 @@ class UserService {
     }
 }
 
-export default UserService;
+export default CardService;

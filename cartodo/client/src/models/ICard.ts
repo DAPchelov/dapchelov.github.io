@@ -1,8 +1,5 @@
-interface ITodo {
-    _id: string;
-    isCompleted: boolean;
-    message: string;
-}
+import { ITodo } from "./ITodo";
+
 export interface ICard {
     _id: string;
     isAccepted: boolean;

@@ -5,11 +5,11 @@ import { ICard } from "../models/ICard";
 import { IUser } from "../models/IUser";
 import { AuthResponse } from "../models/response/AuthResponse";
 import AuthService from "../services/AuthService";
-import TodoService from "../services/TodoService";
+import CardService from "../services/CardService";
 class Store {
 
     private user: IUser = {} as IUser;
-    private todos: [ICard] = {} as [ICard];
+    private cards: [ICard] = {} as [ICard];
 
     private isAuth: boolean = false;
     private isLoading: boolean = false;
@@ -34,7 +34,7 @@ class Store {
         return this.isTodosLoading
     }
     getCards() {
-        return this.todos
+        return this.cards
     }
     getIsCompletedDisplayMode() {
         return this.isCompletedDisplayMode
@@ -53,13 +53,13 @@ class Store {
         this.isTodosLoading = bool;
     }
     setTodos(todos: [ICard]) {
-        this.todos = todos;
+        this.cards = todos;
     }
     setIsCompletedDisplayMode(mode: boolean | undefined) {
         this.isCompletedDisplayMode = mode;
     }
     setCheckCard(cardId: string, isCompleted: boolean) {
-        let card = this.todos.find(card => card._id === cardId);
+        let card = this.cards.find(card => card._id === cardId);
         if (card) {
             card.isCompleted = isCompleted;
         }
@@ -119,7 +119,7 @@ class Store {
     async receiveTodos() {
         try {
             this.setIsTodosLoading(true);
-            await TodoService.getCards().then((response) => {
+            await CardService.getCards().then((response) => {
                 this.setTodos(response.data.cards);
                 this.setIsTodosLoading(false);
             });
@@ -131,7 +131,7 @@ class Store {
 
     async pullTodos() {
         try {
-            await TodoService.getCards().then((response) => {
+            await CardService.getCards().then((response) => {
                 this.setTodos(response.data.cards);
             });
 
@@ -142,7 +142,7 @@ class Store {
 
     async checkCard(cardId: string, isCompleted: boolean) {
         try {
-            await TodoService.checkCard(cardId, isCompleted);
+            await CardService.checkCard(cardId, isCompleted);
             this.setCheckCard(cardId, isCompleted);
         } catch (e: any) {
             console.log(e.response?.data?.message);
@@ -152,7 +152,7 @@ class Store {
 
     async postTodo(todoMessage: string) {
         try {
-            await TodoService.postTodo(todoMessage);
+            await CardService.postTodo(todoMessage);
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }
@@ -160,7 +160,7 @@ class Store {
 
     async removeCompletedTodos() {
         try {
-            await TodoService.removeCompletedTodos();
+            await CardService.removeCompletedTodos();
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }
@@ -168,7 +168,7 @@ class Store {
 
     async removeOneTodo(todoId: string) {
         try {
-            await TodoService.removeOneTodo(todoId);
+            await CardService.removeOneTodo(todoId);
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }

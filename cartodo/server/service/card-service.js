@@ -4,7 +4,7 @@ import CardsDto from '../dtos/cards-dto';
 class CardService {
     async postNewCard(reqUserId, postMessage, postTodos) {
         const newCard = {
-            isAccepted: true,
+            isAccepted: false,
             isCompleted: false,
             message: postMessage,
             todos: postTodos,

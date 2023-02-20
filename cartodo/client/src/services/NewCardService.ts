@@ -3,11 +3,12 @@ import { ITodo } from "../models/ITodo";
 
 class NewCardService {
 
-    message: string;
+    message: string = '';
     todos: ITodo[] = [];
 
-    constructor() {
-        this.message = "New Card";
+
+    writeMessage(newCardMessage: string) {
+        this.message = newCardMessage;
     }
 
     addTodo(postIsCompleted: boolean, postMessage: string) {

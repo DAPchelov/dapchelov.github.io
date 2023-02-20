@@ -8,39 +8,44 @@ import React, { useContext } from 'react';
 import { Context } from '../index'
 import { ICard } from "../models/ICard";
 import { observer } from 'mobx-react-lite';
+import { Box, Stack } from '@mui/material';
+import TodoList from './TodoList/TodoList';
 
 const Card: React.FC<ICard> = (props: ICard) => {
 
     const store = useContext(Context);
 
     return (
-        <Paper elevation={1} sx={{
-            '&:hover': {
-                background: 'linear-gradient(270deg, rgba(255,85,0,0.15) 0%, rgba(0,0,0,0) 17%, rgba(0,0,0,0) 83%, rgba(21,101,192,0.15) 100%)'
-            }
-        }}>
-            <ListItem disablePadding aria-multiline>
-                <Checkbox
-                    checked={props.isCompleted}
-                    onClick={()=> store.checkCard(props._id, !props.isCompleted)}
-                    sx={{
-                        cursor: 'pointer',
-                    }}/>
-                <Typography sx={{ overflow: 'hidden', textOverflow: 'ellipsis', width: '88%'}}>
-                    {props.message}
-                </Typography>
-                <DeleteIcon fontSize="small"
-                onClick={()=> {
-                    store.removeOneTodo(props._id);
-                    store.pullTodos();
-                }}
-                sx={{
-                    cursor: 'pointer',
-                    position: 'absolute',
-                    right: '5px',
-                }}/>
-            </ListItem>
-        </Paper>
+        <Box >
+            <Paper elevation={2} sx={{
+            padding: 2,
+            marginBottom: 1,
+            marginTop: 1
+            }}>
+                <ListItem disablePadding aria-multiline >
+                    <Checkbox
+                        checked={props.isCompleted}
+                        onClick={() => store.checkCard(props._id, !props.isCompleted)}
+                        sx={{
+                            cursor: 'pointer',
+                        }} />
+                    <Typography sx={{ overflow: 'hidden', textOverflow: 'ellipsis', width: '88%' }}>
+                        {props.message}
+                    </Typography>
+                    <DeleteIcon fontSize="small"
+                        onClick={() => {
+                            store.removeOneTodo(props._id);
+                            store.pullTodos();
+                        }}
+                        sx={{
+                            cursor: 'pointer',
+                            position: 'absolute',
+                            right: '5px',
+                        }} />
+                </ListItem>
+                <TodoList todos={props.todos}/>
+            </Paper>
+        </Box>
     );
 }
 

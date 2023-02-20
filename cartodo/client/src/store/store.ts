@@ -6,6 +6,7 @@ import { IUser } from "../models/IUser";
 import { AuthResponse } from "../models/response/AuthResponse";
 import AuthService from "../services/AuthService";
 import CardService from "../services/CardService";
+import NewCardService from "../services/NewCardService";
 class Store {
 
     private user: IUser = {} as IUser;
@@ -16,6 +17,8 @@ class Store {
     private isTodosLoading: boolean = false;
 
     private isCompletedDisplayMode: boolean | undefined = undefined;
+
+    newCard: NewCardService = new NewCardService();
 
     constructor() {
         makeAutoObservable(this);

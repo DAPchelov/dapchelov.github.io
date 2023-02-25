@@ -13,14 +13,14 @@ class CardService {
     static async checkCard(cardId: string, isCompleted: boolean): Promise<void> {
         return $api.post('/setcompleted', { cardId, isCompleted });
     }
-    static async postTodo(todoMessage: string): Promise<void> {
-        return $api.post('/posttodo', { message: todoMessage });
+    static async postCard(todoMessage: string): Promise<void> {
+        return $api.post('/postcard', { message: todoMessage });
     }
-    static async removeCompletedTodos() {
+    static async removeCompletedCards() {
         return $api.post('/removecompleted');
     }
-    static async removeOneTodo(todoId: string) {
-        return $api.post('/removeonetodo', { todoId });
+    static async removeOneCard(todoId: string) {
+        return $api.post('/removeonecard', { todoId });
     }
 }
 

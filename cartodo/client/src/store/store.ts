@@ -14,7 +14,7 @@ class Store {
 
     private isAuth: boolean = false;
     private isLoading: boolean = false;
-    private isTodosLoading: boolean = false;
+    private isCardsLoading: boolean = false;
 
     private isCompletedDisplayMode: boolean | undefined = undefined;
 
@@ -33,8 +33,8 @@ class Store {
     getIsLoading() {
         return this.isLoading
     }
-    getIsTodosLoading() {
-        return this.isTodosLoading
+    getIsCardsLoading() {
+        return this.isCardsLoading
     }
     getCards() {
         return this.cards
@@ -52,11 +52,11 @@ class Store {
     setIsLoading(bool: boolean) {
         this.isLoading = bool;
     }
-    setIsTodosLoading(bool: boolean) {
-        this.isTodosLoading = bool;
+    setIsCardsLoading(bool: boolean) {
+        this.isCardsLoading = bool;
     }
-    setTodos(todos: [ICard]) {
-        this.cards = todos;
+    setCards(cards: [ICard]) {
+        this.cards = cards;
     }
     setIsCompletedDisplayMode(mode: boolean | undefined) {
         this.isCompletedDisplayMode = mode;
@@ -73,7 +73,7 @@ class Store {
             this.setIsLoading(true);
             const response = await AuthService.login(email, password);
             localStorage.setItem('token', response.data.accessToken);
-            this.receiveTodos();
+            this.receiveCards();
             this.setUser(response.data.user);
             this.setIsAuth(true);
             this.setIsLoading(false);
@@ -86,7 +86,7 @@ class Store {
         try {
             const response = await AuthService.registration(email, password);
             localStorage.setItem('token', response.data.accessToken);
-            this.receiveTodos();
+            this.receiveCards();
             this.setUser(response.data.user);
             this.setIsAuth(true);
         } catch (e: any) {
@@ -100,7 +100,7 @@ class Store {
             localStorage.removeItem('token');
             this.setIsAuth(false);
             this.setUser({} as IUser);
-            this.setTodos({} as [ICard]);
+            this.setCards({} as [ICard]);
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }
@@ -119,12 +119,12 @@ class Store {
         this.setIsLoading(false);
     }
 
-    async receiveTodos() {
+    async receiveCards() {
         try {
-            this.setIsTodosLoading(true);
+            this.setIsCardsLoading(true);
             await CardService.getCards().then((response) => {
-                this.setTodos(response.data.cards);
-                this.setIsTodosLoading(false);
+                this.setCards(response.data.cards);
+                this.setIsCardsLoading(false);
             });
 
         } catch (e: any) {
@@ -132,10 +132,10 @@ class Store {
         }
     }
 
-    async pullTodos() {
+    async pullCards() {
         try {
             await CardService.getCards().then((response) => {
-                this.setTodos(response.data.cards);
+                this.setCards(response.data.cards);
             });
 
         } catch (e: any) {
@@ -153,25 +153,25 @@ class Store {
 
     }
 
-    async postTodo(todoMessage: string) {
+    async postCard(cardMessage: string) {
         try {
-            await CardService.postTodo(todoMessage);
+            await CardService.postCard(cardMessage);
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }
     }
 
-    async removeCompletedTodos() {
+    async removeCompletedCards() {
         try {
-            await CardService.removeCompletedTodos();
+            await CardService.removeCompletedCards();
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }
     }
 
-    async removeOneTodo(todoId: string) {
+    async removeOneCard(cardId: string) {
         try {
-            await CardService.removeOneTodo(todoId);
+            await CardService.removeOneCard(cardId);
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }

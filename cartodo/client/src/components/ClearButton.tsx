@@ -9,8 +9,8 @@ const ClearButton: React.FC = () => {
     const store = useContext(Context);
 
     const removeCallback = () => {
-        store.removeCompletedTodos();
-        store.pullTodos();
+        store.removeCompletedCards();
+        store.pullCards();
     }
 
     return (

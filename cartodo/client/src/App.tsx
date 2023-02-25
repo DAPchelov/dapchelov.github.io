@@ -11,7 +11,7 @@ const App: FC = () => {
   useEffect(() => {
     if (localStorage.getItem('token')) {
       store.checkAuth();
-      store.receiveTodos();
+      store.receiveCards();
     }
   }, [])
 
@@ -23,7 +23,7 @@ const App: FC = () => {
     return (<LoginForm />)
   }
 
-  if (store.getIsTodosLoading()) {
+  if (store.getIsCardsLoading()) {
     return (<div>Задачи загружаются...</div>);
   }
 

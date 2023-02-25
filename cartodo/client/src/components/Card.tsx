@@ -9,7 +9,7 @@ import { Context } from '../index'
 import { ICard } from "../models/ICard";
 import { observer } from 'mobx-react-lite';
 import { Box, Stack } from '@mui/material';
-import TodoList from './TodoList/TodoList';
+import CardList from './TodoList/TodoList';
 
 const Card: React.FC<ICard> = (props: ICard) => {
 
@@ -34,8 +34,8 @@ const Card: React.FC<ICard> = (props: ICard) => {
                     </Typography>
                     <DeleteIcon fontSize="small"
                         onClick={() => {
-                            store.removeOneTodo(props._id);
-                            store.pullTodos();
+                            store.removeOneCard(props._id);
+                            store.pullCards();
                         }}
                         sx={{
                             cursor: 'pointer',
@@ -43,7 +43,7 @@ const Card: React.FC<ICard> = (props: ICard) => {
                             right: '5px',
                         }} />
                 </ListItem>
-                <TodoList todos={props.todos}/>
+                <CardList todos={props.todos}/>
             </Paper>
         </Box>
     );

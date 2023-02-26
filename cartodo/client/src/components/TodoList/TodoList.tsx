@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 import { ITodo } from '../../models/ITodo';
 
 interface ITodos {
-    todos: [ITodo]
+    todos: ITodo[]
 }
 
 const TodoList: React.FC<ITodos> = (props: ITodos) => {

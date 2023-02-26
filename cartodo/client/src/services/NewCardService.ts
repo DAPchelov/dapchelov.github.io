@@ -1,3 +1,4 @@
+import { makeAutoObservable } from "mobx";
 import $api from "../http";
 import { ITodo } from "../models/ITodo";
 
@@ -5,6 +6,10 @@ class NewCardService {
 
     message: string = '';
     todos: ITodo[] = [];
+
+    constructor() {
+        makeAutoObservable(this);
+      }
 
 
     writeMessage(newCardMessage: string) {

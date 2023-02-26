@@ -8,8 +8,8 @@ import React, { useContext } from 'react';
 import { Context } from '../index'
 import { ICard } from "../models/ICard";
 import { observer } from 'mobx-react-lite';
-import { Box, Stack } from '@mui/material';
-import CardList from './TodoList/TodoList';
+import { Box } from '@mui/material';
+import TodoList from './TodoList/TodoList';
 
 const Card: React.FC<ICard> = (props: ICard) => {
 
@@ -43,7 +43,7 @@ const Card: React.FC<ICard> = (props: ICard) => {
                             right: '5px',
                         }} />
                 </ListItem>
-                <CardList todos={props.todos}/>
+                <TodoList todos={props.todos}/>
             </Paper>
         </Box>
     );

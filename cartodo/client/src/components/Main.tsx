@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 
 import CardsList from './CardsList'
 import InputForm from "./InputForm";
-import ControlPanel from "./ControlPanel";
+import ControlPanel from "./ControlPanel/ControlPanel";
 
 import { observer } from "mobx-react-lite";
 import { Context } from '../index'

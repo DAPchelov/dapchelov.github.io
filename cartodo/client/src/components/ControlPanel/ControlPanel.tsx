@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
-import { Context } from '../index'
+import { Context } from '../../index'
 import { observer } from 'mobx-react-lite';
+import { Route, Routes } from 'react-router-dom';
 
-import SelectButtons from "./SelectButtons";
-import ClearButton from "./ClearButton";
 import Paper from "@mui/material/Paper";
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import HomeControl from './HomeControl/HomeControl';
+import NewCardControl from './NewCardControl/NewCardControl';
+
 
 const ControlPanel: React.FC = () => {
   const store = useContext(Context);
@@ -17,14 +18,15 @@ const ControlPanel: React.FC = () => {
       sx={{
         display: "flex",
         justifyContent: "space-between",
-        alignItems: "center"
+        alignItems: "center",
+        paddingLeft: 2,
+        paddingRight: 2,
       }}
     >
-      <Typography color="text.secondary" ml={1} sx={{ fontSize: 14 }}>
-        {`${store.getCards().filter(task => task.isCompleted === false).length}`.concat(" items left")}
-      </Typography>
-      <SelectButtons />
-      <ClearButton />
+      <Routes>
+        <Route path="/" element={<HomeControl />} />
+        <Route path="/newcard" element={<NewCardControl />} />
+      </Routes>
       <Button variant="text" sx={{ fontSize: 10 }} size="small" color="error" onClick={() => store.logout()}>Logout</Button>
     </Paper>
   );

@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import { useContext } from 'react';
-import { Context } from '../../src/index'
+import { Context } from '../../../index'
 import { observer } from 'mobx-react-lite';
 
 interface IoutlinedButton {

@@ -1,6 +1,6 @@
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
-import { useContext, useState} from "react";
+import { useContext, useState } from "react";
 import { observer } from "mobx-react-lite";
 import TodoList from "./TodoList/TodoList";
 import { Context } from '../index'
@@ -9,7 +9,7 @@ import { Box, ListItem } from "@mui/material";
 const InputForm: React.FC = () => {
   const store = useContext(Context);
 
-  let newTodoMessage: string = '';
+  const [newTodoMessage, setNewTodoMessage] = useState('');
 
   const onPush = (keyKode: string) => {
     if (keyKode === "Enter") {
@@ -20,6 +20,7 @@ const InputForm: React.FC = () => {
   const addTodo = (keyKode: string) => {
     if (keyKode === "Enter" && newTodoMessage.length > 0) {
       store.newCard.addTodo(false, newTodoMessage);
+      setNewTodoMessage('');
     }
   };
 
@@ -39,9 +40,7 @@ const InputForm: React.FC = () => {
             variant="filled"
             fullWidth
             value={store.newCard.message}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              store.newCard.setMessage(event.target.value)
-            }}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.newCard.setMessage(event.target.value)}
             onKeyUp={event => {
               onPush(event.key);
             }}
@@ -56,7 +55,8 @@ const InputForm: React.FC = () => {
           sx={{
             marginTop: 2,
           }}
-          onChange={event => { newTodoMessage = event.target.value }}
+          value={newTodoMessage}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => setNewTodoMessage(event.target.value)}
           onKeyUp={event => addTodo(event.key)}
         />
       </Paper>

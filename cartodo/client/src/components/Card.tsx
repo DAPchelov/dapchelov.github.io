@@ -6,7 +6,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import React, { useContext } from 'react';
 import { Context } from '../index'
-import { ICard } from "../models/ICard";
+import { ICard } from '../models/ICard';
 import { observer } from 'mobx-react-lite';
 import { Box } from '@mui/material';
 import TodoList from './TodoList/TodoList';
@@ -17,15 +17,18 @@ const Card: React.FC<ICard> = (props: ICard) => {
 
     return (
         <Box >
-            <Paper elevation={2} sx={{
+            <ListItem sx={{
+                display: 'flex',
+                flexDirection: 'column',
                 padding: 2,
                 marginBottom: 1,
-                marginTop: 1
+                marginTop: 1,
+                boxShadow: 3,
             }}>
-                <Paper sx={{
-                    background:'rgba(21,101,192,0.15)',
-                }}>
-                    <ListItem disablePadding aria-multiline >
+                    <ListItem disablePadding aria-multiline sx={{
+                        boxShadow: 3,
+                        background: 'rgba(21,101,192,0.15)',
+                    }}>
                         <Checkbox
                             checked={props.isCompleted}
                             onClick={() => store.checkCard(props._id, !props.isCompleted)}
@@ -35,7 +38,7 @@ const Card: React.FC<ICard> = (props: ICard) => {
                         <Typography sx={{ overflow: 'hidden', textOverflow: 'ellipsis', width: '88%' }}>
                             {props.message}
                         </Typography>
-                        <DeleteIcon fontSize="small"
+                        <DeleteIcon fontSize='small'
                             onClick={() => {
                                 store.removeOneCard(props._id);
                                 store.pullCards();
@@ -46,9 +49,8 @@ const Card: React.FC<ICard> = (props: ICard) => {
                                 right: '5px',
                             }} />
                     </ListItem>
-                </Paper>
                 <TodoList todos={props.todos} />
-            </Paper>
+            </ListItem>
         </Box>
     );
 }

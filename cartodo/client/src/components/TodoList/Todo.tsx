@@ -5,7 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import React from 'react';
-import { ITodo } from "../../models/ITodo";
+import { ITodo } from '../../models/ITodo';
 import { observer } from 'mobx-react-lite';
 
 const Todo: React.FC<ITodo> = (props: ITodo) => {
@@ -23,19 +23,19 @@ const Todo: React.FC<ITodo> = (props: ITodo) => {
                     sx={{
                         cursor: 'pointer',
                     }}/>
-                <Typography sx={{ overflow: 'hidden', textOverflow: 'ellipsis', width: '88%'}}>
+                <Typography sx={{ overflow: 'hidden', textOverflow: 'ellipsis', width: '94%', wordWrap: 'break-word'}}>
                     {props.message}
                 </Typography>
-                {/* <DeleteIcon fontSize="small"
-                onClick={()=> {
-                    store.removeOneTodo(props._id);
-                    store.pullTodos();
-                }}
+                <DeleteIcon fontSize='small'
+                // onClick={()=> {
+                //     store.removeOneTodo(props._id);
+                //     store.pullTodos();
+                // }}
                 sx={{
                     cursor: 'pointer',
                     position: 'absolute',
                     right: '5px',
-                }}/> */}
+                }}/>
             </ListItem>
         </Paper>
     );

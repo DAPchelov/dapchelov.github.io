@@ -9,8 +9,8 @@ const NewCardControl: React.FC = () => {
     const store = useContext(Context);
 
     return (
-            <ButtonGroup variant="text" aria-label="text button group">
-                <Button variant={"contained"} sx={{ fontSize: 10 }} size="small" onClick={() => store.newCard.postCard()}>Send NEW card</Button>
+            <ButtonGroup variant='text' aria-label='text button group'>
+                
             </ButtonGroup>
     );
 }

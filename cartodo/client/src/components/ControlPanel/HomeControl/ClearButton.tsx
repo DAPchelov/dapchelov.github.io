@@ -14,7 +14,7 @@ const ClearButton: React.FC = () => {
     }
 
     return (
-        <Button variant="text" sx={{ fontSize: 10 }} onClick = {() => removeCallback()}>clear completed</Button>
+        <Button variant='text' sx={{ fontSize: 10 }} onClick = {() => removeCallback()}>clear completed</Button>
     );
 }
 

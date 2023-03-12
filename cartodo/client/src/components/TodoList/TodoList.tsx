@@ -11,7 +11,9 @@ interface ITodos {
 const TodoList: React.FC<ITodos> = (props: ITodos) => {
 
     return (
-        <Stack>
+        <Stack sx ={{
+            width: '100%'
+        }}>
             {props.todos.map(todo => {
                 return (
                     <Todo key={todo._id} _id={todo._id} message={todo.message} isCompleted={todo.isCompleted} />

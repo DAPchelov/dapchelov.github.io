@@ -25,30 +25,36 @@ const Card: React.FC<ICard> = (props: ICard) => {
                 marginTop: 1,
                 boxShadow: 3,
             }}>
-                    <ListItem disablePadding aria-multiline sx={{
-                        boxShadow: 3,
-                        background: 'rgba(21,101,192,0.15)',
+                <ListItem disablePadding aria-multiline sx={{
+                    boxShadow: 3,
+                    background: 'rgba(21,101,192,0.15)',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                }}>
+                    <Checkbox
+                        checked={props.isCompleted}
+                        onClick={() => store.checkCard(props._id, !props.isCompleted)}
+                        sx={{
+                            cursor: 'pointer',
+                        }} />
+                    <Typography sx={{
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        wordWrap: 'break-word',
+                        width: '100%',
                     }}>
-                        <Checkbox
-                            checked={props.isCompleted}
-                            onClick={() => store.checkCard(props._id, !props.isCompleted)}
-                            sx={{
-                                cursor: 'pointer',
-                            }} />
-                        <Typography sx={{ overflow: 'hidden', textOverflow: 'ellipsis', width: '88%' }}>
-                            {props.message}
-                        </Typography>
-                        <DeleteIcon fontSize='small'
-                            onClick={() => {
-                                store.removeOneCard(props._id);
-                                store.pullCards();
-                            }}
-                            sx={{
-                                cursor: 'pointer',
-                                position: 'absolute',
-                                right: '5px',
-                            }} />
-                    </ListItem>
+                        {props.message}
+                    </Typography>
+                    <DeleteIcon fontSize='small'
+                        onClick={() => {
+                            store.removeOneCard(props._id);
+                            store.pullCards();
+                        }}
+                        sx={{
+                            cursor: 'pointer',
+                            width: '30px',
+                        }} />
+                </ListItem>
                 <TodoList todos={props.todos} />
             </ListItem>
         </Box>

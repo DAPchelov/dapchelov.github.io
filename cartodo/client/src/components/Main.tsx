@@ -15,7 +15,6 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link
 } from 'react-router-dom';
 
 
@@ -26,7 +25,6 @@ const Main: React.FC = () => {
   return (
     <Router>
       <Container sx={{
-        maxWidth: '800px',
         pt: '100px',
         display: 'flex',
         flexDirection: 'column',

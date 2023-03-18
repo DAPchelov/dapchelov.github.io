@@ -16,6 +16,10 @@ class NewCardService {
         this.message = newCardMessage;
     }
 
+    setTodos(todos: ITodo[]) {
+        this.todos = todos;
+    }
+
     addTodo(postIsCompleted: boolean, postMessage: string) {
         const newTodo: ITodo = {
             message: postMessage,
@@ -27,19 +31,25 @@ class NewCardService {
         this.todos.push(newTodo);
     }
 
+    clearCard() {
+        this.setTodos([]);
+        this.setMessage('');
+    }
+
+    removeTodo(id: ITodo['_id']) {
+        this.setTodos(this.todos.filter(todo => todo._id !== id));
+    }
+
     async postCard(): Promise<void> {
         // delete TEMP todo IDs before post new card to BE. It will get new IDs in the database
         if (this.message.length > 0) {
-            this.todos.map(todo => { delete (todo._id) });
+            this.todos.forEach(todo => { delete (todo._id) });
             $api.post('/postcard', { message: this.message, todos: this.todos, });
             this.clearCard();
         }
     }
 
-    clearCard() {
-        this.todos.length = 0;
-        this.message = '';
-    }
+
 }
 
 export default NewCardService;

@@ -10,7 +10,7 @@ const NewCardControl: React.FC = () => {
 
     return (
             <ButtonGroup variant='text' aria-label='text button group'>
-                
+
             </ButtonGroup>
     );
 }

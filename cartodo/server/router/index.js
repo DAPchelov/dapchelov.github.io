@@ -16,7 +16,7 @@ router.get('/activate/:link', userController.activate);
 router.get('/refresh', userController.refresh);
 
 router.post('/postcard', authMiddleware, userController.postCard);
-router.post('/setcompleted', authMiddleware, userController.setCardCompleted);
+router.post('/checkcard', authMiddleware, userController.checkCard);
 router.post('/removecompleted', authMiddleware, userController.removeCompletedCards);
 router.post('/removeonecard', authMiddleware, userController.removeOneCard);
 router.get('/cards', authMiddleware, userController.getUserCards);

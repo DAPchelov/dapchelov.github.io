@@ -11,7 +11,7 @@ class CardService {
         return $api.get<ICards>('/cards');
     }
     static async checkCard(cardId: string, isCompleted: boolean): Promise<void> {
-        return $api.post('/setcompleted', { cardId, isCompleted });
+        return $api.post('/checkCard', { cardId, isCompleted });
     }
     static async postCard(todoMessage: string): Promise<void> {
         return $api.post('/postcard', { message: todoMessage });

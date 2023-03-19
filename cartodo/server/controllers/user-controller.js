@@ -86,9 +86,9 @@ class userController {
             next(e);
         }
     }
-    async setCardCompleted (req, res, next) {
+    async checkCard (req, res, next) {
         try {
-            res.json(await cardService.setCardCompleted(req.user._id, req.body.cardId, req.body.isCompleted)); 
+            res.json(await cardService.checkCard(req.user._id, req.body.cardId, req.body.isCompleted)); 
         } catch (e) {
             next(e);
         }

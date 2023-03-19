@@ -14,7 +14,7 @@ class CardService {
     async removeCompletedCards(reqUserId) {
         await CardsListModel.updateOne({ userId: reqUserId }, { $pull: { cards: { isCompleted: true } } });
     }
-    async setCardCompleted(reqUserId, cardId, isCompleted) {
+    async checkCard(reqUserId, cardId, isCompleted) {
         await CardsListModel.updateOne({ userId: reqUserId, 'cards._id': cardId }, {$set: {"cards.$.isCompleted": isCompleted}});
     }
     async removeOneCard(reqUserId, cardId) {

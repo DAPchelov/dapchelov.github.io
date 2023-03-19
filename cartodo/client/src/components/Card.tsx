@@ -1,19 +1,22 @@
 import ListItem from '@mui/material/ListItem';
 import Checkbox from '@mui/material/Checkbox';
 import DeleteIcon from '@mui/icons-material/Delete';
-
-import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import React, { useContext } from 'react';
-import { Context } from '../index'
 import { ICard } from '../models/ICard';
 import { observer } from 'mobx-react-lite';
 import { Box } from '@mui/material';
 import TodoList from './TodoList/TodoList';
 
+import React, { useContext } from 'react';
+import { Context } from '../index'
+
 const Card: React.FC<ICard> = (props: ICard) => {
 
     const store = useContext(Context);
+
+    // bind the context to the method, for set it on callback
+    // implement remove todo method!
+    // const removeTodo = store.removeTodo.bind(store);
 
     return (
         <Box >
@@ -55,7 +58,8 @@ const Card: React.FC<ICard> = (props: ICard) => {
                             width: '30px',
                         }} />
                 </ListItem>
-                <TodoList todos={props.todos} />
+                {/*assign removeTodo method */}
+                <TodoList todos={props.todos} removeTodo={() => { }} />
             </ListItem>
         </Box>
     );

@@ -4,11 +4,12 @@ import Todo from './Todo'
 import { observer } from 'mobx-react-lite';
 import { ITodo } from '../../models/ITodo';
 
-interface ITodos {
-    todos: ITodo[]
+interface ITodoListProps {
+    todos: ITodo[],
+    removeTodo (id: string | undefined): void,
 }
 
-const TodoList: React.FC<ITodos> = (props: ITodos) => {
+const TodoList: React.FC<ITodoListProps> = (props: ITodoListProps) => {
 
     return (
         <Stack sx ={{
@@ -16,7 +17,7 @@ const TodoList: React.FC<ITodos> = (props: ITodos) => {
         }}>
             {props.todos.map(todo => {
                 return (
-                    <Todo key={todo._id} _id={todo._id} message={todo.message} isCompleted={todo.isCompleted} />
+                    <Todo key={todo._id} content={todo} removeTodo={props.removeTodo}  />
                 )
             })}
         </Stack>

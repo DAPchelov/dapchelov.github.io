@@ -8,6 +8,9 @@ import { Box, Button, ListItem } from '@mui/material';
 
 const InputForm: React.FC = () => {
   const store = useContext(Context);
+  
+  // bind the context to the method, for set it on callback
+  const removeTodo = store.newCard.removeTodo.bind(store.newCard);
 
   const [newTodoMessage, setNewTodoMessage] = useState('');
 
@@ -46,7 +49,7 @@ const InputForm: React.FC = () => {
             }}
           />
         </ListItem>
-        <TodoList todos={store.newCard.todos} />
+        <TodoList todos={store.newCard.todos} removeTodo={removeTodo} />
         <TextField
           id='standard-basic'
           label='New todo content'
@@ -59,7 +62,6 @@ const InputForm: React.FC = () => {
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => setNewTodoMessage(event.target.value)}
           onKeyUp={event => addTodo(event.key)}
         />
-        
       </Paper>
       <Button variant={'contained'} sx={{ fontSize: 12, width: '100%'}} size='small' onClick={() => store.newCard.postCard()}>Add NEW card</Button>
     </Box>

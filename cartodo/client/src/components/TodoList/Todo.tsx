@@ -1,19 +1,19 @@
 import ListItem from '@mui/material/ListItem';
 import Checkbox from '@mui/material/Checkbox';
 import DeleteIcon from '@mui/icons-material/Delete';
-
-import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import React, { useContext } from 'react';
+
+import React from 'react';
 import { ITodo } from '../../models/ITodo';
 import { observer } from 'mobx-react-lite';
-import { Context } from '../../index'
-import { Route, Routes } from 'react-router-dom';
 import { Box } from '@mui/material';
 
-const Todo: React.FC<ITodo> = (props: ITodo) => {
+interface ITodoProps {
+    content: ITodo,
+    removeTodo (id: ITodo['_id']): void,
+}
 
-    const store = useContext(Context);
+const Todo: React.FC<ITodoProps> = (props: ITodoProps) => {
 
     return (
         <Box sx={{
@@ -24,8 +24,8 @@ const Todo: React.FC<ITodo> = (props: ITodo) => {
         }}>
             <ListItem disablePadding aria-multiline sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Checkbox
-                    checked={props.isCompleted}
-                    // onClick={()=> store.checkTodo(props._id, !props.isCompleted)}
+                    checked={props.content.isCompleted}
+                    // onClick={()=> store.checkTodo(propsContent._id, !propsContent.isCompleted)}
                     sx={{
                         cursor: 'pointer',
                     }} />
@@ -35,12 +35,14 @@ const Todo: React.FC<ITodo> = (props: ITodo) => {
                     wordWrap: 'break-word',
                     width: '100%',
                 }}>
-                    {props.message}
+                    {props.content.message}
                 </Typography>
                 <DeleteIcon fontSize='small'
                     onClick={() => {
-                        store.newCard.removeTodo(props._id)
-                        // store.removeOneTodo(props._id);
+                        props.removeTodo(props.content._id);
+                        
+                        // store.newCard.removeTodo(propsContent._id);
+                        // store.removeOneTodo(propsContent._id);
                         // store.pullTodos();
                     }}
                     sx={{

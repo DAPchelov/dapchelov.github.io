@@ -4,7 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Typography from '@mui/material/Typography';
 import { ICard } from '../models/ICard';
 import { observer } from 'mobx-react-lite';
-import { Box, MenuItem, Paper } from '@mui/material';
+import { Paper } from '@mui/material';
 import TodoList from './TodoList/TodoList';
 
 import React, { useContext } from 'react';
@@ -14,9 +14,9 @@ const Card: React.FC<ICard> = (props: ICard) => {
 
     const store = useContext(Context);
 
-    // bind the context to the method, for set it on callback
-    // implement remove todo method!
-    // const removeTodo = store.removeTodo.bind(store);
+    const removeTodo = (todoId: string) => {
+        store.removeTodo(props._id, todoId);
+    }
 
     return (
         <Paper elevation={2} sx={{
@@ -53,8 +53,7 @@ const Card: React.FC<ICard> = (props: ICard) => {
                         width: '30px',
                     }} />
             </ListItem>
-            {/*assign removeTodo method */}
-            <TodoList todos={props.todos} removeTodo={() => { }} />
+            <TodoList todos={props.todos} removeTodo={removeTodo} />
         </Paper>
     );
 }

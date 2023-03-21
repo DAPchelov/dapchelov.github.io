@@ -95,7 +95,14 @@ class userController {
     }
     async removeOneCard (req, res, next) {
         try {
-            res.json(await cardService.removeOneCard(req.user._id, req.body.CardId)); 
+            res.json(await cardService.removeOneCard(req.user._id, req.body.cardId)); 
+        } catch (e) {
+            next(e);
+        }
+    }
+    async removeTodo (req, res, next) {
+        try {
+            res.json(await cardService.removeTodo(req.user._id, req.body.cardId, req.body.todoId)); 
         } catch (e) {
             next(e);
         }

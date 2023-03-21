@@ -5,9 +5,9 @@ class TodoService {
     static async checkTodo(todoId: string, isCompleted: boolean): Promise<void> {
         return $api.post('/setcompleted', { todoId, isCompleted });
     }
-    
-    static async removeTodo(todoId: string) {
-        return $api.post('/removetodo', { todoId });
+
+    static async removeTodo(cardId: string, todoId: string) {
+        return $api.post('/removetodo', { cardId, todoId });
     }
 }
 

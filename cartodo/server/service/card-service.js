@@ -1,4 +1,4 @@
-import CardsListModel from "../models/cardsList-model";
+import CardsListModel from '../models/cardsList-model';
 import CardsDto from '../dtos/cards-dto';
 
 class CardService {
@@ -15,7 +15,7 @@ class CardService {
         await CardsListModel.updateOne({ userId: reqUserId }, { $pull: { cards: { isCompleted: true } } });
     }
     async checkCard(reqUserId, cardId, isCompleted) {
-        await CardsListModel.updateOne({ userId: reqUserId, 'cards._id': cardId }, {$set: {"cards.$.isCompleted": isCompleted}});
+        await CardsListModel.updateOne({ userId: reqUserId, 'cards._id': cardId }, { $set: { 'cards.$.isCompleted': isCompleted } });
     }
     async removeOneCard(reqUserId, cardId) {
         await CardsListModel.updateOne({ userId: reqUserId }, { $pull: { cards: { _id: cardId } } });
@@ -23,16 +23,19 @@ class CardService {
     async getUserCards(reqUserId) {
         const cardsList = await CardsListModel.findOne({ userId: reqUserId });
         const cardsListDto = new CardsDto(cardsList);
- 
+
         return { cards: cardsListDto.cards }
+    }
+
+    async removeTodo(reqUserId, cardId, todoId) {
+        // await CardsListModel.updateOne({ userId: reqUserId, cards: { _id: cardId } }, { $pull: { todos: { _id: todoId } } });
+        // await CardsListModel.updateOne({ userId: reqUserId }, { $pull: { 'cards._id': cardId } });
     }
     // may adapt to work with cards
     // async setTodoCompleted(reqUserId, todoId, isCompleted) {
-    //     await CardsListModel.updateOne({ userId: reqUserId, 'todos._id': todoId }, {$set: {"todos.$.isCompleted": isCompleted}});
+    //     await CardsListModel.updateOne({ userId: reqUserId, 'todos._id': todoId }, {$set: {'todos.$.isCompleted': isCompleted}});
     // }
-    // async removeOneTodo(reqUserId, todoId) {
-    //     await CardsListModel.updateOne({ userId: reqUserId }, { $pull: { todos: { _id: todoId } } });
-    // }
+
 };
 
 export default new CardService();

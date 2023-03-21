@@ -7,6 +7,7 @@ import { AuthResponse } from "../models/response/AuthResponse";
 import AuthService from "../services/AuthService";
 import CardService from "../services/CardService";
 import NewCardService from "../services/NewCardService";
+import TodoService from "../services/TodoService";
 class Store {
 
     private user: IUser = {} as IUser;
@@ -176,6 +177,22 @@ class Store {
             console.log(e.response?.data?.message);
         }
     }
+
+    async removeTodo(cardId: string, todoId: string) {
+        try {
+            await TodoService.removeTodo(cardId, todoId);
+        } catch (e: any) {
+            console.log(e.response?.data?.message);
+        }
+    }
+
+    // async checkTodo(todoId: string, isCompleted: boolean) {
+    //     try {
+    //         await TodoService.checkTodo(todoId, isCompleted);
+    //     } catch (e: any) {
+    //         console.log(e.response?.data?.message);
+    //     }
+    // }
 }
 
 export default Store;

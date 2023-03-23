@@ -21,6 +21,7 @@ router.post('/removecompleted', authMiddleware, userController.removeCompletedCa
 router.post('/removeonecard', authMiddleware, userController.removeOneCard);
 
 router.post('/removetodo', authMiddleware, userController.removeTodo);
+router.post('/checktodo', authMiddleware, userController.checkTodo);
 
 router.get('/cards', authMiddleware, userController.getUserCards);
 router.get('/user', authMiddleware, userController.getUser);

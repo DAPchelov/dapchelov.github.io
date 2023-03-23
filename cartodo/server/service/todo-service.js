@@ -21,7 +21,7 @@ const filterArrayById = (array, id) => {
 
 class TodoService {
     async removeTodo(reqUserId, cardId, todoId) {
-        
+
         let newTodos = [];
         await CardsListModel.findOne({ userId: reqUserId }).then((event) => {
             const cardsListDto = new CardsDto(event);
@@ -31,11 +31,20 @@ class TodoService {
 
         await CardsListModel.updateOne({ userId: reqUserId, 'cards._id': cardId }, { $set: { 'cards.$.todos': newTodos } });
     }
-    // may adapt to work with cards
-    // async setTodoCompleted(reqUserId, todoId, isCompleted) {
-    //     await CardsListModel.updateOne({ userId: reqUserId, 'todos._id': todoId }, {$set: {'todos.$.isCompleted': isCompleted}});
-    // }
 
+    async checkTodo(reqUserId, cardId, todoId) {
+
+        let newTodos = [];
+        await CardsListModel.findOne({ userId: reqUserId }).then((event) => {
+            const cardsListDto = new CardsDto(event);
+            const card = findElementById(cardsListDto.cards, cardId);
+
+            findElementById(card.todos, todoId).isCompleted = !findElementById(card.todos, todoId).isCompleted;
+            newTodos = card.todos;
+        });
+
+        await CardsListModel.updateOne({ userId: reqUserId, 'cards._id': cardId }, { $set: { 'cards.$.todos': newTodos } });
+    }
 };
 
 export default new TodoService();

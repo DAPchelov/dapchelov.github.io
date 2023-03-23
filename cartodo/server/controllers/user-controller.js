@@ -109,6 +109,13 @@ class userController {
             next(e);
         }
     }
+    async checkTodo (req, res, next) {
+        try {
+            res.json(await todoService.checkTodo(req.user._id, req.body.cardId, req.body.todoId)); 
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 export default new userController();

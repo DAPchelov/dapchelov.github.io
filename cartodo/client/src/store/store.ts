@@ -184,6 +184,17 @@ class Store {
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }
+        this.pullCards();
+    }
+
+    async checkTodo(cardId: string, todoId: string) {
+        try {
+            await TodoService.checkTodo(cardId, todoId);
+        } catch (e: any) {
+            console.log(e.response?.data?.message);
+        }
+        this.pullCards();
+
     }
 
     // async checkTodo(todoId: string, isCompleted: boolean) {

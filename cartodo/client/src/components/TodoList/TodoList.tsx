@@ -7,6 +7,7 @@ import { ITodo } from '../../models/ITodo';
 interface ITodoListProps {
     todos: ITodo[],
     removeTodo (id: string | undefined): void,
+    checkTodo (id: string | undefined): void,
 }
 
 const TodoList: React.FC<ITodoListProps> = (props: ITodoListProps) => {
@@ -17,7 +18,7 @@ const TodoList: React.FC<ITodoListProps> = (props: ITodoListProps) => {
         }}>
             {props.todos.map(todo => {
                 return (
-                    <Todo key={todo._id} content={todo} removeTodo={props.removeTodo}  />
+                    <Todo key={todo._id} content={todo} removeTodo={props.removeTodo} checkTodo={props.checkTodo} />
                 )
             })}
         </Stack>

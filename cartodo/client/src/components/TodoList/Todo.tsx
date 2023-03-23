@@ -11,6 +11,7 @@ import { Box } from '@mui/material';
 interface ITodoProps {
     content: ITodo,
     removeTodo (id: ITodo['_id']): void,
+    checkTodo (id: ITodo['_id']): void,
 }
 
 const Todo: React.FC<ITodoProps> = (props: ITodoProps) => {
@@ -25,7 +26,9 @@ const Todo: React.FC<ITodoProps> = (props: ITodoProps) => {
             <ListItem disablePadding aria-multiline sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Checkbox
                     checked={props.content.isCompleted}
-                    // onClick={()=> store.checkTodo(propsContent._id, !propsContent.isCompleted)}
+                    onClick={() => {
+                        props.checkTodo(props.content._id);
+                    }}
                     sx={{
                         cursor: 'pointer',
                     }} />
@@ -40,10 +43,6 @@ const Todo: React.FC<ITodoProps> = (props: ITodoProps) => {
                 <DeleteIcon fontSize='small'
                     onClick={() => {
                         props.removeTodo(props.content._id);
-                        
-                        // store.newCard.removeTodo(propsContent._id);
-                        // store.removeOneTodo(propsContent._id);
-                        // store.pullTodos();
                     }}
                     sx={{
                         cursor: 'pointer',

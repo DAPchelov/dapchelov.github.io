@@ -11,6 +11,7 @@ const InputForm: React.FC = () => {
   
   // bind the context to the method, for set it on callback
   const removeTodo = store.newCard.removeTodo.bind(store.newCard);
+  const checkTodo = store.newCard.checkTodo.bind(store.newCard);
 
   const [newTodoMessage, setNewTodoMessage] = useState('');
 
@@ -49,7 +50,7 @@ const InputForm: React.FC = () => {
             }}
           />
         </ListItem>
-        <TodoList todos={store.newCard.todos} removeTodo={removeTodo} />
+        <TodoList todos={store.newCard.todos} removeTodo={removeTodo} checkTodo={checkTodo}/>
         <TextField
           id='standard-basic'
           label='New todo content'

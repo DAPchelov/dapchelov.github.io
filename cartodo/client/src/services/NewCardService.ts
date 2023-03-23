@@ -40,6 +40,13 @@ class NewCardService {
         this.setTodos(this.todos.filter(todo => todo._id !== id));
     }
 
+    checkTodo(id: ITodo['_id']) {
+        const todo = this.todos.find(todo => todo._id === id);
+        if (todo) {
+            todo.isCompleted = !todo.isCompleted
+        }
+    }
+
     async postCard(): Promise<void> {
         // delete TEMP todo IDs before post new card to BE. It will get new IDs in the database
         if (this.message.length > 0) {

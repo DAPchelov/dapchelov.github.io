@@ -17,6 +17,9 @@ const Card: React.FC<ICard> = (props: ICard) => {
     const removeTodo = (todoId: string) => {
         store.removeTodo(props._id, todoId);
     }
+    const checkTodo = (todoId: string) => {
+        store.checkTodo(props._id, todoId);
+    }
 
     return (
         <Paper elevation={2} sx={{
@@ -53,7 +56,7 @@ const Card: React.FC<ICard> = (props: ICard) => {
                         width: '30px',
                     }} />
             </ListItem>
-            <TodoList todos={props.todos} removeTodo={removeTodo} />
+            <TodoList todos={props.todos} removeTodo={removeTodo} checkTodo={checkTodo}/>
         </Paper>
     );
 }

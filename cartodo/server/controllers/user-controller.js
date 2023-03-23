@@ -3,6 +3,8 @@ import { validationResult } from "express-validator";
 import ApiError from "../exeptions/api-error";
 import userService from "../service/user-service";
 import cardService from "../service/card-service";
+import todoService from "../service/todo-service";
+
 
 class userController {
     async registration(req, res, next) {
@@ -102,7 +104,7 @@ class userController {
     }
     async removeTodo (req, res, next) {
         try {
-            res.json(await cardService.removeTodo(req.user._id, req.body.cardId, req.body.todoId)); 
+            res.json(await todoService.removeTodo(req.user._id, req.body.cardId, req.body.todoId)); 
         } catch (e) {
             next(e);
         }

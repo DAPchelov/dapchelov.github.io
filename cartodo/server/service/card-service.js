@@ -27,15 +27,6 @@ class CardService {
         return { cards: cardsListDto.cards }
     }
 
-    async removeTodo(reqUserId, cardId, todoId) {
-        // await CardsListModel.updateOne({ userId: reqUserId, cards: { _id: cardId } }, { $pull: { todos: { _id: todoId } } });
-        // await CardsListModel.updateOne({ userId: reqUserId }, { $pull: { 'cards._id': cardId } });
-    }
-    // may adapt to work with cards
-    // async setTodoCompleted(reqUserId, todoId, isCompleted) {
-    //     await CardsListModel.updateOne({ userId: reqUserId, 'todos._id': todoId }, {$set: {'todos.$.isCompleted': isCompleted}});
-    // }
-
 };
 
 export default new CardService();

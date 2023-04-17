@@ -10,7 +10,6 @@ const root = ReactDOM.createRoot(
 const store = new Store();
 export const Context = createContext(store);
 
-
 root.render(
   <React.StrictMode>
     <Context.Provider value={ store }>

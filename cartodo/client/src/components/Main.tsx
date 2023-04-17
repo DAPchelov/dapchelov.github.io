@@ -8,7 +8,7 @@ import ControlPanel from './ControlPanel/ControlPanel';
 
 import { observer } from 'mobx-react-lite';
 import { Context } from '../index'
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 import React from 'react';
 import {
@@ -22,6 +22,10 @@ const Main: React.FC = () => {
 
   const store = useContext(Context);
 
+  useEffect(() => {
+    store.receiveUser();
+  }, [])
+
   return (
     <Router>
       <Container sx={{
@@ -30,9 +34,7 @@ const Main: React.FC = () => {
         flexDirection: 'column',
         alignItems: 'center'
       }}>
-        <Typography variant='h4' color='text.secondary' gutterBottom>
-          {store.getUser().email}
-        </Typography>
+          {store.getUser().email && <Typography variant='h4' color='text.secondary' gutterBottom>{store.getUser().email}</Typography>}
         <Box sx={{ width: '100%' }}>
           <ControlPanel />
           <Routes>

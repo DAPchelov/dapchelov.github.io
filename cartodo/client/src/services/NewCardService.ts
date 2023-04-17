@@ -20,6 +20,11 @@ class NewCardService {
         this.todos = todos;
     }
 
+    clearCard() {
+        this.setTodos([]);
+        this.setMessage('');
+    }
+
     addTodo(postIsCompleted: boolean, postMessage: string) {
         const newTodo: ITodo = {
             message: postMessage,
@@ -31,11 +36,6 @@ class NewCardService {
         this.todos.push(newTodo);
     }
 
-    clearCard() {
-        this.setTodos([]);
-        this.setMessage('');
-    }
-
     removeTodo(id: ITodo['_id']) {
         this.setTodos(this.todos.filter(todo => todo._id !== id));
     }
@@ -45,7 +45,7 @@ class NewCardService {
         if (todo) {
             todo.isCompleted = !todo.isCompleted
         }
-    }
+    }    
 
     async postCard(): Promise<void> {
         // delete TEMP todo IDs before post new card to BE. It will get new IDs in the database
@@ -55,8 +55,6 @@ class NewCardService {
             this.clearCard();
         }
     }
-
-
 }
 
 export default NewCardService;

@@ -5,17 +5,17 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 
 // this component is displayed in the todo list if the user is not activated
-const ActivationTodo: React.FC = () => {
+const LoadingCard: React.FC = () => {
 
     return (
         <Paper elevation={1}>
             <ListItem disablePadding aria-multiline>
                 <Typography sx={{ overflow: 'hidden', textOverflow: 'ellipsis', width: '100%', textAlign: 'center' }}>
-                    {'Account activation required'}
+                    {'You cards is loading!'}
                 </Typography>
             </ListItem>
         </Paper>
     );
 }
 
-export default observer(ActivationTodo);
+export default observer(LoadingCard);

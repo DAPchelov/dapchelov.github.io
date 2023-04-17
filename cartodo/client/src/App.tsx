@@ -8,12 +8,11 @@ import { Context } from '../src/index'
 const App: FC = () => {
   const store = useContext(Context);
 
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      store.checkAuth();
-      store.receiveCards();
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (!localStorage.getItem('token')) {
+  //     store.checkAuth();
+  //   }
+  // }, [])
 
   if (store.getIsLoading()) {
     return (<div>Загрузка...</div>)
@@ -21,10 +20,6 @@ const App: FC = () => {
 
   if (!store.getIsAuth()) {
     return (<LoginForm />)
-  }
-
-  if (store.getIsCardsLoading()) {
-    return (<div>Задачи загружаются...</div>);
   }
 
   return (

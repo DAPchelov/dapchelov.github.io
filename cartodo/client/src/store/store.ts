@@ -1,21 +1,19 @@
-import axios from "axios";
 import { makeAutoObservable } from "mobx";
-import { API_URL } from "../http";
 import { ICard } from "../models/ICard";
 import { IUser } from "../models/IUser";
-import { AuthResponse } from "../models/response/AuthResponse";
 import AuthService from "../services/AuthService";
 import CardService from "../services/CardService";
 import NewCardService from "../services/NewCardService";
 import TodoService from "../services/TodoService";
+import UserService from "../services/UserService";
 class Store {
 
     private user: IUser = {} as IUser;
     private cards: [ICard] = {} as [ICard];
 
-    private isAuth: boolean = false;
+    private isAuth: boolean = (localStorage.getItem("isAuth") === "true");
     private isLoading: boolean = false;
-    private isCardsLoading: boolean = false;
+    private isCardsLoading: boolean = true;
 
     private isCompletedDisplayMode: boolean | undefined = undefined;
 
@@ -45,6 +43,7 @@ class Store {
     }
 
     setIsAuth(bool: boolean) {
+        localStorage.setItem("isAuth", bool.toString())
         this.isAuth = bool;
     }
     setUser(user: IUser) {
@@ -74,8 +73,6 @@ class Store {
             this.setIsLoading(true);
             const response = await AuthService.login(email, password);
             localStorage.setItem('token', response.data.accessToken);
-            this.receiveCards();
-            this.setUser(response.data.user);
             this.setIsAuth(true);
             this.setIsLoading(false);
         } catch (e: any) {
@@ -87,8 +84,6 @@ class Store {
         try {
             const response = await AuthService.registration(email, password);
             localStorage.setItem('token', response.data.accessToken);
-            this.receiveCards();
-            this.setUser(response.data.user);
             this.setIsAuth(true);
         } catch (e: any) {
             console.log(e.response?.data?.message);
@@ -100,37 +95,41 @@ class Store {
             await AuthService.logout;
             localStorage.removeItem('token');
             this.setIsAuth(false);
-            this.setUser({} as IUser);
-            this.setCards({} as [ICard]);
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }
     }
 
     async checkAuth() {
-        this.setIsLoading(true);
         try {
-            const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, { withCredentials: true });
+            const response = await AuthService.refresh();
             localStorage.setItem('token', response.data.accessToken);
-            this.setIsAuth(true);
             this.setUser(response.data.user);
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }
-        this.setIsLoading(false);
+    }
+
+    async receiveUser() {
+        try {
+            const response = await UserService.getUser();
+            this.setUser(response.data);
+        } catch (e: any) {
+            console.log(e.response?.data?.message);
+        }
     }
 
     async receiveCards() {
+        this.setIsCardsLoading(true);
         try {
-            this.setIsCardsLoading(true);
             await CardService.getCards().then((response) => {
                 this.setCards(response.data.cards);
-                this.setIsCardsLoading(false);
             });
 
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }
+        this.setIsCardsLoading(false);
     }
 
     async pullCards() {
@@ -196,14 +195,6 @@ class Store {
         this.pullCards();
 
     }
-
-    // async checkTodo(todoId: string, isCompleted: boolean) {
-    //     try {
-    //         await TodoService.checkTodo(todoId, isCompleted);
-    //     } catch (e: any) {
-    //         console.log(e.response?.data?.message);
-    //     }
-    // }
 }
 
 export default Store;

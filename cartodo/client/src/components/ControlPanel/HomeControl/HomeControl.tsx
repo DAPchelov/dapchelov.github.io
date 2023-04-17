@@ -13,9 +13,9 @@ const HomeControl: React.FC = () => {
 
     return (
         <>
-            <Typography color='text.secondary' ml={1} sx={{ fontSize: 14 }}>
+            {/* <Typography color='text.secondary' ml={1} sx={{ fontSize: 14 }}>
                 {`${store.getCards().filter(task => task.isCompleted === false).length}`.concat(' items left')}
-            </Typography>
+            </Typography> */}
             <Link to='/newcard' style={{ textDecoration: 'none' }}><Button variant={'contained'} sx={{ fontSize: 10 }} size='small' >Create NEW card</Button></Link>
             <SelectButtons />
             <ClearButton />

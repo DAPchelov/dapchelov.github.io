@@ -74,7 +74,7 @@ class UserService {
         const tokenFromDb = await TokenService.findToken(refreshToken);
 
         if (!userData || !tokenFromDb) {
-            throw ApiError.UnautorizedError();
+            throw ApiError.AuthenticationTimeout();
         }
 
         const user = await UserModel.findById(userData._id);

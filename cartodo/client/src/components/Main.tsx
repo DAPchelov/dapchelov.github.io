@@ -24,7 +24,7 @@ const Main: React.FC = () => {
 
   useEffect(() => {
     store.receiveUser();
-  }, [])
+  }, [store])
 
   return (
     <Router>

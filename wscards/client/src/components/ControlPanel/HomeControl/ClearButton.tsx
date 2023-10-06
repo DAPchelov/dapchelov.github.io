@@ -1,0 +1,21 @@
+import Button from '@mui/material/Button';
+import { observer } from 'mobx-react-lite';
+import { useContext } from 'react';
+import { Context } from '../../App'
+
+
+
+const ClearButton: React.FC = () => {
+    const store = useContext(Context);
+
+    const removeCallback = () => {
+        store.removeCompletedCards();
+        // store.pullCards();
+    }
+
+    return (
+        <Button variant='text' sx={{ fontSize: 10 }} onClick = {() => removeCallback()}>clear completed</Button>
+    );
+}
+
+export default observer(ClearButton);

@@ -35,7 +35,7 @@ const LoginForm: React.FC = () => {
       // props.setIsAuth(localStorage.getItem('token') !== null);
       // navigate("/home");
       store.setToken(localStorage.getItem('token'));
-      store.login();
+      store.getAuth();
     }
       // store.Login(email, password);
     )

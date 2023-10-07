@@ -6,17 +6,14 @@ const WsController = () => {
     io.on('connection', socket => {
         socket.emit('TakeAuth', tokenService.validateAccessToken(socket.handshake.auth.token));
 
-        socket.on('Login', (data) => {
-            console.log('userDataToken: ', data.token)
-            let userToken = data.token;
-            let user = tokenService.validateAccessToken(userToken);
+        socket.on('GetAuth', (data) => {
+            console.log('userAccessToken: ', data.token)
+            let user = tokenService.validateAccessToken(data.token);
             // console.log('TakeAuth!', 'user:', userToken);
             socket.emit('TakeAuth', user);
         });
         socket.on('GetCards', (data) => {
-            let userToken = data.token;
-            let user = tokenService.validateAccessToken(userToken);
-
+            let user = tokenService.validateAccessToken(data.token);            
             if (user) {
                 cardService.getUserCards(user._id).then((data) => {
                     // console.log('TakeCards!', 'cards:', data);
@@ -24,6 +21,7 @@ const WsController = () => {
                 });
             } else {
                 // if socket not valid (user === null) do logout user
+                console.log('Logout user')
                 socket.emit('TakeAuth', null);
             }
         });

@@ -28,15 +28,24 @@ class WSConnection {
 
     constructor() {
         // console.log(this.socket.auth);
-        this.socket.on('TakeAuth', (data) => {
+        this.socket.on('TakeAuth', async (data) => {
+            
             if (data !== null) {
                 this.setUser(data);
                 console.log('Success Auth!', data);
+                localStorage.setItem('isAuth', 'true');
                 this.setIsAuth(true);
             } else {
                 console.log('Auth not successful!');
                 localStorage.setItem('isAuth', 'false');
                 this.setIsAuth(false);
+
+                const response = await AuthService.refresh();
+                localStorage.setItem('token', response.data.accessToken);
+                this.setToken(response.data.accessToken);
+
+                this.getAuth();
+                this.getCards();
             }
         });
 
@@ -75,8 +84,8 @@ class WSConnection {
         return this.isCompletedDisplayMode
     }
 
-    async login() {
-        this.socket.emit('Login', { token: this.token });
+    async getAuth() {
+        this.socket.emit('GetAuth', { token: this.token });
     }
     async receiveCards() {
         this.socket.emit('GetCards', { token: this.token });
@@ -113,7 +122,7 @@ class WSConnection {
         }
     }
 
-    async checkAuth() {
+    async refreshAuth() {
         try {
             const response = await AuthService.refresh();
             localStorage.setItem('token', response.data.accessToken);
@@ -163,7 +172,6 @@ class WSConnection {
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }
-        // this.pullCards();
     }
 
     async checkTodo(cardId: string, todoId: string) {
@@ -173,8 +181,6 @@ class WSConnection {
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }
-        // this.pullCards();
-
     }
 };
 export default WSConnection;

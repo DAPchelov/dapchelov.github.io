@@ -14,7 +14,6 @@ class WSConnection {
 
     private socket = io('http://pchel.ddns.net:5000/', {
         auth: {
-            // token: localStorage.getItem('token'),
             token: this.token
         }
     });
@@ -27,7 +26,6 @@ class WSConnection {
     newCard: NewCardService = new NewCardService();
 
     constructor() {
-        // console.log(this.socket.auth);
         this.socket.on('TakeAuth', async (data) => {
             
             if (data !== null) {
@@ -92,11 +90,7 @@ class WSConnection {
     }
 
 
-
-
-
-
-
+    
     setCheckCard(cardId: string) {
         let card = this.cards.find(card => card._id === cardId);
         if (card) {

@@ -9,12 +9,13 @@ const ClearButton: React.FC = () => {
     const store = useContext(Context);
 
     const removeCallback = () => {
-        store.removeCompletedCards();
-        // store.pullCards();
+        store.removeCompletedCards().then(() => {
+            store.receiveCards();
+        });
     }
 
     return (
-        <Button variant='text' sx={{ fontSize: 10 }} onClick = {() => removeCallback()}>clear completed</Button>
+        <Button variant='text' sx={{ fontSize: 10 }} onClick={() => removeCallback()}>clear completed</Button>
     );
 }
 

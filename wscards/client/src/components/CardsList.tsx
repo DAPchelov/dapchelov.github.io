@@ -3,11 +3,9 @@ import React, { useContext, useEffect } from 'react';
 import Card from './Card'
 import { Context } from './App'
 import { observer } from 'mobx-react-lite';
-import LoadingCard from './LoadingCard';
 
 const CardsList: React.FC = () => {
     const store = useContext(Context);
-    // const wsConnection = store.createSocket();
 
     useEffect(() => {
         store.receiveCards();
@@ -15,7 +13,7 @@ const CardsList: React.FC = () => {
 
     return (
         <Stack>
-            {store.getCards().length > 0 ? store.getCards()
+            {store.getCards().length > 0 && store.getCards()
                 .map(card => {
                     if (store.getIsCompletedDisplayMode() === undefined) {
                         return (
@@ -27,7 +25,7 @@ const CardsList: React.FC = () => {
                             <Card key={card._id} _id={card._id} isAccepted={card.isAccepted} isCompleted={card.isCompleted} message={card.message} todos={card.todos} />
                         )
                     }
-                }) : <LoadingCard />}
+                })}
         </Stack>
     );
 }

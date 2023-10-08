@@ -6,11 +6,9 @@ class authController {
         try {
             await AuthService.login(email, password).then((response) => {
                 localStorage.setItem('token', response.data.accessToken);
-                // localStorage.setItem('isAuth', 'true');
             })
         } catch (e: any) {
             console.log(e.response?.data?.message);
-            // localStorage.setItem('isAuth', 'false');
         }
 
     }
@@ -21,11 +19,9 @@ class authController {
                 localStorage.setItem('token', response.data.accessToken);
                 // localStorage.setItem('isAuth', 'true');
             });
-            return (true);
         } catch (e: any) {
             console.log(e.response?.data?.message);
             // localStorage.setItem('isAuth', 'false');
-            return (false);
         }
     }
 }

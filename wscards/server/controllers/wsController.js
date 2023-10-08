@@ -7,7 +7,6 @@ const WsController = () => {
         socket.emit('TakeAuth', tokenService.validateAccessToken(socket.handshake.auth.token));
 
         socket.on('GetAuth', (data) => {
-            console.log('userAccessToken: ', data.token)
             let user = tokenService.validateAccessToken(data.token);
             // console.log('TakeAuth!', 'user:', userToken);
             socket.emit('TakeAuth', user);
@@ -21,7 +20,6 @@ const WsController = () => {
                 });
             } else {
                 // if socket not valid (user === null) do logout user
-                console.log('Logout user')
                 socket.emit('TakeAuth', null);
             }
         });

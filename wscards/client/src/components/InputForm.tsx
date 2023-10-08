@@ -5,6 +5,8 @@ import { observer } from 'mobx-react-lite';
 import TodoList from './TodoList/TodoList';
 import { Context } from './App'
 import { Box, Button, ListItem } from '@mui/material';
+import TodoField from './TodoFields/TodoField';
+import TodoFields from './TodoFields/TodoFields';
 
 const InputForm: React.FC = () => {
   const store = useContext(Context);
@@ -23,7 +25,7 @@ const InputForm: React.FC = () => {
 
   const addTodo = (keyKode: string) => {
     if (keyKode === 'Enter' && newTodoMessage.length > 0) {
-      store.newCard.addTodo(false, newTodoMessage);
+      store.newCard.addTodo(newTodoMessage, false);
       setNewTodoMessage('');
     }
   };
@@ -50,8 +52,8 @@ const InputForm: React.FC = () => {
             }}
           />
         </ListItem>
-        <TodoList todos={store.newCard.todos} removeTodo={removeTodo} checkTodo={checkTodo} />
-        <TextField
+        <TodoFields todos={store.newCard.todos} removeTodo={removeTodo} checkTodo={checkTodo} />
+        {/* <TextField
           id='standard-basic'
           label='New todo content'
           variant='standard'
@@ -60,7 +62,7 @@ const InputForm: React.FC = () => {
           value={newTodoMessage}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => setNewTodoMessage(event.target.value)}
           onKeyUp={event => addTodo(event.key)}
-        />
+        /> */}
       </Paper>
       <Button variant={'contained'} sx={{ fontSize: 12, width: '100%' }} size='small' onClick={() => store.newCard.postCard()}>Add NEW card</Button>
     </Box>

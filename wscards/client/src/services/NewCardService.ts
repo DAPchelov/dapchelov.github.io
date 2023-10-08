@@ -25,11 +25,11 @@ class NewCardService {
         this.setMessage('');
     }
 
-    addTodo(postIsCompleted: boolean, postMessage: string) {
+    addTodo(postMessage: string, postIsCompleted: boolean) {
         const newTodo: ITodo = {
             message: postMessage,
             isCompleted: postIsCompleted,
-            // add TEMP todo IDs only for normal rendering <TodoList> in <InputForm>
+            // add TEMP todo IDs only for normal rendering <TodoFields> in <InputForm>
             _id: uuidv4(),
         };
 

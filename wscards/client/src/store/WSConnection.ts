@@ -154,7 +154,9 @@ class WSConnection {
 
     async removeOneCard(cardId: string) {
         try {
-            await CardService.removeOneCard(cardId);
+            await CardService.removeOneCard(cardId).then(()=> {
+                this.receiveCards();
+            });
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }
@@ -162,7 +164,9 @@ class WSConnection {
 
     async removeTodo(cardId: string, todoId: string) {
         try {
-            await TodoService.removeTodo(cardId, todoId);
+            await TodoService.removeTodo(cardId, todoId).then(()=> {
+                this.receiveCards();
+            });
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }

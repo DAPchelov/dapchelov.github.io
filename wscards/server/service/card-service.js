@@ -2,6 +2,10 @@ import CardsListModel from '../models/cardsList-model';
 import CardsDto from '../dtos/cards-dto';
 
 class CardService {
+    async editCard(reqUserId, cardId, postMessage, postTodos) {
+        await CardsListModel.updateOne({ userId: reqUserId, 'cards._id': cardId }, { $set: { 'cards.$.message': postMessage } });
+        await CardsListModel.updateOne({ userId: reqUserId, 'cards._id': cardId }, { $set: { 'cards.$.todos': postTodos } });
+    }
     async postNewCard(reqUserId, postMessage, postTodos) {
         const newCard = {
             isAccepted: false,
@@ -25,7 +29,6 @@ class CardService {
         const cardsListDto = new CardsDto(cardsList);
         return { cards: cardsListDto.cards }
     }
-
 };
 
 export default new CardService();

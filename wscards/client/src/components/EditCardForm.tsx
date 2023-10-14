@@ -16,7 +16,7 @@ const InputForm: React.FC = () => {
 
   const onPush = (keyKode: string) => {
     if (keyKode === 'Enter') {
-      store.newCard.postCard();
+      store.newCard.editCard();
     }
   };
 
@@ -32,7 +32,7 @@ const InputForm: React.FC = () => {
         <ListItem disablePadding aria-multiline >
           <TextField
             id='filled-basic'
-            label='New card title (press Enter to add a Card)'
+            label='Card title'
             variant='filled'
             fullWidth
             value={store.newCard.message}
@@ -42,9 +42,9 @@ const InputForm: React.FC = () => {
             }}
           />
         </ListItem>
-        <TodoFields todos={store.newCard.todos} removeTodo={removeTodo} checkTodo={checkTodo} setTodoMessage={setTodoMessage}/>
+        <TodoFields todos={store.newCard.todos} removeTodo={removeTodo} checkTodo={checkTodo} setTodoMessage={setTodoMessage} />
       </Paper>
-      <Button variant={'contained'} sx={{ fontSize: 12, width: '100%' }} size='small' onClick={() => store.newCard.postCard()}>Add NEW card</Button>
+      <Button variant={'contained'} sx={{ fontSize: 12, width: '100%' }} size='small' onClick={() => store.newCard.editCard()}>Update this card</Button>
     </Box>
   );
 };

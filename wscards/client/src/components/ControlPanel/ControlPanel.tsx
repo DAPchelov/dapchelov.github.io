@@ -27,6 +27,7 @@ const ControlPanel: React.FC = () => {
       <Routes>
         <Route path='/' element={<HomeControl />} />
         <Route path='/newcard' element={<NewCardControl />} />
+        <Route path='/editcard' element={<NewCardControl />} />
       </Routes>
       <Button variant='text' sx={{ fontSize: 10 }} size='small' color='error' onClick={() => store.logout()}>Logout</Button>
     </Paper>

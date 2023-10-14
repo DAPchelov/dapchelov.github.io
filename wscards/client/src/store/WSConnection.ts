@@ -7,6 +7,7 @@ import NewCardService from '../services/NewCardService';
 import AuthService from '../services/AuthService';
 import CardService from '../services/CardService';
 import TodoService from '../services/TodoService';
+import { ITodo } from '../models/ITodo';
 
 
 class WSConnection {
@@ -18,23 +19,23 @@ class WSConnection {
         }
     });
 
-    user: IUser = {} as IUser;
-    cards: [ICard] = {} as [ICard];
-    isAuth: boolean = localStorage.getItem('isAuth') === 'true';
+    private user: IUser = {} as IUser;
+    private cards: [ICard] = {} as [ICard];
+    private isAuth: boolean = localStorage.getItem('isAuth') === 'true';
     private isCompletedDisplayMode: boolean | undefined = undefined;
 
-    newCard: NewCardService = new NewCardService();
+    newCard: NewCardService = new NewCardService('','', []);
 
     constructor() {
         this.socket.on('TakeAuth', async (data) => {
             
             if (data !== null) {
                 this.setUser(data);
-                console.log('Success Auth!', data);
+                // console.log('Success Auth!');
                 localStorage.setItem('isAuth', 'true');
                 this.setIsAuth(true);
             } else {
-                console.log('Auth not successful!');
+                // console.log('Auth not successful!');
                 localStorage.setItem('isAuth', 'false');
                 this.setIsAuth(false);
 
@@ -68,6 +69,7 @@ class WSConnection {
     setIsCompletedDisplayMode(mode: boolean | undefined) {
         this.isCompletedDisplayMode = mode;
     }
+    
 
     getUser() {
         return this.user
@@ -89,7 +91,12 @@ class WSConnection {
         this.socket.emit('GetCards', { token: this.token });
     }
 
-
+    editCard(_id: string) {
+        const editableCard = this.cards.find((card) => card._id === _id);
+        if (editableCard) {
+            this.newCard = new NewCardService(editableCard._id, editableCard.message, editableCard.todos)
+        }
+    }
     
     setCheckCard(cardId: string) {
         let card = this.cards.find(card => card._id === cardId);

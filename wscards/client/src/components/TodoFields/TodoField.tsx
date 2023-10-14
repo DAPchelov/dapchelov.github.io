@@ -1,23 +1,24 @@
 import ListItem from '@mui/material/ListItem';
 import Checkbox from '@mui/material/Checkbox';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Typography from '@mui/material/Typography';
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { ITodo } from '../../models/ITodo';
 import { observer } from 'mobx-react-lite';
 import { Box, TextField } from '@mui/material';
+import { Context } from '../App'
+
 
 interface ITodoProps {
     content: ITodo,
     removeTodo(id: ITodo['_id']): void,
     checkTodo(id: ITodo['_id']): void,
+    setTodoMessage(message: string, id?: string): void
 }
 
 const TodoField: React.FC<ITodoProps> = (props: ITodoProps) => {
-    const setNewTodoMessage = (message: string) => {
-        props.content.message = message;
-    }
+
+    const store = useContext(Context);
 
     return (
         <Box sx={{
@@ -28,30 +29,25 @@ const TodoField: React.FC<ITodoProps> = (props: ITodoProps) => {
         }}>
             <ListItem disablePadding aria-multiline sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Checkbox
+                    id={'checkBoxId' + props.content._id}
                     checked={props.content.isCompleted}
                     onClick={() => {
                         props.checkTodo(props.content._id);
                     }}
-                    sx={{
-                        cursor: 'pointer',
-                    }} />
+                    sx={{ cursor: 'pointer' }} />
                 <TextField
-                    // id='standard-basic'
-                    id={props.content._id}
+                    id={'textFieldId' + props.content._id}
                     variant='standard'
                     fullWidth
                     sx={{ marginTop: 0 }}
-                    defaultValue='New Todo'
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => setNewTodoMessage(event.target.value)}
+                    defaultValue={props.content.message}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => props.setTodoMessage(event.target.value, props.content._id)}
                 />
                 <DeleteIcon fontSize='small'
                     onClick={() => {
                         props.removeTodo(props.content._id);
                     }}
-                    sx={{
-                        cursor: 'pointer',
-                        width: '30px',
-                    }}
+                    sx={{ cursor: 'pointer', width: '30px' }}
                 />
             </ListItem>
         </Box>

@@ -16,6 +16,7 @@ restRouter.get('/activate/:link', userController.activate);
 restRouter.get('/refresh', userController.refresh);
 
 restRouter.post('/postcard', authMiddleware, userController.postCard);
+restRouter.post('/editcard', authMiddleware, userController.editCard);
 restRouter.post('/checkcard', authMiddleware, userController.checkCard);
 restRouter.post('/removecompleted', authMiddleware, userController.removeCompletedCards);
 restRouter.post('/removeonecard', authMiddleware, userController.removeOneCard);

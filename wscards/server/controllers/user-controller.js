@@ -81,6 +81,13 @@ class userController {
             next(e);
         }
     }
+    async editCard (req, res, next) {
+        try {
+            res.json(await cardService.editCard(req.user._id, req.body._id, req.body.message, req.body.todos)); 
+        } catch (e) {
+            next(e);
+        }
+    }
     async removeCompletedCards (req, res, next) {
         try {
             res.json(await cardService.removeCompletedCards(req.user._id)); 

@@ -11,6 +11,7 @@ type ITodoListProps = {
     todos: ITodo[],
     removeTodo (id: string | undefined): void,
     checkTodo (id: string | undefined): void,
+    setTodoMessage (message: string, id: string | undefined): void
 }
 
 const TodoFields: React.FC<ITodoListProps> = (props: ITodoListProps) => {
@@ -22,7 +23,7 @@ const TodoFields: React.FC<ITodoListProps> = (props: ITodoListProps) => {
         }}>
             {props.todos.map(todo => {
                 return (
-                    <TodoField key={todo._id} content={todo} removeTodo={props.removeTodo} checkTodo={props.checkTodo} />
+                    <TodoField key={todo._id} content={todo} removeTodo={props.removeTodo} checkTodo={props.checkTodo} setTodoMessage={props.setTodoMessage}/>
                 )
             })}
             <Button variant={'contained'} sx={{ fontSize: 12, width: '100%' }} size='small' color="secondary" onClick={() => store.newCard.addTodo('New todo', false)}>Add NEW Todo</Button>

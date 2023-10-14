@@ -1,6 +1,7 @@
 import ListItem from '@mui/material/ListItem';
 import Checkbox from '@mui/material/Checkbox';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import Typography from '@mui/material/Typography';
 import { ICard } from '../models/ICard';
 import { observer } from 'mobx-react-lite';
@@ -9,6 +10,7 @@ import TodoList from './TodoList/TodoList';
 
 import React, { useContext } from 'react';
 import { Context } from './App'
+import { Link } from 'react-router-dom';
 
 const Card: React.FC<ICard> = (props: ICard) => {
 
@@ -37,6 +39,7 @@ const Card: React.FC<ICard> = (props: ICard) => {
                 justifyContent: 'space-between',
             }}>
                 <Checkbox
+                    id={props._id}
                     checked={props.isCompleted}
                     onClick={() => store.checkCard(props._id, !props.isCompleted)}
                     sx={{ cursor: 'pointer' }} />
@@ -47,16 +50,14 @@ const Card: React.FC<ICard> = (props: ICard) => {
                 }}>
                     {props.message}
                 </Typography>
-                <DeleteIcon fontSize='small'
-                    onClick={() => {
-                        store.removeOneCard(props._id);
-                    }}
-                    sx={{
-                        cursor: 'pointer',
-                        width: '30px',
-                    }} />
+                <Link to='/editcard'>
+                    <EditIcon fontSize='small' onClick={() => { store.editCard(props._id); }} sx={{ cursor: 'pointer', width: '30px' }} />
+                </Link>
+
+                <DeleteIcon fontSize='small' onClick={() => { store.removeOneCard(props._id); }} sx={{ cursor: 'pointer', width: '30px' }} />
             </ListItem>
-            <TodoList todos={props.todos} removeTodo={removeTodo} checkTodo={checkTodo}/>
+
+            <TodoList todos={props.todos} removeTodo={removeTodo} checkTodo={checkTodo} />
         </Paper>
     );
 }

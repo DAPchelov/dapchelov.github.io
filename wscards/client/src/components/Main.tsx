@@ -10,6 +10,7 @@ import CardsList from './CardsList'
 import InputForm from './InputForm';
 import ControlPanel from './ControlPanel/ControlPanel';
 import { Context } from './App'
+import EditCardForm from './EditCardForm';
 
 
 const Main: React.FC = () => {
@@ -28,6 +29,7 @@ const Main: React.FC = () => {
         <Routes>
           <Route path='/' element={<CardsList />} />
           <Route path='/newcard' element={<InputForm />} />
+          <Route path='/editcard' element={<EditCardForm />} />
         </Routes>
       </Box>
     </Container>

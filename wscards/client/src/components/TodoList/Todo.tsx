@@ -10,8 +10,8 @@ import { Box } from '@mui/material';
 
 interface ITodoProps {
     content: ITodo,
-    removeTodo (id: ITodo['_id']): void,
-    checkTodo (id: ITodo['_id']): void,
+    removeTodo(id: ITodo['_id']): void,
+    checkTodo(id: ITodo['_id']): void,
 }
 
 const Todo: React.FC<ITodoProps> = (props: ITodoProps) => {
@@ -25,13 +25,10 @@ const Todo: React.FC<ITodoProps> = (props: ITodoProps) => {
         }}>
             <ListItem disablePadding aria-multiline sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Checkbox
+                    id={'checkBoxId' + props.content._id}
                     checked={props.content.isCompleted}
-                    onClick={() => {
-                        props.checkTodo(props.content._id);
-                    }}
-                    sx={{
-                        cursor: 'pointer',
-                    }} />
+                    onClick={() => { props.checkTodo(props.content._id) }}
+                    sx={{ cursor: 'pointer' }} />
                 <Typography sx={{
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
@@ -44,10 +41,7 @@ const Todo: React.FC<ITodoProps> = (props: ITodoProps) => {
                     onClick={() => {
                         props.removeTodo(props.content._id);
                     }}
-                    sx={{
-                        cursor: 'pointer',
-                        width: '30px',
-                    }}
+                    sx={{ cursor: 'pointer', width: '30px' }}
                 />
             </ListItem>
         </Box>

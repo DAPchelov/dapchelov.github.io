@@ -3,10 +3,14 @@ import CardsDto from '../dtos/cards-dto';
 
 class CardService {
     async editCard(reqUserId, cardId, postMessage, postTodos) {
+        // delete TEMP todo IDs before post new card to BE. It will get new IDs in the database
+        postTodos.forEach(todo => { delete (todo._id) });
         await CardsListModel.updateOne({ userId: reqUserId, 'cards._id': cardId }, { $set: { 'cards.$.message': postMessage } });
         await CardsListModel.updateOne({ userId: reqUserId, 'cards._id': cardId }, { $set: { 'cards.$.todos': postTodos } });
     }
     async postNewCard(reqUserId, postMessage, postTodos) {
+        // delete TEMP todo IDs before post new card to BE. It will get new IDs in the database
+        postTodos.forEach(todo => { delete (todo._id) });
         const newCard = {
             isAccepted: false,
             isCompleted: false,

@@ -19,11 +19,11 @@ const ControlPanel: React.FC = () => {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingLeft: 2,
-        paddingRight: 2,
+        paddingLeft: 1,
+        paddingRight: 1,
         boxShadow: 3,
-      }}
-    >
+        height: 30
+      }}>
       <Routes>
         <Route path='/' element={<HomeControl />} />
         <Route path='/newcard' element={<NewCardControl />} />

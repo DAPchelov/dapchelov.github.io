@@ -37,7 +37,6 @@ class NewCardService {
             // add TEMP todo IDs only for normal rendering <TodoFields> in <InputForm>
             _id: uuidv4(),
         };
-
         this.todos.push(newTodo);
     }
 
@@ -53,16 +52,14 @@ class NewCardService {
     }
 
     async postCard(): Promise<void> {
-        // delete TEMP todo IDs before post new card to BE. It will get new IDs in the database
         if (this.message.length > 0) {
-            this.todos.forEach(todo => { delete (todo._id) });
             $api.post('/postcard', { message: this.message, todos: this.todos });
-            // $api.post('/postcard', { _id: '6523a1210188fec1175b1ad8', message: '3', todos: [{isCompleted: false, message: '3'}], });
             this.clearCard();
         }
     }
 
     async editCard(): Promise<void> {
+        // this.todos.forEach(todo => { delete (todo._id) });
         $api.post('/editcard', { _id: this._id, message: this.message, todos: this.todos });
         this.clearCard();
     }

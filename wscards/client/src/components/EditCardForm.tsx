@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite';
 import { Context } from './App'
 import { Box, Button, ListItem } from '@mui/material';
 import TodoFields from './TodoFields/TodoFields';
+import { Link, useNavigate } from 'react-router-dom';
 
 const InputForm: React.FC = () => {
   const store = useContext(Context);
@@ -14,11 +15,19 @@ const InputForm: React.FC = () => {
   const checkTodo = store.newCard.checkTodo.bind(store.newCard);
   const setTodoMessage = store.newCard.setTodoMessage.bind(store.newCard);
 
+  const navigate = useNavigate();
+
   const onPush = (keyKode: string) => {
     if (keyKode === 'Enter') {
       store.newCard.editCard();
+      navigate('/');
     }
   };
+  const updateCardCallback = () => {
+    store.newCard.editCard().then(() => {
+      navigate('/');
+    });
+  }
 
   return (
     <Box component='form' noValidate autoComplete='off'>
@@ -44,7 +53,7 @@ const InputForm: React.FC = () => {
         </ListItem>
         <TodoFields todos={store.newCard.todos} removeTodo={removeTodo} checkTodo={checkTodo} setTodoMessage={setTodoMessage} />
       </Paper>
-      <Button variant={'contained'} sx={{ fontSize: 12, width: '100%' }} size='small' onClick={() => store.newCard.editCard()}>Update this card</Button>
+      <Button variant={'contained'} sx={{ fontSize: 12, width: '100%' }} size='small' onClick={() => updateCardCallback()}>Update this card</Button>
     </Box>
   );
 };

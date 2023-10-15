@@ -37,12 +37,6 @@ const Todo: React.FC<ITodoProps> = (props: ITodoProps) => {
                 }}>
                     {props.content.message}
                 </Typography>
-                <DeleteIcon fontSize='small'
-                    onClick={() => {
-                        props.removeTodo(props.content._id);
-                    }}
-                    sx={{ cursor: 'pointer', width: '30px' }}
-                />
             </ListItem>
         </Box>
     );

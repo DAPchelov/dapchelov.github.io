@@ -53,14 +53,13 @@ class NewCardService {
 
     async postCard(): Promise<void> {
         if (this.message.length > 0) {
-            $api.post('/postcard', { message: this.message, todos: this.todos });
+            await $api.post('/postcard', { message: this.message, todos: this.todos });
             this.clearCard();
         }
     }
 
     async editCard(): Promise<void> {
-        // this.todos.forEach(todo => { delete (todo._id) });
-        $api.post('/editcard', { _id: this._id, message: this.message, todos: this.todos });
+        await $api.post('/editcard', { _id: this._id, message: this.message, todos: this.todos });
         this.clearCard();
     }
     setTodoMessage(message: string, id?: string) {

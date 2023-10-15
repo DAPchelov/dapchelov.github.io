@@ -7,10 +7,9 @@ import NewCardService from '../services/NewCardService';
 import AuthService from '../services/AuthService';
 import CardService from '../services/CardService';
 import TodoService from '../services/TodoService';
-import { ITodo } from '../models/ITodo';
 
 
-class WSConnection {
+class WSStore {
     private token: string | null = localStorage.getItem('token');
 
     private socket = io('http://pchel.ddns.net:5000/', {
@@ -188,4 +187,4 @@ class WSConnection {
         }
     }
 };
-export default WSConnection;
+export default WSStore;

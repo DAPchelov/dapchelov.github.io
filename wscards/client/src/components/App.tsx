@@ -1,12 +1,12 @@
 import { observer } from 'mobx-react-lite';
-import React, { useState, createContext } from 'react';
+import React, { createContext } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import WSConnection from '../store/WSConnection';
+import WSStore from '../store/WSStore';
 
 import LoginForm from './loginForm/LoginForm';
 import Main from './Main';
 
-const store = new WSConnection;
+const store = new WSStore;
 const Context = createContext(store);
 
 const App: React.FC = () => {

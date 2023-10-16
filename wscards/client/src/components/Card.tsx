@@ -53,10 +53,8 @@ const Card: React.FC<ICard> = (props: ICard) => {
                 <Link to='/editcard'>
                     <EditIcon fontSize='small' onClick={() => { store.editCard(props._id); }} sx={{ cursor: 'pointer', width: '30px' }} />
                 </Link>
-
                 <DeleteIcon fontSize='small' onClick={() => { store.removeOneCard(props._id); }} sx={{ cursor: 'pointer', width: '30px' }} />
             </ListItem>
-
             <TodoList todos={props.todos} removeTodo={removeTodo} checkTodo={checkTodo} />
         </Paper>
     );

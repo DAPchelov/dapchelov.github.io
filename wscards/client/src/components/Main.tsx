@@ -18,7 +18,6 @@ const Main: React.FC = () => {
 
   return (
     <Container sx={{
-      pt: '100px',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center'

@@ -30,11 +30,9 @@ class WSStore {
             
             if (data !== null) {
                 this.setUser(data);
-                // console.log('Success Auth!');
                 localStorage.setItem('isAuth', 'true');
                 this.setIsAuth(true);
             } else {
-                // console.log('Auth not successful!');
                 localStorage.setItem('isAuth', 'false');
                 this.setIsAuth(false);
 

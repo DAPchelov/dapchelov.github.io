@@ -39,7 +39,8 @@ const TodoField: React.FC<ITodoProps> = (props: ITodoProps) => {
                     id={'textFieldId' + props.content._id}
                     variant='standard'
                     fullWidth
-                    sx={{ marginTop: 0 }}
+                    margin='dense'
+                    label='Todo message'
                     defaultValue={props.content.message}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => props.setTodoMessage(event.target.value, props.content._id)}
                 />

@@ -50,6 +50,7 @@ class userController {
             next(e);
         }
     }
+    
     async refresh(req, res, next) {
         try {
             const { refreshToken } = req.cookies;

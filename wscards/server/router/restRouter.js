@@ -21,10 +21,10 @@ restRouter.post('/checkcard', authMiddleware, userController.checkCard);
 restRouter.post('/removecompleted', authMiddleware, userController.removeCompletedCards);
 restRouter.post('/removeonecard', authMiddleware, userController.removeOneCard);
 
-restRouter.post('/removetodo', authMiddleware, userController.removeTodo);
+// restRouter.post('/removetodo', authMiddleware, userController.removeTodo);
 restRouter.post('/checktodo', authMiddleware, userController.checkTodo);
 
-restRouter.get('/cards', authMiddleware, userController.getUserCards);
-restRouter.get('/user', authMiddleware, userController.getUser);
+// restRouter.get('/cards', authMiddleware, userController.getUserCards);
+// restRouter.get('/user', authMiddleware, userController.getUser);
 
 export default restRouter;

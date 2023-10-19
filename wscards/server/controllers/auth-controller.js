@@ -50,7 +50,6 @@ class userController {
             next(e);
         }
     }
-    
     async refresh(req, res, next) {
         try {
             const { refreshToken } = req.cookies;
@@ -61,20 +60,21 @@ class userController {
             next(e);
         }
     }
-    async getUserCards(req, res, next) {
-        try {
-            res.json(await cardService.getUserCards(req.user._id)); 
-        } catch (e) {
-            next(e);
-        }
-    }
-    async getUser(req, res, next) {
-        try {
-            res.json(await userService.getUser(req.user._id)); 
-        } catch (e) {
-            next(e);
-        }
-    }
+
+    // async getUserCards(req, res, next) {
+    //     try {
+    //         res.json(await cardService.getUserCards(req.user._id)); 
+    //     } catch (e) {
+    //         next(e);
+    //     }
+    // }
+    // async getUser(req, res, next) {
+    //     try {
+    //         res.json(await userService.getUser(req.user._id)); 
+    //     } catch (e) {
+    //         next(e);
+    //     }
+    // }
     async postCard (req, res, next) {
         try {
             res.json(await cardService.postNewCard(req.user._id, req.body.message, req.body.todos)); 
@@ -110,13 +110,13 @@ class userController {
             next(e);
         }
     }
-    async removeTodo (req, res, next) {
-        try {
-            res.json(await todoService.removeTodo(req.user._id, req.body.cardId, req.body.todoId)); 
-        } catch (e) {
-            next(e);
-        }
-    }
+    // async removeTodo (req, res, next) {
+    //     try {
+    //         res.json(await todoService.removeTodo(req.user._id, req.body.cardId, req.body.todoId)); 
+    //     } catch (e) {
+    //         next(e);
+    //     }
+    // }
     async checkTodo (req, res, next) {
         try {
             res.json(await todoService.checkTodo(req.user._id, req.body.cardId, req.body.todoId)); 

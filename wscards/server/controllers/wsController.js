@@ -19,11 +19,11 @@ const takeCards = (socket, user) => {
 
 const WsController = () => {
     io.on('connection', socket => {
-        socket.emit('TakeAuth', validateUser(socket, socket.handshake.auth.token));
-        // let user = null;
+        let user = validateUser(socket, socket.handshake.auth.token);
+        socket.emit('TakeAuth', user);
 
         socket.on('GetAuth', (data) => {
-            const user = tokenService.validateAccessToken(data.token);
+            user = tokenService.validateAccessToken(data.token);
             socket.emit('TakeAuth', user);
         });
         socket.on('GetCards', (data) => {
@@ -33,31 +33,26 @@ const WsController = () => {
             });
         });
         socket.on('PostCard', (data) => {
-            const user = validateUser(socket, data.token);
             const card = data.card;
+            console.log(user._id);
             user && cardService.postNewCard(user._id, card.message, card.todos).then(takeCards(socket, user));
         });
         socket.on('EditCard', (data) => {
-            const user = validateUser(socket, data.token);
             const card = data.card;
             user && cardService.editCard(user._id, card._id, card.message, card.todos).then(takeCards(socket, user));
         });
         socket.on('RemoveCompletedCards', (data) => {
-            const user = validateUser(socket, data.token);
             user && cardService.removeCompletedCards(user._id).then(takeCards(socket, user));
         });
         socket.on('CheckCard', (data) => {
-            const user = validateUser(socket, data.token);
             const card = data.card;
             user && cardService.checkCard(user._id, card._id, card.isCompleted).then(takeCards(socket, user));
         });
         socket.on('RemoveOneCard', (data) => {
-            const user = validateUser(socket, data.token);
             const card = data.card;
             user && cardService.removeOneCard(user._id, card._id).then(takeCards(socket, user));
         });
         socket.on('CheckTodo', (data) => {
-            const user = validateUser(socket, data.token);
             const card = data.card;
             const todo = data.todo;
             user && todoService.checkTodo(user._id, card._id, todo._id).then(takeCards(socket, user));

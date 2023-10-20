@@ -5,9 +5,6 @@ import { IUser } from '../models/IUser';
 import NewCardService from '../services/NewCardService';
 
 import AuthService from '../services/AuthService';
-import CardService from '../services/CardService';
-import TodoService from '../services/TodoService';
-
 
 class WSStore {
     private token: string | null = localStorage.getItem('token');
@@ -23,11 +20,11 @@ class WSStore {
     private isAuth: boolean = localStorage.getItem('isAuth') === 'true';
     private isCompletedDisplayMode: boolean | undefined = undefined;
 
-    newCard: NewCardService = new NewCardService('','', []);
+    newCard: NewCardService = new NewCardService('', '', [], this.socket);
 
     constructor() {
         this.socket.on('TakeAuth', async (data) => {
-            
+
             if (data !== null) {
                 this.setUser(data);
                 localStorage.setItem('isAuth', 'true');
@@ -41,7 +38,6 @@ class WSStore {
                 this.setToken(response.data.accessToken);
 
                 this.getAuth();
-                this.getCards();
             }
         });
 
@@ -66,7 +62,6 @@ class WSStore {
     setIsCompletedDisplayMode(mode: boolean | undefined) {
         this.isCompletedDisplayMode = mode;
     }
-    
 
     getUser() {
         return this.user
@@ -88,13 +83,6 @@ class WSStore {
         this.socket.emit('GetCards', { token: this.token });
     }
 
-    editCard(_id: string) {
-        const editableCard = this.cards.find((card) => card._id === _id);
-        if (editableCard) {
-            this.newCard = new NewCardService(editableCard._id, editableCard.message, editableCard.todos)
-        }
-    }
-    
     setCheckCard(cardId: string) {
         let card = this.cards.find(card => card._id === cardId);
         if (card) {
@@ -130,27 +118,25 @@ class WSStore {
         }
     }
 
-    async checkCard(cardId: string, isCompleted: boolean) {
-        try {
-            await CardService.checkCard(cardId, isCompleted);
-            this.setCheckCard(cardId);
-        } catch (e: any) {
-            console.log(e.response?.data?.message);
-        }
-
-    }
-
-    async postCard(cardMessage: string) {
-        try {
-            await CardService.postCard(cardMessage);
-        } catch (e: any) {
-            console.log(e.response?.data?.message);
+    editCard(_id: string) {
+        const editableCard = this.cards.find((card) => card._id === _id);
+        if (editableCard) {
+            this.newCard = new NewCardService(editableCard._id, editableCard.message, editableCard.todos, this.socket)
         }
     }
 
     async removeCompletedCards() {
         try {
-            await CardService.removeCompletedCards();
+            this.socket.emit('RemoveCompletedCards');
+        } catch (e: any) {
+            console.log(e.response?.data?.message);
+        }
+    }
+
+    async checkCard(cardId: string, isCompleted: boolean) {
+        try {
+            this.socket.emit('CheckCard', { card: { _id: cardId, isCompleted: isCompleted } });
+            this.setCheckCard(cardId);
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }
@@ -158,19 +144,8 @@ class WSStore {
 
     async removeOneCard(cardId: string) {
         try {
-            await CardService.removeOneCard(cardId).then(()=> {
-                this.receiveCards();
-            });
-        } catch (e: any) {
-            console.log(e.response?.data?.message);
-        }
-    }
-
-    async removeTodo(cardId: string, todoId: string) {
-        try {
-            await TodoService.removeTodo(cardId, todoId).then(()=> {
-                this.receiveCards();
-            });
+            this.socket.emit('RemoveOneCard', { card: { _id: cardId } });
+            this.receiveCards();
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }
@@ -178,7 +153,7 @@ class WSStore {
 
     async checkTodo(cardId: string, todoId: string) {
         try {
-            await TodoService.checkTodo(cardId, todoId);
+            this.socket.emit('CheckTodo', { card: { _id: cardId }, todo: { _id: todoId} });
             this.setCheckTodo(cardId, todoId);
         } catch (e: any) {
             console.log(e.response?.data?.message);

@@ -1,6 +1,7 @@
 import { io } from '../index';
 import tokenService from "../service/token-service";
 import cardService from "../service/card-service";
+import todoService from "../service/todo-service";
 
 const validateUser = (socket, token) => {
     const user = tokenService.validateAccessToken(token);
@@ -34,19 +35,18 @@ const WsController = () => {
         });
         socket.on('PostCard', (data) => {
             const card = data.card;
-            console.log(user._id);
             user && cardService.postNewCard(user._id, card.message, card.todos).then(takeCards(socket, user));
         });
         socket.on('EditCard', (data) => {
             const card = data.card;
             user && cardService.editCard(user._id, card._id, card.message, card.todos).then(takeCards(socket, user));
         });
-        socket.on('RemoveCompletedCards', (data) => {
+        socket.on('RemoveCompletedCards', () => {
             user && cardService.removeCompletedCards(user._id).then(takeCards(socket, user));
         });
         socket.on('CheckCard', (data) => {
             const card = data.card;
-            user && cardService.checkCard(user._id, card._id, card.isCompleted).then(takeCards(socket, user));
+            user && cardService.checkCard(user._id, card._id, card.isCompleted);
         });
         socket.on('RemoveOneCard', (data) => {
             const card = data.card;
@@ -55,7 +55,7 @@ const WsController = () => {
         socket.on('CheckTodo', (data) => {
             const card = data.card;
             const todo = data.todo;
-            user && todoService.checkTodo(user._id, card._id, todo._id).then(takeCards(socket, user));
+            user && todoService.checkTodo(user._id, card._id, todo._id);
         });
     });
 }

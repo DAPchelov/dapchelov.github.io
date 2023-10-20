@@ -24,9 +24,8 @@ const InputForm: React.FC = () => {
     }
   };
   const updateCardCallback = () => {
-    store.newCard.editCard().then(() => {
-      navigate('/');
-    });
+    store.newCard.editCard()
+    navigate('/');
   }
 
   return (

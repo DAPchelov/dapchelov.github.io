@@ -16,9 +16,6 @@ const Card: React.FC<ICard> = (props: ICard) => {
 
     const store = useContext(Context);
 
-    const removeTodo = (todoId: string) => {
-        store.removeTodo(props._id, todoId);
-    }
     const checkTodo = (todoId: string) => {
         store.checkTodo(props._id, todoId);
     }
@@ -55,7 +52,7 @@ const Card: React.FC<ICard> = (props: ICard) => {
                 </Link>
                 <DeleteIcon fontSize='small' onClick={() => { store.removeOneCard(props._id); }} sx={{ cursor: 'pointer', width: '30px' }} />
             </ListItem>
-            <TodoList todos={props.todos} removeTodo={removeTodo} checkTodo={checkTodo} />
+            <TodoList todos={props.todos} checkTodo={checkTodo} />
         </Paper>
     );
 }

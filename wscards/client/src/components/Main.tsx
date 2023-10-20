@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import { Container } from '@mui/system';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import CardsList from './CardsList'
@@ -11,6 +10,11 @@ import InputForm from './InputForm';
 import ControlPanel from './ControlPanel/ControlPanel';
 import { Context } from './App'
 import EditCardForm from './EditCardForm';
+import Avatar from '@mui/material/Avatar';
+import { lightBlue } from '@mui/material/colors';
+import ListItemText from '@mui/material/ListItemText';
+import ListItem from '@mui/material/ListItem';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
 
 
 const Main: React.FC = () => {
@@ -22,7 +26,12 @@ const Main: React.FC = () => {
       flexDirection: 'column',
       alignItems: 'center'
     }}>
-      {store.getUser() && (<Typography variant='h4' color='text.secondary' gutterBottom>{store.getUser().email}</Typography>)}
+      <ListItem>
+        <ListItemAvatar>
+          <Avatar sx={{ bgcolor: lightBlue[600] }}>ПД</Avatar>
+        </ListItemAvatar>
+        <ListItemText primary='Дмитрий Пчелов' secondary='Команда Ракета' />
+      </ListItem>
       <Box sx={{ width: '100%' }}>
         <ControlPanel />
         <Routes>

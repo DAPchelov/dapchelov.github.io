@@ -1,18 +1,20 @@
 import { makeAutoObservable } from "mobx";
-import $api from "../http";
 import { ITodo } from "../models/ITodo";
 import { v4 as uuidv4 } from 'uuid';
+import { Socket } from "socket.io-client";
 
 class NewCardService {
 
     _id: string = '';
     message: string = '';
     todos: ITodo[] = [];
+    socket: Socket = {} as Socket;
 
-    constructor(_id: string, message: string, todos: ITodo[]) {
+    constructor(_id: string, message: string, todos: ITodo[], socket: Socket) {
         this.message = message;
         this.todos = todos;
         this._id = _id;
+        this.socket = socket;
         makeAutoObservable(this);
     }
 
@@ -50,24 +52,33 @@ class NewCardService {
             todo.isCompleted = !todo.isCompleted
         }
     }
-
-    async postCard(): Promise<void> {
-        if (this.message.length > 0) {
-            await $api.post('/postcard', { message: this.message, todos: this.todos });
-            this.clearCard();
-        }
-    }
-
-    async editCard(): Promise<void> {
-        await $api.post('/editcard', { _id: this._id, message: this.message, todos: this.todos });
-        this.clearCard();
-    }
     setTodoMessage(message: string, id?: string) {
         const todo = this.todos.find(todo => todo._id === id);
         if (todo) {
             todo.message = message
         }
     }
+
+    postCard() {
+        try {
+            if (this.message.length > 0) {
+                this.socket.emit('PostCard', { card: { message: this.message, todos: this.todos } });
+                this.clearCard();
+            }
+        } catch (e: any) {
+            console.log(e.response?.data?.message);
+        }
+    }
+
+    editCard() {
+        try {
+            this.socket.emit('EditCard', { card: { _id: this._id, message: this.message, todos: this.todos } });
+            this.clearCard();
+        } catch (e: any) {
+            console.log(e.response?.data?.message);
+        }
+    }
+    
 }
 
 export default NewCardService;

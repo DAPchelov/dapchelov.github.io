@@ -75,41 +75,41 @@ class userController {
     //         next(e);
     //     }
     // }
-    async postCard (req, res, next) {
-        try {
-            res.json(await cardService.postNewCard(req.user._id, req.body.message, req.body.todos)); 
-        } catch (e) {
-            next(e);
-        }
-    }
-    async editCard (req, res, next) {
-        try {
-            res.json(await cardService.editCard(req.user._id, req.body._id, req.body.message, req.body.todos)); 
-        } catch (e) {
-            next(e);
-        }
-    }
-    async removeCompletedCards (req, res, next) {
-        try {
-            res.json(await cardService.removeCompletedCards(req.user._id)); 
-        } catch (e) {
-            next(e);
-        }
-    }
-    async checkCard (req, res, next) {
-        try {
-            res.json(await cardService.checkCard(req.user._id, req.body.cardId, req.body.isCompleted)); 
-        } catch (e) {
-            next(e);
-        }
-    }
-    async removeOneCard (req, res, next) {
-        try {
-            res.json(await cardService.removeOneCard(req.user._id, req.body.cardId)); 
-        } catch (e) {
-            next(e);
-        }
-    }
+    // async postCard (req, res, next) {
+    //     try {
+    //         res.json(await cardService.postNewCard(req.user._id, req.body.message, req.body.todos)); 
+    //     } catch (e) {
+    //         next(e);
+    //     }
+    // }
+    // async editCard (req, res, next) {
+    //     try {
+    //         res.json(await cardService.editCard(req.user._id, req.body._id, req.body.message, req.body.todos)); 
+    //     } catch (e) {
+    //         next(e);
+    //     }
+    // }
+    // async removeCompletedCards (req, res, next) {
+    //     try {
+    //         res.json(await cardService.removeCompletedCards(req.user._id)); 
+    //     } catch (e) {
+    //         next(e);
+    //     }
+    // }
+    // async checkCard (req, res, next) {
+    //     try {
+    //         res.json(await cardService.checkCard(req.user._id, req.body.cardId, req.body.isCompleted)); 
+    //     } catch (e) {
+    //         next(e);
+    //     }
+    // }
+    // async removeOneCard (req, res, next) {
+    //     try {
+    //         res.json(await cardService.removeOneCard(req.user._id, req.body.cardId)); 
+    //     } catch (e) {
+    //         next(e);
+    //     }
+    // }
     // async removeTodo (req, res, next) {
     //     try {
     //         res.json(await todoService.removeTodo(req.user._id, req.body.cardId, req.body.todoId)); 
@@ -117,13 +117,13 @@ class userController {
     //         next(e);
     //     }
     // }
-    async checkTodo (req, res, next) {
-        try {
-            res.json(await todoService.checkTodo(req.user._id, req.body.cardId, req.body.todoId)); 
-        } catch (e) {
-            next(e);
-        }
-    }
+    // async checkTodo (req, res, next) {
+    //     try {
+    //         res.json(await todoService.checkTodo(req.user._id, req.body.cardId, req.body.todoId)); 
+    //     } catch (e) {
+    //         next(e);
+    //     }
+    // }
 }
 
 export default new userController();

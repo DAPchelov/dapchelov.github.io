@@ -3,7 +3,7 @@ import { ITodo } from "../models/ITodo";
 import { v4 as uuidv4 } from 'uuid';
 import { Socket } from "socket.io-client";
 
-class NewCardService {
+class NewCardController {
 
     _id: string = '';
     message: string = '';
@@ -81,4 +81,4 @@ class NewCardService {
     
 }
 
-export default NewCardService;
+export default NewCardController;

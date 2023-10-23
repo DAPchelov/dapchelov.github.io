@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx';
 import { io } from 'socket.io-client';
 import { ICard } from '../models/ICard';
 import { IUser } from '../models/IUser';
-import NewCardService from '../services/NewCardService';
+import NewCardController from './NewCardController';
 
 import AuthService from '../services/AuthService';
 
@@ -20,7 +20,7 @@ class WSStore {
     private isAuth: boolean = localStorage.getItem('isAuth') === 'true';
     private isCompletedDisplayMode: boolean | undefined = undefined;
 
-    newCard: NewCardService = new NewCardService('', '', [], this.socket);
+    newCard: NewCardController = new NewCardController('', '', [], this.socket);
 
     constructor() {
         this.socket.on('TakeAuth', async (data) => {
@@ -33,11 +33,12 @@ class WSStore {
                 localStorage.setItem('isAuth', 'false');
                 this.setIsAuth(false);
 
-                const response = await AuthService.refresh();
-                localStorage.setItem('token', response.data.accessToken);
-                this.setToken(response.data.accessToken);
+                AuthService.refresh().then((response) => {
+                    localStorage.setItem('token', response.data.accessToken);
+                    this.setToken(response.data.accessToken);
 
-                this.getAuth();
+                    this.getAuth();
+                });
             }
         });
 
@@ -97,6 +98,13 @@ class WSStore {
         }
     }
 
+    editCard(_id: string) {
+        const editableCard = this.cards.find((card) => card._id === _id);
+        if (editableCard) {
+            this.newCard = new NewCardController(editableCard._id, editableCard.message, editableCard.todos, this.socket)
+        }
+    }
+
     async logout() {
         try {
             await AuthService.logout();
@@ -115,13 +123,6 @@ class WSStore {
             this.setUser(response.data.user);
         } catch (e: any) {
             console.log(e.response?.data?.message);
-        }
-    }
-
-    editCard(_id: string) {
-        const editableCard = this.cards.find((card) => card._id === _id);
-        if (editableCard) {
-            this.newCard = new NewCardService(editableCard._id, editableCard.message, editableCard.todos, this.socket)
         }
     }
 
@@ -153,7 +154,7 @@ class WSStore {
 
     async checkTodo(cardId: string, todoId: string) {
         try {
-            this.socket.emit('CheckTodo', { card: { _id: cardId }, todo: { _id: todoId} });
+            this.socket.emit('CheckTodo', { card: { _id: cardId }, todo: { _id: todoId } });
             this.setCheckTodo(cardId, todoId);
         } catch (e: any) {
             console.log(e.response?.data?.message);

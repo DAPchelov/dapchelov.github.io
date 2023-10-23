@@ -27,8 +27,7 @@ const WsController = () => {
             user = tokenService.validateAccessToken(data.token);
             socket.emit('TakeAuth', user);
         });
-        socket.on('GetCards', (data) => {
-            const user = validateUser(socket, data.token);
+        socket.on('GetCards', () => {
             user && cardService.getUserCards(user._id).then((data) => {
                 socket.emit('TakeCards', data);
             });

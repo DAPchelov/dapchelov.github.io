@@ -2,6 +2,7 @@ import { io } from '../index';
 import tokenService from "../service/token-service";
 import cardService from "../service/card-service";
 import todoService from "../service/todo-service";
+import groupService from "../service/group-service"
 
 const validateUser = (socket, token) => {
     const user = tokenService.validateAccessToken(token);
@@ -55,6 +56,9 @@ const WsController = () => {
             const card = data.card;
             const todo = data.todo;
             user && todoService.checkTodo(user._id, card._id, todo._id);
+        });
+        socket.on('CreateNewGroup', (data) => {
+            user && groupService.createNewGroup(data.label);
         });
     });
 }

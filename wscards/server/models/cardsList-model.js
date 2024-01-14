@@ -23,4 +23,5 @@ const CardsListSchema = new Schema({
 
 const CardsListModel = model('Card', CardsListSchema);
 
+export { CardSchema };
 export default CardsListModel;

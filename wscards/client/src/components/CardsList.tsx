@@ -1,8 +1,8 @@
-import Stack from '@mui/material/Stack';
 import React, { useContext, useEffect } from 'react';
 import Card from './Card'
 import { Context } from './App'
 import { observer } from 'mobx-react-lite';
+import { Box, Paper } from '@mui/material';
 
 const CardsList: React.FC = () => {
     const store = useContext(Context);
@@ -12,7 +12,12 @@ const CardsList: React.FC = () => {
     }, [])
 
     return (
-        <Stack>
+        <Paper sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            rowGap: 2,
+            padding: 1,
+          }}>
             {store.getCards().length > 0 && store.getCards()
                 .map(card => {
                     if (store.getIsCompletedDisplayMode() === undefined) {
@@ -26,7 +31,7 @@ const CardsList: React.FC = () => {
                         )
                     }
                 })}
-        </Stack>
+        </Paper>
     );
 }
 

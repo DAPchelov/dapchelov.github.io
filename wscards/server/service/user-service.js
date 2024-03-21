@@ -18,10 +18,10 @@ class UserService {
         const activationLink = uuidv4();
 
         // set isActivated in user-model default false if need activation by email
-        const user = await UserModel.create({ email, password: hashPassword, activationLink });
+        const user = await UserModel.create({ email, password: hashPassword, activationLink, socketId: "" });
         const userDto = new UserDto(user);
 
-        CardsListModel.create({userId: userDto._id, cards: []});
+        CardsListModel.create({ userId: userDto._id, cards: [] });
 
         // turn on if need mail service
         // await MailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
@@ -88,6 +88,13 @@ class UserService {
     }
     async getUser(userId) {
         return await UserModel.findById(userId);
+    }
+    async getAllUsers() {
+        return await UserModel.find();
+    }
+
+    async setSocketId(userId, socketId) {
+        await UserModel.updateOne({ _id: userId }, { $set: { socketId: socketId } });
     }
 }
 

@@ -9,6 +9,7 @@ const UserSchema = new Schema({
     password: { type: String, required: true },
     isActivated: { type: Boolean, default: true },
     activationLink: { type: String },
+    socketId: {type: String, unique: true, required: true}
 })
 
 const UserModel = model('User', UserSchema);

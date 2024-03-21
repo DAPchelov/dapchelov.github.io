@@ -2,12 +2,10 @@ import ListItem from '@mui/material/ListItem';
 import Checkbox from '@mui/material/Checkbox';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import React, { useContext } from 'react';
+import React from 'react';
 import { ITodo } from '../../models/ITodo';
 import { observer } from 'mobx-react-lite';
 import { Box, TextField } from '@mui/material';
-import { Context } from '../App'
-
 
 interface ITodoProps {
     content: ITodo,
@@ -18,8 +16,6 @@ interface ITodoProps {
 
 const TodoField: React.FC<ITodoProps> = (props: ITodoProps) => {
 
-    const store = useContext(Context);
-
     return (
         <Box sx={{
             boxShadow: '2px 2px 3px rgba(0, 0, 0, 0.1)',
@@ -27,7 +23,7 @@ const TodoField: React.FC<ITodoProps> = (props: ITodoProps) => {
                 background: 'linear-gradient(270deg, rgba(255,85,0,0.15) 0%, rgba(0,0,0,0) 17%, rgba(0,0,0,0) 83%, rgba(21,101,192,0.15) 100%)'
             }
         }}>
-            <ListItem disablePadding aria-multiline sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <ListItem disablePadding sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Checkbox
                     id={'checkBoxId' + props.content._id}
                     checked={props.content.isCompleted}
@@ -39,6 +35,7 @@ const TodoField: React.FC<ITodoProps> = (props: ITodoProps) => {
                     id={'textFieldId' + props.content._id}
                     variant='standard'
                     fullWidth
+                    multiline
                     margin='dense'
                     label='Todo message'
                     defaultValue={props.content.message}

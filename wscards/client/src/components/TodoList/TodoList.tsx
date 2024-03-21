@@ -3,6 +3,7 @@ import React from 'react';
 import Todo from './Todo'
 import { observer } from 'mobx-react-lite';
 import { ITodo } from '../../models/ITodo';
+import { Box } from '@mui/material';
 
 type ITodoListProps = {
     todos: ITodo[],
@@ -12,15 +13,15 @@ type ITodoListProps = {
 const TodoList: React.FC<ITodoListProps> = (props: ITodoListProps) => {
 
     return (
-        <Stack sx ={{
-            width: '100%'
+        <Box sx ={{
+            width: '75%',
         }}>
             {props.todos.map(todo => {
                 return (
                     <Todo key={todo._id} content={todo} checkTodo={props.checkTodo} />
                 )
             })}
-        </Stack>
+        </Box>
     );
 }
 

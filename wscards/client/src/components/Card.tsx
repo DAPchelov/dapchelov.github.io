@@ -22,24 +22,20 @@ const Card: React.FC<ICard> = (props: ICard) => {
 
     return (
         <Paper elevation={2} sx={{
-            padding: 1,
-            marginBottom: 1,
-            marginTop: 1,
             display: 'flex',
-            flexDirection: 'column',
-            boxShadow: 6,
+            // flexDirection: 'column',
         }}>
             <ListItem disablePadding aria-multiline sx={{
-                boxShadow: 3,
                 background: 'rgba(21,101,192,0.15)',
-                display: 'flex',
-                justifyContent: 'space-between',
+                width: '25%',
+                minWidth: '250px'
             }}>
                 <Checkbox
                     id={props._id}
                     checked={props.isCompleted}
                     onClick={() => store.checkCard(props._id, !props.isCompleted)}
                     sx={{ cursor: 'pointer' }} />
+
                 <Typography sx={{
                     overflow: 'hidden',
                     wordWrap: 'break-word',
@@ -47,10 +43,10 @@ const Card: React.FC<ICard> = (props: ICard) => {
                 }}>
                     {props.message}
                 </Typography>
+                <DeleteIcon fontSize='small' onClick={() => { store.removeOneCard(props._id); }} sx={{ cursor: 'pointer', width: '30px' }} />
                 <Link to='/editcard'>
                     <EditIcon fontSize='small' onClick={() => { store.editCard(props._id); }} sx={{ cursor: 'pointer', width: '30px' }} />
                 </Link>
-                <DeleteIcon fontSize='small' onClick={() => { store.removeOneCard(props._id); }} sx={{ cursor: 'pointer', width: '30px' }} />
             </ListItem>
             <TodoList todos={props.todos} checkTodo={checkTodo} />
         </Paper>

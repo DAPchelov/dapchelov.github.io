@@ -3,13 +3,14 @@ import { io } from 'socket.io-client';
 import { ICard } from '../models/ICard';
 import { IUser } from '../models/IUser';
 import NewCardController from './NewCardController';
+import NewGroupController from './NewGroupController';
 
 import AuthService from '../services/AuthService';
 
 class WSStore {
     private token: string | null = localStorage.getItem('token');
 
-    private socket = io('http://pchel.ddns.net:5000/', {
+    private socket = io('http://localhost:5000/', {
         auth: {
             token: this.token
         }
@@ -21,6 +22,8 @@ class WSStore {
     private isCompletedDisplayMode: boolean | undefined = undefined;
 
     newCard: NewCardController = new NewCardController('', '', [], this.socket);
+    newGroup: NewGroupController = new NewGroupController(this.user._id, this.socket);
+
 
     constructor() {
         this.socket.on('TakeAuth', async (data) => {
@@ -111,6 +114,7 @@ class WSStore {
             localStorage.removeItem('token');
             localStorage.setItem('isAuth', 'false');
             this.setIsAuth(false);
+            this.newGroup.clearForm();
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }
@@ -156,6 +160,15 @@ class WSStore {
         try {
             this.socket.emit('CheckTodo', { card: { _id: cardId }, todo: { _id: todoId } });
             this.setCheckTodo(cardId, todoId);
+        } catch (e: any) {
+            console.log(e.response?.data?.message);
+        }
+    }
+
+    async createNewGroup(label: string) {
+        try {
+            this.socket.emit('CreateNewGroup', { label: label });
+            // this.receiveCards();
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }

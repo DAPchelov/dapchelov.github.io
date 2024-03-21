@@ -19,7 +19,7 @@ const SelectButtons: React.FC = () => {
     const store = useContext(Context);
 
     return (
-        <ButtonGroup variant='text' aria-label='text button group'>
+        <ButtonGroup variant='text' aria-label='text button group' >
             <Button variant={outlineButton(undefined, store.getIsCompletedDisplayMode())} sx={{fontSize: 10}} size='small' onClick={() => store.setIsCompletedDisplayMode(undefined)}>All</Button>
             <Button variant={outlineButton(false, store.getIsCompletedDisplayMode())} sx={{fontSize: 10}} size='small' onClick={() => store.setIsCompletedDisplayMode(false)}>Active</Button>
             <Button variant={outlineButton(true, store.getIsCompletedDisplayMode())} sx={{fontSize: 10}} size='small' onClick={() => store.setIsCompletedDisplayMode(true)}>Completed</Button>

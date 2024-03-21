@@ -3,6 +3,7 @@ import tokenService from "../service/token-service";
 import cardService from "../service/card-service";
 import todoService from "../service/todo-service";
 import groupService from "../service/group-service"
+import userService from '../service/user-service';
 
 const validateUser = (socket, token) => {
     const user = tokenService.validateAccessToken(token);
@@ -26,6 +27,7 @@ const WsController = () => {
 
         socket.on('GetAuth', (data) => {
             user = tokenService.validateAccessToken(data.token);
+            userService.setSocketId(user._id, socket.id);
             socket.emit('TakeAuth', user);
         });
         socket.on('GetCards', () => {
@@ -58,7 +60,12 @@ const WsController = () => {
             user && todoService.checkTodo(user._id, card._id, todo._id);
         });
         socket.on('CreateNewGroup', (data) => {
-            user && groupService.createNewGroup(data.label);
+            console.log(data);
+        });
+        socket.on('ReceiveAllUsers', () => {
+            user && userService.getAllUsers().then((data) => {
+                socket.emit('TakeAllUsers', data);
+            });
         });
     });
 }

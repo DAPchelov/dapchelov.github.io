@@ -1,15 +1,19 @@
 import Button from '@mui/material/Button';
 
-import React from 'react';
+import React, { useContext } from 'react';
+import { Context } from '../../App'
 import { observer } from 'mobx-react-lite';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const NewCardControl: React.FC = () => {
+    const navigate = useNavigate();
+    const store = useContext(Context);
 
     return (
-            <>
-                <Link to='/' style={{ textDecoration: 'none' }}><Button variant={'contained'} sx={{ fontSize: 10, width: 150 }} size='small' >Home</Button></Link>
-            </>
+        <>
+            <Button variant='contained' sx={{ fontSize: 10, width: 120 }} size='small' color="secondary" onClick={() => store.newCard.addTodo('', false)}>Add NEW Todo</Button>
+            <Button variant='contained' sx={{ fontSize: 10, width: 120 }} size='small' onClick={() => store.newCard.postCard()}>Add NEW card</Button>
+        </>
     );
 }
 

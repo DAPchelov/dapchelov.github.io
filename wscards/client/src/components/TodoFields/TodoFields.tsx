@@ -1,10 +1,9 @@
 import Stack from '@mui/material/Stack';
-import React, { useContext } from 'react';
+import React from 'react';
 import TodoField from './TodoField'
 import { observer } from 'mobx-react-lite';
 import { ITodo } from '../../models/ITodo';
-import { Button } from '@mui/material';
-import { Context } from '../App'
+import { Box } from '@mui/material';
 
 
 type ITodoListProps = {
@@ -15,19 +14,15 @@ type ITodoListProps = {
 }
 
 const TodoFields: React.FC<ITodoListProps> = (props: ITodoListProps) => {
-    const store = useContext(Context);
     
     return (
-        <Stack sx ={{
-            width: '100%'
-        }}>
+        <Box>
             {props.todos.map(todo => {
                 return (
                     <TodoField key={todo._id} content={todo} removeTodo={props.removeTodo} checkTodo={props.checkTodo} setTodoMessage={props.setTodoMessage}/>
                 )
             })}
-            <Button variant={'contained'} sx={{ fontSize: 12, width: '100%' }} size='small' color="secondary" onClick={() => store.newCard.addTodo('', false)}>Add NEW Todo</Button>
-        </Stack>
+        </Box>
     );
 }
 

@@ -10,7 +10,7 @@ import AuthService from '../services/AuthService';
 class WSStore {
     private token: string | null = localStorage.getItem('token');
 
-    private socket = io('http://localhost:5000/', {
+    private socket = io('http://176.109.109.16:5000/', {
         auth: {
             token: this.token
         }

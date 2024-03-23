@@ -19,7 +19,7 @@ const httpServer = createServer(app);
 
 export const io = new Server(httpServer, {
     cors: {
-        origin: true,
+        origin: 'http://176.109.109.16:3000',
         methods: ['GET', 'POST']
     }
 });
@@ -31,7 +31,7 @@ app.use(cookieParser());
 app.use(cors(
     {
         credentials: true,
-        origin: true,
+        origin: 'http://176.109.109.16:3000',
         // origin: process.env.CLIENT_URL,
     }
 ));

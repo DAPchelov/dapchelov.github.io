@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { CardSchema } from './cardsList-model';
+import { CardSchema } from './cardsList-model.js';
 
 const Schema = mongoose.Schema;
 const model = mongoose.model;

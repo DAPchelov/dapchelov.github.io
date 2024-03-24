@@ -1,11 +1,11 @@
-import UserModel from '../models/user-model'
+import UserModel from '../models/user-model.js'
 import bcrypt from 'bcrypt'
 import { v4 as uuidv4 } from 'uuid';
-import MailService from './mail-service'
-import TokenService from './token-service'
-import UserDto from '../dtos/user-dto'
-import ApiError from '../exeptions/api-error'
-import CardsListModel from '../models/cardsList-model';
+import MailService from './mail-service.js'
+import TokenService from './token-service.js'
+import UserDto from '../dtos/user-dto.js'
+import ApiError from '../exeptions/api-error.js'
+import CardsListModel from '../models/cardsList-model.js';
 
 class UserService {
     async registration(email, password) {

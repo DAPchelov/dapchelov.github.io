@@ -1,9 +1,9 @@
-import UserService from "../service/user-service";
+import UserService from "../service/user-service.js";
 import { validationResult } from "express-validator";
-import ApiError from "../exeptions/api-error";
-import userService from "../service/user-service";
-import cardService from "../service/card-service";
-import todoService from "../service/todo-service";
+import ApiError from "../exeptions/api-error.js";
+import userService from "../service/user-service.js";
+import cardService from "../service/card-service.js";
+import todoService from "../service/todo-service.js";
 
 
 class userController {

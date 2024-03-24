@@ -1,5 +1,5 @@
-import CardsListModel from '../models/cardsList-model';
-import CardsDto from '../dtos/cards-dto';
+import CardsListModel from '../models/cardsList-model.js';
+import CardsDto from '../dtos/cards-dto.js';
 
 // array.find() and .filter() don`t work. Some bicycles for your attention!
 const findElementById = (array, id) => {

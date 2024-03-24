@@ -1,9 +1,9 @@
-import { io } from '../index';
-import tokenService from "../service/token-service";
-import cardService from "../service/card-service";
-import todoService from "../service/todo-service";
-import groupService from "../service/group-service"
-import userService from '../service/user-service';
+import { io } from '../index.js';
+import tokenService from "../service/token-service.js";
+import cardService from "../service/card-service.js";
+import todoService from "../service/todo-service.js";
+import groupService from "../service/group-service.js"
+import userService from '../service/user-service.js';
 
 const validateUser = (socket, token) => {
     const user = tokenService.validateAccessToken(token);

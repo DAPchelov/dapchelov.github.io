@@ -1,4 +1,4 @@
-import GroupModel from "../models/group-model";
+import GroupModel from "../models/group-model.js";
 
 class GroupService {
     async createNewGroup (reqLabel) {

@@ -112,9 +112,12 @@ class WSStore {
         try {
             await AuthService.logout();
             localStorage.removeItem('token');
+            this.setToken(null);
             localStorage.setItem('isAuth', 'false');
             this.setIsAuth(false);
             this.newGroup.clearForm();
+            this.socket.close();
+            this.socket.open();
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }

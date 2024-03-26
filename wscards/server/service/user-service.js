@@ -18,7 +18,8 @@ class UserService {
         const activationLink = uuidv4();
 
         // set isActivated in user-model default false if need activation by email
-        const user = await UserModel.create({ email, password: hashPassword, activationLink, socketId: "" });
+        // set socketId temporary uuid4 string to avoid collisions
+        const user = await UserModel.create({ email, password: hashPassword, activationLink, socketId: uuidv4() });
         const userDto = new UserDto(user);
 
         CardsListModel.create({ userId: userDto._id, cards: [] });

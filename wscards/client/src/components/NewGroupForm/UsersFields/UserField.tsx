@@ -18,17 +18,16 @@ interface IUserProps {
 const UserField: React.FC<IUserProps> = (props: IUserProps) => {
 
     return (
-        <ListItem>
+        <ListItem 
+        sx={{ cursor: 'pointer'}}
+        onClick={() => {
+            props.switchUser(props.user._id);
+        }}>
+            
             <ListItemAvatar>
                 <Avatar sx={{ bgcolor: assignColor(props.user._id)[600] }}>{props.user.email[0].toUpperCase()}</Avatar>
             </ListItemAvatar>
             <ListItemText primary={props.user.email} secondary='Команда Ракета' />
-            <ReplayIcon fontSize='small'
-                onClick={() => {
-                    props.switchUser(props.user._id);
-                }}
-                sx={{ cursor: 'pointer', width: '30px' }}
-            />
         </ListItem>
     );
 }

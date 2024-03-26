@@ -29,7 +29,6 @@ const UserSearchForm: React.FC = () => {
                 margin: 1,
                 display: 'flex',
                 flexDirection: 'column',
-                height: '100%',
             }}>
                 <ListItem disablePadding aria-multiline >
                     <TextField

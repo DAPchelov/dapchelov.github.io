@@ -11,9 +11,8 @@ class NewGroupController {
 
     socket: Socket = {} as Socket;
 
-    constructor(ownerId: string, socket: Socket) {
+    constructor(socket: Socket) {
 
-        this.ownerId = ownerId;
         this.socket = socket;
 
         this.socket.on('TakeAllUsers', (data) => {
@@ -64,7 +63,8 @@ class NewGroupController {
 
     createGroup() {
         try {
-            this.socket.emit('CreateNewGroup', { group: { label: this.label, users: this.groupUsers, ownerId: this.ownerId } });
+            const usersId = this.groupUsers.map((user) => (user._id));
+            this.socket.emit('CreateNewGroup', { label: this.label, users: usersId });
             this.clearForm();
         } catch (e: any) {
             console.log(e.response?.data?.message);

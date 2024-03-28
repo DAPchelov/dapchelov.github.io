@@ -15,6 +15,9 @@ const NewGroupForm: React.FC = () => {
   //     store.newCard.postCard();
   //   }
   // };
+  const pushCallback = () => {
+    store.newGroup.label.length !==0 ? store.newGroup.createGroup() : alert('Group label is required');
+  }
 
   return (
     <Paper elevation={2} sx={{
@@ -25,7 +28,7 @@ const NewGroupForm: React.FC = () => {
         <UserListForm />
         <UserSearchForm />
         <Grid item xs={12} md={12}>
-          <Button variant={'contained'} sx={{ fontSize: 12, width: '100%' }} size='small' onClick={() => store.newGroup.createGroup()}>Create Group</Button>
+          <Button variant={'contained'} sx={{ fontSize: 12, width: '100%' }} size='small' onClick={() => pushCallback()}>Create Group</Button>
         </Grid>
       </Grid>
     </Paper>

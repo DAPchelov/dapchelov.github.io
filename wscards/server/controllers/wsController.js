@@ -60,7 +60,7 @@ const WsController = () => {
             user && todoService.checkTodo(user._id, card._id, todo._id);
         });
         socket.on('CreateNewGroup', (data) => {
-            console.log(data);
+            user && groupService.createNewGroup(data.label, user._id, data.users);
         });
         socket.on('ReceiveAllUsers', () => {
             user && userService.getAllUsers().then((data) => {

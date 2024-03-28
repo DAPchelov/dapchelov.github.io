@@ -22,7 +22,7 @@ class WSStore {
     private isCompletedDisplayMode: boolean | undefined = undefined;
 
     newCard: NewCardController = new NewCardController('', '', [], this.socket);
-    newGroup: NewGroupController = new NewGroupController(this.user._id, this.socket);
+    newGroup: NewGroupController = new NewGroupController(this.socket);
 
 
     constructor() {

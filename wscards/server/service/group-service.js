@@ -1,13 +1,24 @@
+import ApiError from '../exeptions/api-error.js'
 import GroupModel from "../models/group-model.js";
 
 class GroupService {
-    async createNewGroup (reqLabel) {
-        const candidate = await GroupModel.findOne({ reqLabel });
+    async createNewGroup(label, ownerId, usersId) {
+        const candidate = await GroupModel.findOne({ label });
         if (candidate) {
-            throw ApiError.BadRequest(`Группа с таким названием ${reqLabel} уже существует`)
+            throw ApiError.BadRequest(`Группа с таким названием ${label} уже существует`)
         }
-        
-        GroupModel.create({"label":reqLabel});
+        const groupUsers = usersId.map((userId) => {
+           return ({
+            userId,
+            isLoggedIn: false,
+           }) 
+        });
+
+        GroupModel.create({
+            label: label,
+            ownerId: ownerId,
+            users: groupUsers,
+        });
     };
 
     async getGroupCards(reqLabel) {

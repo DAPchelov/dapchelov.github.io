@@ -1,4 +1,5 @@
 import ApiError from '../exeptions/api-error.js'
+
 import GroupModel from "../models/group-model.js";
 
 class GroupService {
@@ -19,6 +20,8 @@ class GroupService {
             ownerId: ownerId,
             users: groupUsers,
         });
+        // add new users to group
+        // await GroupModel.updateOne({ label: label }, { $push: { users: groupUsers } });
     };
 
     async getGroupCards(reqLabel) {

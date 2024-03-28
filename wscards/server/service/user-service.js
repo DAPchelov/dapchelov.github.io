@@ -97,6 +97,9 @@ class UserService {
     async setSocketId(userId, socketId) {
         await UserModel.updateOne({ _id: userId }, { $set: { socketId: socketId } });
     }
+    async addGroup(groupId) {
+        
+    }
 }
 
 export default new UserService();

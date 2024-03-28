@@ -5,15 +5,14 @@ const Schema = mongoose.Schema;
 const model = mongoose.model;
 
 const GroupUserSchema = new Schema({
-    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    isLoggedIn: { type: Boolean, required: true, default: false },
+    userId: { type: String, unique: false, required: false },
+    isLoggedIn: { type: Boolean, required: false, default: false },
 })
 
 const GroupSchema = new Schema({
     label: { type: String, unique: true, required: true },
     ownerId: { type: String, required: true },
-    users: [GroupUserSchema],
-    cards: [CardSchema],
+    users:[GroupUserSchema]
 })
 
 const GroupeModel = model('Group', GroupSchema);

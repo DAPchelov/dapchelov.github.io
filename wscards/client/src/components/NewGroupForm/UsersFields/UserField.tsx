@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite';
 import { Avatar, ListItemAvatar, ListItemText } from '@mui/material';
 import { lightBlue } from '@mui/material/colors';
 import { IUser } from '../../../models/IUser';
-import { assignColor } from '../../UserBadge'
+import { assignColor } from '../../UserControlPanel/UserBadge'
 
 
 

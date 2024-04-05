@@ -6,9 +6,6 @@ import { Context } from '../../App'
 import { IUser } from '../../../models/IUser';
 import UserFields from './UserFields';
 
-
-
-
 const UserSearchForm: React.FC = () => {
 
     const store = useContext(Context);
@@ -29,6 +26,7 @@ const UserSearchForm: React.FC = () => {
                 margin: 1,
                 display: 'flex',
                 flexDirection: 'column',
+                overflow: 'hidden',
             }}>
                 <ListItem disablePadding aria-multiline >
                     <TextField

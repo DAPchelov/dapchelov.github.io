@@ -10,7 +10,9 @@ import NewCardForm from './NewCardForm';
 import ControlPanel from './ControlPanel/ControlPanel';
 import EditCardForm from './EditCardForm';
 import NewGroupForm from './NewGroupForm/NewGroupForm';
-import UserBadge from './UserBadge';
+import UserBadge from './UserControlPanel/UserBadge';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import UserControlPanel from './UserControlPanel/UserControlPanel';
 
 
 const Main: React.FC = () => {
@@ -23,7 +25,7 @@ const Main: React.FC = () => {
       height: '98vh',
       minWidth: '560px'
     }}>
-      <UserBadge />
+      <UserControlPanel />
       <ControlPanel />
         <Routes>
           <Route path='/' element={<CardsList />} />

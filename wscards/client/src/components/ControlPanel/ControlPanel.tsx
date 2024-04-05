@@ -22,12 +22,13 @@ const ControlPanel: React.FC = () => {
         justifyContent: 'space-between',
         padding: 1,
         boxShadow: 3,
+        minWidth: '350px'
       }}>
       <Box sx={{
         display: 'flex',
         justifyContent: 'space-between',
-        width: '25%',
-        minWidth: '250px'
+        width:'35%',
+        minWidth: '190px',
     }}>
         <Button variant='contained' sx={{ fontSize: 10, width: '30%' }} size='small' onClick={() => navigate('/')}>Home</Button>
         <Button variant='contained' sx={{ fontSize: 10, width: '30%' }} size='small' onClick={() => navigate('/newcard')}>New Card</Button>

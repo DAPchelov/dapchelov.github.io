@@ -60,11 +60,21 @@ const WsController = () => {
             user && todoService.checkTodo(user._id, card._id, todo._id);
         });
         socket.on('CreateNewGroup', (data) => {
-            user && groupService.createNewGroup(data.label, user._id, data.users);
+            try {
+                user && groupService.createNewGroup(data.label, user._id, data.users);
+            } catch (error) {
+                console.log(error);
+            }
+
         });
         socket.on('ReceiveAllUsers', () => {
             user && userService.getAllUsers().then((data) => {
                 socket.emit('TakeAllUsers', data);
+            });
+        });
+        socket.on('ReceiveUserLoggedInGroups', () => {
+            user && groupService.getUserLoggedInGroups(user._id).then((data) => {
+                socket.emit('TakeUserLoggedInGroups', data);
             });
         });
     });

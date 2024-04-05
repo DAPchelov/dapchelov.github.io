@@ -23,7 +23,6 @@ const NewGroupForm: React.FC = () => {
     <Paper elevation={2} sx={{
     }}>
       <Grid container spacing={0} sx={{
-        // maxHeight: '300px'
       }}>
         <UserListForm />
         <UserSearchForm />

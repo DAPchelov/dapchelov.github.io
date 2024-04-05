@@ -6,6 +6,7 @@ import NewCardController from './NewCardController';
 import NewGroupController from './NewGroupController';
 
 import AuthService from '../services/AuthService';
+import { IGroup } from '../models/IGroup';
 
 class WSStore {
     private token: string | null = localStorage.getItem('token');
@@ -20,6 +21,7 @@ class WSStore {
     private cards: [ICard] = {} as [ICard];
     private isAuth: boolean = localStorage.getItem('isAuth') === 'true';
     private isCompletedDisplayMode: boolean | undefined = undefined;
+    private loggedInGroups: [IGroup] = {} as [IGroup];
 
     newCard: NewCardController = new NewCardController('', '', [], this.socket);
     newGroup: NewGroupController = new NewGroupController(this.socket);
@@ -48,9 +50,12 @@ class WSStore {
         this.socket.on('TakeCards', (data) => {
             this.setCards(data.cards);
         })
+        this.socket.on('TakeUserLoggedInGroups', (groups) => {
+            this.setLoggedInGroups(groups);
+        })
         makeAutoObservable(this);
     }
-
+    
     setUser(user: IUser) {
         this.user = user;
     }
@@ -79,6 +84,9 @@ class WSStore {
     getIsCompletedDisplayMode() {
         return this.isCompletedDisplayMode
     }
+    getLoggedInGroups() {
+        return this.loggedInGroups
+    }
 
     async getAuth() {
         this.socket.emit('GetAuth', { token: this.token });
@@ -99,6 +107,9 @@ class WSStore {
         if (todo) {
             todo.isCompleted = !todo.isCompleted;
         }
+    }
+    setLoggedInGroups(groups: [IGroup]) {
+        this.loggedInGroups = groups;
     }
 
     editCard(_id: string) {
@@ -171,7 +182,13 @@ class WSStore {
     async createNewGroup(label: string) {
         try {
             this.socket.emit('CreateNewGroup', { label: label });
-            // this.receiveCards();
+        } catch (e: any) {
+            console.log(e.response?.data?.message);
+        }
+    }
+    async ReceiveUserLoggedInGroups() {
+        try {
+            this.socket.emit('ReceiveUserLoggedInGroups');
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }

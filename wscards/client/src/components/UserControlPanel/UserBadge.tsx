@@ -1,25 +1,15 @@
 import React, { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 
-import { Context } from './App'
+import { Context } from '../App'
 import Avatar from '@mui/material/Avatar';
-import { lightBlue } from '@mui/material/colors';
 import ListItemText from '@mui/material/ListItemText';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 
-import { pink } from '@mui/material/colors';
-import { amber } from '@mui/material/colors';
-import { blue } from '@mui/material/colors';
-import { cyan } from '@mui/material/colors';
-import { deepPurple } from '@mui/material/colors';
-import { green } from '@mui/material/colors';
-import { lime } from '@mui/material/colors';
-import { indigo } from '@mui/material/colors';
-import { yellow } from '@mui/material/colors';
-import { deepOrange } from '@mui/material/colors';
-import { purple } from '@mui/material/colors';
-import { grey } from '@mui/material/colors';
+import { pink, amber, blue, cyan, deepPurple, green, lime, indigo, yellow, deepOrange, purple, grey } from '@mui/material/colors';
+
+
 
 
 const createColorNum = (userId: string) => {
@@ -64,7 +54,7 @@ const UserBadge: React.FC = () => {
         <ListItemAvatar>
           <Avatar sx={{ bgcolor: assignColor(user._id)[600] }}>{user.email[0].toUpperCase()}</Avatar>
         </ListItemAvatar>
-        <ListItemText primary={store.getUser().email} secondary='Команда Ракета' />
+        <ListItemText primary={store.getUser().email} secondary='Команда ракета' />
       </ListItem>
     );
   }

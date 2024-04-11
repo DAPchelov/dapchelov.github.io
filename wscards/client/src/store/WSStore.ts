@@ -50,8 +50,8 @@ class WSStore {
         this.socket.on('TakeCards', (data) => {
             this.setCards(data.cards);
         })
-        this.socket.on('TakeUserLoggedInGroups', (groups) => {
-            this.setLoggedInGroups(groups);
+        this.socket.on('TakeUserLoggedInGroups', (data) => {
+            this.setLoggedInGroups(data);
         })
         makeAutoObservable(this);
     }
@@ -71,21 +71,24 @@ class WSStore {
     setIsCompletedDisplayMode(mode: boolean | undefined) {
         this.isCompletedDisplayMode = mode;
     }
+    setLoggedInGroups(groups: [IGroup]) {
+        this.loggedInGroups = groups;
+    }
 
     getUser() {
-        return this.user
+        return this.user;
     }
     getCards() {
-        return this.cards
+        return this.cards;
     }
     getIsAuth() {
-        return this.isAuth
+        return this.isAuth;
     }
     getIsCompletedDisplayMode() {
-        return this.isCompletedDisplayMode
+        return this.isCompletedDisplayMode;
     }
     getLoggedInGroups() {
-        return this.loggedInGroups
+        return this.loggedInGroups;
     }
 
     async getAuth() {
@@ -107,9 +110,6 @@ class WSStore {
         if (todo) {
             todo.isCompleted = !todo.isCompleted;
         }
-    }
-    setLoggedInGroups(groups: [IGroup]) {
-        this.loggedInGroups = groups;
     }
 
     editCard(_id: string) {

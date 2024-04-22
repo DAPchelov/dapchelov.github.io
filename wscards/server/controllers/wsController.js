@@ -30,8 +30,14 @@ const WsController = () => {
             user && userService.setSocketId(user._id, socket.id);
             socket.emit('TakeAuth', user);
         });
-        socket.on('GetCards', () => {
-            user && cardService.getUserCards(user._id).then((data) => {
+        socket.on('GetCards', (data) => {
+            console.log('GetCards groupId: ' + data.groupId);
+            let groupId = data.groupId;
+            if (groupId === undefined) {
+                // console.log('GroupId Changed!');
+                groupId = user._id;
+            }
+            user && cardService.getUserCards(groupId).then((data) => {
                 socket.emit('TakeCards', data);
             });
         });
@@ -41,23 +47,27 @@ const WsController = () => {
         });
         socket.on('EditCard', (data) => {
             const card = data.card;
-            user && cardService.editCard(user._id, card._id, card.message, card.todos).then(takeCards(socket, user));
+            const groupId = data.groupId;
+            user && cardService.editCard(groupId, card._id, card.message, card.todos).then(takeCards(socket, user));
         });
         socket.on('RemoveCompletedCards', () => {
             user && cardService.removeCompletedCards(user._id).then(takeCards(socket, user));
         });
         socket.on('CheckCard', (data) => {
             const card = data.card;
-            user && cardService.checkCard(user._id, card._id, card.isCompleted);
+            const groupId = data.groupId;
+            user && cardService.checkCard(groupId, card._id, card.isCompleted);
         });
         socket.on('RemoveOneCard', (data) => {
             const card = data.card;
-            user && cardService.removeOneCard(user._id, card._id).then(takeCards(socket, user));
+            const groupId = data.groupId;
+            user && cardService.removeOneCard(groupId, card._id).then(takeCards(socket, user));
         });
         socket.on('CheckTodo', (data) => {
             const card = data.card;
             const todo = data.todo;
-            user && todoService.checkTodo(user._id, card._id, todo._id);
+            const groupId = data.groupId;
+            user && todoService.checkTodo(groupId, card._id, todo._id);
         });
         socket.on('CreateNewGroup', (data) => {
             try {

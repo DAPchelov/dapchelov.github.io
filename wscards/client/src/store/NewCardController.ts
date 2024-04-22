@@ -70,9 +70,9 @@ class NewCardController {
         }
     }
 
-    editCard() {
+    editCard(groupId: string) {
         try {
-            this.socket.emit('EditCard', { card: { _id: this._id, message: this.message, todos: this.todos } });
+            this.socket.emit('EditCard', { card: { _id: this._id, message: this.message, todos: this.todos }, groupId });
             this.clearCard();
         } catch (e: any) {
             console.log(e.response?.data?.message);

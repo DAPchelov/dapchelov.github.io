@@ -8,7 +8,7 @@ const CardsList: React.FC = () => {
     const store = useContext(Context);
 
     useEffect(() => {
-        store.receiveCards();
+        store.receiveCards(store.getCurrentGroupId());
     }, [])
 
     return (
@@ -17,7 +17,7 @@ const CardsList: React.FC = () => {
             flexDirection: 'column',
             rowGap: 2,
             padding: 1,
-          }}>
+        }}>
             {store.getCards().length > 0 && store.getCards()
                 .map(card => {
                     if (store.getIsCompletedDisplayMode() === undefined) {
@@ -34,5 +34,4 @@ const CardsList: React.FC = () => {
         </Paper>
     );
 }
-
 export default observer(CardsList);

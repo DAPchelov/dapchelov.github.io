@@ -46,9 +46,9 @@ export const assignColor = (userId: string) => {
 const UserBadge: React.FC = () => {
   const store = useContext(Context);
   const user = store.getUser();
-
+  
   if (user.email !== undefined) {
-
+    
     return (
       <ListItem>
         <ListItemAvatar>

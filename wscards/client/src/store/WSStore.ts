@@ -4,9 +4,11 @@ import { ICard } from '../models/ICard';
 import { IUser } from '../models/IUser';
 import NewCardController from './NewCardController';
 import NewGroupController from './NewGroupController';
+import { v4 as uuidv4 } from 'uuid';
 
 import AuthService from '../services/AuthService';
 import { IGroup } from '../models/IGroup';
+import { ITodo } from '../models/ITodo';
 
 class WSStore {
     private token: string | null = localStorage.getItem('token');
@@ -22,6 +24,7 @@ class WSStore {
     private isAuth: boolean = localStorage.getItem('isAuth') === 'true';
     private isCompletedDisplayMode: boolean | undefined = undefined;
     private loggedInGroups: [IGroup] = {} as [IGroup];
+    private currentGroupId: string = this.user._id;
 
     newCard: NewCardController = new NewCardController('', '', [], this.socket);
     newGroup: NewGroupController = new NewGroupController(this.socket);
@@ -55,7 +58,7 @@ class WSStore {
         })
         makeAutoObservable(this);
     }
-    
+
     setUser(user: IUser) {
         this.user = user;
     }
@@ -74,6 +77,9 @@ class WSStore {
     setLoggedInGroups(groups: [IGroup]) {
         this.loggedInGroups = groups;
     }
+    setCurrentGroupId(id: string) {
+        this.currentGroupId = id;
+    }
 
     getUser() {
         return this.user;
@@ -90,12 +96,15 @@ class WSStore {
     getLoggedInGroups() {
         return this.loggedInGroups;
     }
+    getCurrentGroupId() {
+        return this.currentGroupId;
+    }
 
     async getAuth() {
         this.socket.emit('GetAuth', { token: this.token });
     }
-    async receiveCards() {
-        this.socket.emit('GetCards', { token: this.token });
+    async receiveCards(groupId: string) {
+        this.socket.emit('GetCards', { groupId });
     }
 
     setCheckCard(cardId: string) {
@@ -144,35 +153,34 @@ class WSStore {
         }
     }
 
-    async removeCompletedCards() {
+    async removeCompletedCards(groupId: string) {
         try {
-            this.socket.emit('RemoveCompletedCards');
+            this.socket.emit('RemoveCompletedCards', { groupId });
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }
     }
 
-    async checkCard(cardId: string, isCompleted: boolean) {
+    async checkCard(cardId: string, isCompleted: boolean, groupId: string) {
         try {
-            this.socket.emit('CheckCard', { card: { _id: cardId, isCompleted: isCompleted } });
+            this.socket.emit('CheckCard', { card: { _id: cardId, isCompleted: isCompleted }, groupId });
             this.setCheckCard(cardId);
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }
     }
 
-    async removeOneCard(cardId: string) {
+    async removeOneCard(cardId: string, groupId: string) {
         try {
-            this.socket.emit('RemoveOneCard', { card: { _id: cardId } });
-            this.receiveCards();
+            this.socket.emit('RemoveOneCard', { card: { _id: cardId }, groupId });
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }
     }
 
-    async checkTodo(cardId: string, todoId: string) {
+    async checkTodo(cardId: string, todoId: string, groupId: string) {
         try {
-            this.socket.emit('CheckTodo', { card: { _id: cardId }, todo: { _id: todoId } });
+            this.socket.emit('CheckTodo', { card: { _id: cardId }, todo: { _id: todoId }, groupId });
             this.setCheckTodo(cardId, todoId);
         } catch (e: any) {
             console.log(e.response?.data?.message);

@@ -11,16 +11,12 @@ import UserBadge from './UserBadge';
 import GroupSelect from './GroupSelect';
 
 const UserControlPanel: React.FC = () => {
-  const navigate = useNavigate();
-
-  const store = useContext(Context);
 
   return (
     <Paper
       sx={{
         display: 'flex',
         justifyContent: 'space-between',
-        // padding: 1,
         boxShadow: 3,
         minWidth: '350px'
       }}>

@@ -14,8 +14,8 @@ const validateUser = (socket, token) => {
     }
     return user;
 }
-const takeCards = (socket, user) => {
-    cardService.getUserCards(user._id).then((data) => {
+const takeCards = (socket, groupId) => {
+    cardService.getUserCards(groupId).then((data) => {
         socket.emit('TakeCards', data);
     });
 }
@@ -43,15 +43,17 @@ const WsController = () => {
         });
         socket.on('PostCard', (data) => {
             const card = data.card;
-            user && cardService.postNewCard(user._id, card.message, card.todos).then(takeCards(socket, user));
+            const groupId = data.groupId;
+            user && cardService.postNewCard(groupId, card.message, card.todos).then(takeCards(socket, groupId));
         });
         socket.on('EditCard', (data) => {
             const card = data.card;
             const groupId = data.groupId;
-            user && cardService.editCard(groupId, card._id, card.message, card.todos).then(takeCards(socket, user));
+            user && cardService.editCard(groupId, card._id, card.message, card.todos).then(takeCards(socket, groupId));
         });
-        socket.on('RemoveCompletedCards', () => {
-            user && cardService.removeCompletedCards(user._id).then(takeCards(socket, user));
+        socket.on('RemoveCompletedCards', (data) => {
+            const groupId = data.groupId;
+            user && cardService.removeCompletedCards(groupId).then(takeCards(socket, groupId));
         });
         socket.on('CheckCard', (data) => {
             const card = data.card;

@@ -30,13 +30,13 @@ const GroupSelect: React.FC = () => {
     return (
         <ListItem>
             <FormControl fullWidth>
-                <InputLabel>{store.getUser().email}</InputLabel>
+                <InputLabel>Groups</InputLabel>
                 <Select
                     defaultValue=''
                     label="Group"
                 onChange={handleGroupChange}
                 >
-                    <MenuItem value={store.getUser()._id} key={store.getUser()._id}>May Cards</MenuItem>
+                    <MenuItem value={store.getUser()._id} key={store.getUser()._id}>My Cards</MenuItem>
                     {store.getLoggedInGroups().length > 0 && store.getLoggedInGroups()
                         .map(group => {
                             return (

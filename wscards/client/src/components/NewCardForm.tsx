@@ -15,7 +15,7 @@ const NewCardForm: React.FC = () => {
 
   const onPush = (keyKode: string) => {
     if (keyKode === 'Enter') {
-      store.newCard.postCard();
+      store.newCard.postCard(store.getCurrentGroupId());
     }
   };
 

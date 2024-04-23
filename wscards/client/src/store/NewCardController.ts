@@ -59,10 +59,10 @@ class NewCardController {
         }
     }
 
-    postCard() {
+    postCard(groupId: string) {
         try {
             if (this.message.length > 0) {
-                this.socket.emit('PostCard', { card: { message: this.message, todos: this.todos } });
+                this.socket.emit('PostCard', { card: { message: this.message, todos: this.todos }, groupId });
                 this.clearCard();
             }
         } catch (e: any) {

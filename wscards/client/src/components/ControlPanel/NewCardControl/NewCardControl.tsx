@@ -12,7 +12,7 @@ const NewCardControl: React.FC = () => {
     return (
         <>
             <Button variant='contained' sx={{ fontSize: 10, width: 120 }} size='small' color="secondary" onClick={() => store.newCard.addTodo('', false)}>Add NEW Todo</Button>
-            <Button variant='contained' sx={{ fontSize: 10, width: 120 }} size='small' onClick={() => store.newCard.postCard()}>Add NEW card</Button>
+            <Button variant='contained' sx={{ fontSize: 10, width: 120 }} size='small' onClick={() => store.newCard.postCard(store.getCurrentGroupId())}>Add NEW card</Button>
         </>
     );
 }

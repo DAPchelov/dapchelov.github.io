@@ -2,16 +2,13 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
-import { Container } from '@mui/system';
 import Box from '@mui/material/Box';
 
-import CardsList from './CardsList'
+import CardsList from './CardsList/CardsList'
 import NewCardForm from './NewCardForm';
 import ControlPanel from './ControlPanel/ControlPanel';
 import EditCardForm from './EditCardForm';
 import NewGroupForm from './NewGroupForm/NewGroupForm';
-import UserBadge from './UserControlPanel/UserBadge';
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import UserControlPanel from './UserControlPanel/UserControlPanel';
 
 

@@ -2,13 +2,12 @@ import { makeAutoObservable } from 'mobx';
 import { io } from 'socket.io-client';
 import { ICard } from '../models/ICard';
 import { IUser } from '../models/IUser';
+import { IGroup } from '../models/IGroup';
+
 import NewCardController from './NewCardController';
 import NewGroupController from './NewGroupController';
-import { v4 as uuidv4 } from 'uuid';
 
 import AuthService from '../services/AuthService';
-import { IGroup } from '../models/IGroup';
-import { ITodo } from '../models/ITodo';
 
 class WSStore {
     private token: string | null = localStorage.getItem('token');

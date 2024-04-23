@@ -3,13 +3,13 @@ import Checkbox from '@mui/material/Checkbox';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Typography from '@mui/material/Typography';
-import { ICard } from '../models/ICard';
+import { ICard } from '../../models/ICard';
 import { observer } from 'mobx-react-lite';
 import { Paper } from '@mui/material';
 import TodoList from './TodoList/TodoList';
 
 import React, { useContext } from 'react';
-import { Context } from './App'
+import { Context } from '../App'
 import { Link } from 'react-router-dom';
 
 const Card: React.FC<ICard> = (props: ICard) => {

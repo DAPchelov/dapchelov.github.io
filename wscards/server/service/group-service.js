@@ -44,11 +44,15 @@ class GroupService {
     }
     async getUserLoggedInGroups(userId) {
         const groups = await GroupModel.find({ 'users.userId': userId, 'users.isLoggedIn': true });
-        // console.log(groups);
-        // const groupsDto = new GroupDto(groups);
         const groupsDto = groups.map((group) => { return (new GroupDto(group)) });
         return groupsDto
     }
+    async getUserAllGroups(userId) {
+        const groups = await GroupModel.find({ 'users.userId': userId });
+        const groupsDto = groups.map((group) => { return (new GroupDto(group)) });
+        return groupsDto
+    }
+
 }
 
 export default new GroupService();

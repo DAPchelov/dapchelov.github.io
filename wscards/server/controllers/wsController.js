@@ -77,7 +77,6 @@ const WsController = () => {
             } catch (error) {
                 console.log(error);
             }
-
         });
         socket.on('ReceiveAllUsers', () => {
             user && userService.getAllUsers().then((data) => {
@@ -87,6 +86,11 @@ const WsController = () => {
         socket.on('ReceiveUserLoggedInGroups', () => {
             user && groupService.getUserLoggedInGroups(user._id).then((data) => {
                 socket.emit('TakeUserLoggedInGroups', data);
+            });
+        });
+        socket.on('ReceiveUserAllGroups', () => {
+            user && groupService.getUserAllGroups(user._id).then((data) => {
+                socket.emit('TakeUserAllGroups', data);
             });
         });
     });

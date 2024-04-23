@@ -1,10 +1,8 @@
 import ListItem from '@mui/material/ListItem';
-import ReplayIcon from '@mui/icons-material/Replay';
 
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { Avatar, ListItemAvatar, ListItemText } from '@mui/material';
-import { lightBlue } from '@mui/material/colors';
 import { IUser } from '../../../models/IUser';
 import { assignColor } from '../../UserControlPanel/UserBadge'
 

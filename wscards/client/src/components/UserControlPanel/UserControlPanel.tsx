@@ -1,12 +1,7 @@
-import React, { useContext } from 'react';
-import { Context } from '../App'
+import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-
-import Box from '@mui/material/Box';
 import UserBadge from './UserBadge';
 import GroupSelect from './GroupSelect';
 

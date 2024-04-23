@@ -1,17 +1,9 @@
 import ListItem from '@mui/material/ListItem';
-import Checkbox from '@mui/material/Checkbox';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import Typography from '@mui/material/Typography';
-import { ICard } from '../../models/ICard';
 import { observer } from 'mobx-react-lite';
-import { FormControl, InputLabel, MenuItem, Paper, Select, SelectChangeEvent} from '@mui/material';
-import TodoList from '../TodoList/TodoList';
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from '@mui/material';
 
 import React, { useContext, useEffect } from 'react';
 import { Context } from '../App'
-import { Link } from 'react-router-dom';
-import { IGroup } from '../../models/IGroup';
 
 const GroupSelect: React.FC = () => {
 

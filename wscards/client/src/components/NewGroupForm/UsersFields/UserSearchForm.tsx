@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Grid, Paper, TextField } from '@mui/material';
 import { Context } from '../../App'
-import { IUser } from '../../../models/IUser';
 import UserFields from './UserFields';
 
 const UserSearchForm: React.FC = () => {

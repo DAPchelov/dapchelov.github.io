@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react';
-import Card from './Card'
-import { Context } from './App'
+import Card from '../CardsList/Card'
+import { Context } from '../App'
 import { observer } from 'mobx-react-lite';
-import { Box, Paper } from '@mui/material';
+import { Paper } from '@mui/material';
 
 const CardsList: React.FC = () => {
     const store = useContext(Context);

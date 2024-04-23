@@ -3,7 +3,7 @@ import Paper from '@mui/material/Paper';
 import { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Context } from './App'
-import TodoFields from './TodoFields/TodoFields';
+import TodoFields from './CardsList/TodoFields/TodoFields';
 
 const NewCardForm: React.FC = () => {
   const store = useContext(Context);

@@ -3,7 +3,7 @@ import Checkbox from '@mui/material/Checkbox';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import React from 'react';
-import { ITodo } from '../../models/ITodo';
+import { ITodo } from '../../../models/ITodo';
 import { observer } from 'mobx-react-lite';
 import { Box, TextField } from '@mui/material';
 

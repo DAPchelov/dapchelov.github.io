@@ -4,8 +4,8 @@ import { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Context } from './App'
 import { Box, Button, ListItem } from '@mui/material';
-import TodoFields from './TodoFields/TodoFields';
-import { Link, useNavigate } from 'react-router-dom';
+import TodoFields from './CardsList/TodoFields/TodoFields';
+import { useNavigate } from 'react-router-dom';
 
 const InputForm: React.FC = () => {
   const store = useContext(Context);

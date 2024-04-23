@@ -1,8 +1,7 @@
-import Stack from '@mui/material/Stack';
 import React from 'react';
 import Todo from './Todo'
 import { observer } from 'mobx-react-lite';
-import { ITodo } from '../../models/ITodo';
+import { ITodo } from '../../../models/ITodo';
 import { Box } from '@mui/material';
 
 type ITodoListProps = {

@@ -1,10 +1,9 @@
 import ListItem from '@mui/material/ListItem';
 import Checkbox from '@mui/material/Checkbox';
-import DeleteIcon from '@mui/icons-material/Delete';
 import Typography from '@mui/material/Typography';
 
 import React from 'react';
-import { ITodo } from '../../models/ITodo';
+import { ITodo } from '../../../models/ITodo';
 import { observer } from 'mobx-react-lite';
 import { Box } from '@mui/material';
 

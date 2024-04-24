@@ -10,6 +10,7 @@ import ControlPanel from './ControlPanel/ControlPanel';
 import EditCardForm from './EditCardForm';
 import NewGroupForm from './NewGroupForm/NewGroupForm';
 import UserControlPanel from './UserControlPanel/UserControlPanel';
+import GroupsList from './GroupsList/GroupsList';
 
 
 const Main: React.FC = () => {
@@ -26,6 +27,7 @@ const Main: React.FC = () => {
       <ControlPanel />
         <Routes>
           <Route path='/' element={<CardsList />} />
+          <Route path='/groups' element={<GroupsList />} />
           <Route path='/newcard' element={<NewCardForm />} />
           <Route path='/editcard' element={<EditCardForm />} />
           <Route path='/newgroup' element={<NewGroupForm />} />

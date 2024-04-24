@@ -21,7 +21,6 @@ const UserField: React.FC<IUserProps> = (props: IUserProps) => {
         onClick={() => {
             props.switchUser(props.user._id);
         }}>
-            
             <ListItemAvatar>
                 <Avatar sx={{ bgcolor: assignColor(props.user._id)[600] }}>{props.user.email[0].toUpperCase()}</Avatar>
             </ListItemAvatar>

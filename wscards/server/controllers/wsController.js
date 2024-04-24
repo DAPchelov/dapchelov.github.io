@@ -37,7 +37,7 @@ const WsController = () => {
                 // console.log('GroupId Changed!');
                 groupId = user._id;
             }
-            user && cardService.getUserCards(groupId).then((data) => {
+            user._id && cardService.getUserCards(groupId).then((data) => {
                 socket.emit('TakeCards', data);
             });
         });

@@ -23,11 +23,11 @@ class WSStore {
     private isAuth: boolean = localStorage.getItem('isAuth') === 'true';
     private isCompletedDisplayMode: boolean | undefined = undefined;
     private loggedInGroups: [IGroup] = {} as [IGroup];
+    private allUserGroups: [IGroup] = {} as [IGroup];
     private currentGroupId: string = this.user._id;
 
     newCard: NewCardController = new NewCardController('', '', [], this.socket);
     newGroup: NewGroupController = new NewGroupController(this.socket);
-
 
     constructor() {
         this.socket.on('TakeAuth', async (data) => {
@@ -55,6 +55,9 @@ class WSStore {
         this.socket.on('TakeUserLoggedInGroups', (data) => {
             this.setLoggedInGroups(data);
         })
+        this.socket.on('TakeUserAllGroups', (data) => {
+            this.setAllUserGroups(data);
+        })
         makeAutoObservable(this);
     }
 
@@ -79,6 +82,9 @@ class WSStore {
     setCurrentGroupId(id: string) {
         this.currentGroupId = id;
     }
+    setAllUserGroups(groups: [IGroup]) {
+        this.allUserGroups = groups;
+    }
 
     getUser() {
         return this.user;
@@ -97,6 +103,9 @@ class WSStore {
     }
     getCurrentGroupId() {
         return this.currentGroupId;
+    }
+    getAllUserGroups() {
+        return this.allUserGroups;
     }
 
     async getAuth() {
@@ -196,6 +205,13 @@ class WSStore {
     async ReceiveUserLoggedInGroups() {
         try {
             this.socket.emit('ReceiveUserLoggedInGroups');
+        } catch (e: any) {
+            console.log(e.response?.data?.message);
+        }
+    }
+    async ReceiveUserAllGroups() {
+        try {
+            this.socket.emit('ReceiveUserAllGroups');
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }

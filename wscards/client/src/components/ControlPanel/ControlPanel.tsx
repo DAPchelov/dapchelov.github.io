@@ -28,19 +28,21 @@ const ControlPanel: React.FC = () => {
       <Box sx={{
         display: 'flex',
         justifyContent: 'space-between',
-        width: '35%',
-        minWidth: '200px',
+        width: '45%',
+        minWidth: '250px',
         maxWidth: '400px',
       }}>
-        <Button variant='contained' sx={{ fontSize: 10, width: '32%' }} size='small' color='secondary' startIcon={<AssignmentTurnedInOutlinedIcon />} onClick={() => navigate('/')}>Cards</Button>
-        <Button variant='contained' sx={{ fontSize: 10, width: '32%' }} size='small' onClick={() => navigate('/newcard')}>New Card</Button>
-        <Button variant='contained' sx={{ fontSize: 10, width: '32%' }} size='small' onClick={() => navigate('/newgroup')}>New Group</Button>
+        <Button variant='contained' sx={{ fontSize: 10, width: '22%' }} size='small' color='secondary' startIcon={<AssignmentTurnedInOutlinedIcon />} onClick={() => navigate('/')}>Cards</Button>
+        <Button variant='contained' sx={{ fontSize: 10, width: '22%' }} size='small' color='secondary' startIcon={<AssignmentTurnedInOutlinedIcon />} onClick={() => navigate('/groups')}>Groups</Button>
+        <Button variant='contained' sx={{ fontSize: 10, width: '22%' }} size='small' onClick={() => navigate('/newcard')}>New Card</Button>
+        <Button variant='contained' sx={{ fontSize: 10, width: '22%' }} size='small' onClick={() => navigate('/newgroup')}>New Group</Button>
       </Box>
       <Routes>
         <Route path='/' element={<HomeControl />} />
         <Route path='/newcard' element={<NewCardControl />} />
         <Route path='/editcard' element={<NewCardControl />} />
         <Route path='/newgroup' element={<NewGroupControl />} />
+        <Route path='/groups' element={<NewGroupControl />} />
       </Routes>
       <Button variant='outlined' sx={{ fontSize: 10, width: '8%' }} size='small' color='error' onClick={() => store.logout()}>Logout</Button>
     </Paper>

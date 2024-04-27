@@ -7,7 +7,7 @@ import UsersList from './UsersList/UsersList';
 import { Paper } from '@mui/material';
 
 import { observer } from 'mobx-react-lite';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Context } from '../App'
 import { Link } from 'react-router-dom';
 import { IGroup } from '../../models/IGroup';
@@ -19,6 +19,9 @@ const Group: React.FC<IGroup> = (props: IGroup) => {
     const checkTodo = (todoId: string) => {
         store.checkTodo(props._id, todoId, store.getCurrentGroupId());
     }
+    useEffect(() => {
+        // store.getGroupUsersEmail(props);
+    }, [])
 
     return (
         <Paper elevation={2} sx={{

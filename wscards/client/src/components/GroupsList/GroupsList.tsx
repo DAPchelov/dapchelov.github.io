@@ -8,7 +8,7 @@ const GroupList: React.FC = () => {
     const store = useContext(Context);
 
     useEffect(() => {
-        store.ReceiveUserAllGroups();
+        store.receiveUserAllGroups();
     }, [])
 
     return (

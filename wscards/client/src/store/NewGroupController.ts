@@ -63,7 +63,7 @@ class NewGroupController {
 
     createGroup() {
         try {
-            const usersId = this.groupUsers.map((user) => (user._id));
+            const usersId = this.groupUsers.map((user) => { return ({ userId: user._id, email: user.email }) });
             this.socket.emit('CreateNewGroup', { label: this.label, users: usersId });
             this.clearForm();
         } catch (e: any) {

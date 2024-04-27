@@ -2,21 +2,23 @@ import ApiError from '../exeptions/api-error.js'
 
 import GroupModel from "../models/group-model.js";
 import CardsListModel from '../models/cardsList-model.js';
+import UserModel from '../models/user-model.js'
 
 import GroupDto from '../dtos/group-dto.js';
 import CardsDto from '../dtos/cards-dto.js';
 
 class GroupService {
-    async createNewGroup(label, ownerId, usersId) {
+    async createNewGroup(label, ownerId, users) {
         try {
             const candidate = await GroupModel.findOne({ label });
             if (candidate) {
                 throw ApiError.BadRequest(`Группа с таким названием ${label} уже существует`)
             }
-            const groupUsers = usersId.map((userId) => {
+            const groupUsers = users.map((user) => {
                 return ({
-                    userId,
+                    userId: user.userId,
                     isLoggedIn: false,
+                    email: user.email
                 })
             });
 
@@ -49,10 +51,10 @@ class GroupService {
     }
     async getUserAllGroups(userId) {
         const groups = await GroupModel.find({ 'users.userId': userId });
-        const groupsDto = groups.map((group) => { return (new GroupDto(group)) });
-        return groupsDto
+        const groupsDto = groups.map((group) => { return new GroupDto(group) });
+        return (groupsDto);
     }
-
 }
 
 export default new GroupService();
+

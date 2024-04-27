@@ -58,6 +58,7 @@ class WSStore {
         this.socket.on('TakeUserAllGroups', (data) => {
             this.setAllUserGroups(data);
         })
+
         makeAutoObservable(this);
     }
 
@@ -209,7 +210,7 @@ class WSStore {
             console.log(e.response?.data?.message);
         }
     }
-    async ReceiveUserAllGroups() {
+    async receiveUserAllGroups() {
         try {
             this.socket.emit('ReceiveUserAllGroups');
         } catch (e: any) {

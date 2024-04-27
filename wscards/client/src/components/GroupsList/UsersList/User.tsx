@@ -10,6 +10,7 @@ import { Box } from '@mui/material';
 interface IUserProps {
     userId: string,
     isLoggedIn: boolean,
+    email: string,
     _id: string,
     // checkTodo(id: ITodo['_id']): void,
 }
@@ -35,7 +36,7 @@ const User: React.FC<IUserProps> = (props: IUserProps) => {
                     wordWrap: 'break-word',
                     width: '100%',
                 }}>
-                    {props.userId}
+                    {props.email}
                 </Typography>
             </ListItem>
         </Box>

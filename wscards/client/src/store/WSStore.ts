@@ -12,7 +12,7 @@ import AuthService from '../services/AuthService';
 class WSStore {
     private token: string | null = localStorage.getItem('token');
 
-    private socket = io('http://176.109.109.16:5000/', {
+    private socket = io('http://pchel.ddns.net:5000/', {
         auth: {
             token: this.token
         }
@@ -22,12 +22,11 @@ class WSStore {
     private cards: [ICard] = {} as [ICard];
     private isAuth: boolean = localStorage.getItem('isAuth') === 'true';
     private isCompletedDisplayMode: boolean | undefined = undefined;
-    private loggedInGroups: [IGroup] = {} as [IGroup];
     private allUserGroups: [IGroup] = {} as [IGroup];
     private currentGroupId: string = this.user._id;
 
     newCard: NewCardController = new NewCardController('', '', [], this.socket);
-    newGroup: NewGroupController = new NewGroupController(this.socket);
+    newGroup: NewGroupController = new NewGroupController(this.socket, '', '', []);
 
     constructor() {
         this.socket.on('TakeAuth', async (data) => {
@@ -35,6 +34,7 @@ class WSStore {
             if (data !== null) {
                 this.setUser(data);
                 localStorage.setItem('isAuth', 'true');
+                this.getBasicState();
                 this.setIsAuth(true);
             } else {
                 localStorage.setItem('isAuth', 'false');
@@ -52,14 +52,19 @@ class WSStore {
         this.socket.on('TakeCards', (data) => {
             this.setCards(data.cards);
         })
-        this.socket.on('TakeUserLoggedInGroups', (data) => {
-            this.setLoggedInGroups(data);
-        })
+        // this.socket.on('TakeUserLoggedInGroups', (data) => {
+        //     this.setLoggedInGroups(data);
+        // })
         this.socket.on('TakeUserAllGroups', (data) => {
             this.setAllUserGroups(data);
         })
 
         makeAutoObservable(this);
+    }
+
+    async getBasicState() {
+        await this.receiveGroupCards(this.getUser()._id);
+        await this.receiveUserAllGroups();
     }
 
     setUser(user: IUser) {
@@ -77,9 +82,9 @@ class WSStore {
     setIsCompletedDisplayMode(mode: boolean | undefined) {
         this.isCompletedDisplayMode = mode;
     }
-    setLoggedInGroups(groups: [IGroup]) {
-        this.loggedInGroups = groups;
-    }
+    // setLoggedInGroups(groups: [IGroup]) {
+    //     this.loggedInGroups = groups;
+    // }
     setCurrentGroupId(id: string) {
         this.currentGroupId = id;
     }
@@ -99,9 +104,9 @@ class WSStore {
     getIsCompletedDisplayMode() {
         return this.isCompletedDisplayMode;
     }
-    getLoggedInGroups() {
-        return this.loggedInGroups;
-    }
+    // getLoggedInGroups() {
+    //     return this.loggedInGroups;
+    // }
     getCurrentGroupId() {
         return this.currentGroupId;
     }
@@ -112,9 +117,7 @@ class WSStore {
     async getAuth() {
         this.socket.emit('GetAuth', { token: this.token });
     }
-    async receiveCards(groupId: string) {
-        this.socket.emit('GetCards', { groupId });
-    }
+    
 
     setCheckCard(cardId: string) {
         let card = this.cards.find(card => card._id === cardId);
@@ -134,6 +137,13 @@ class WSStore {
         const editableCard = this.cards.find((card) => card._id === _id);
         if (editableCard) {
             this.newCard = new NewCardController(editableCard._id, editableCard.message, editableCard.todos, this.socket)
+        }
+    }
+    editGroup(_id: string) {
+        const editableGroup = this.allUserGroups.find((group) => group._id === _id);
+        if (editableGroup) {
+            this.newGroup = new NewGroupController(this.socket, editableGroup.label, editableGroup.ownerId, editableGroup.users);
+            // this.newCard = new NewCardController(editableCard._id, editableCard.message, editableCard.todos, this.socket)
         }
     }
 
@@ -203,16 +213,23 @@ class WSStore {
             console.log(e.response?.data?.message);
         }
     }
-    async ReceiveUserLoggedInGroups() {
+    // async ReceiveUserLoggedInGroups() {
+    //     try {
+    //         this.socket.emit('ReceiveUserLoggedInGroups');
+    //     } catch (e: any) {
+    //         console.log(e.response?.data?.message);
+    //     }
+    // }
+    async receiveUserAllGroups() {
         try {
-            this.socket.emit('ReceiveUserLoggedInGroups');
+            this.socket.emit('ReceiveUserAllGroups');
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }
     }
-    async receiveUserAllGroups() {
+    async receiveGroupCards(groupId: string) {
         try {
-            this.socket.emit('ReceiveUserAllGroups');
+            this.socket.emit('GetCards', { groupId });
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }

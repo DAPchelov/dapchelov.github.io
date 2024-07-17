@@ -49,8 +49,15 @@ const Group: React.FC<IGroup> = (props: IGroup) => {
                 <Link to='/editcard'>
                     <EditIcon fontSize='small' onClick={() => { store.editCard(props._id); }} sx={{ cursor: 'pointer', width: '30px' }} />
                 </Link> */}
+                {
+                    store.getUser()._id === props.ownerId &&
+                    <Link to='/editgroup'>
+                        <EditIcon fontSize='small' onClick={() => { store.editCard(props._id); }} sx={{ cursor: 'pointer', width: '30px' }} />
+                    </Link>
+                }
+
             </ListItem>
-            <UsersList users={props.users}/>
+            <UsersList users={props.users} />
         </Paper>
     );
 }

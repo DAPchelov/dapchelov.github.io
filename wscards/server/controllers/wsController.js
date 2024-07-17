@@ -31,15 +31,11 @@ const WsController = () => {
             socket.emit('TakeAuth', user);
         });
         socket.on('GetCards', (data) => {
-            console.log('GetCards groupId: ' + data.groupId);
             let groupId = data.groupId;
-            if (groupId === undefined) {
-                // console.log('GroupId Changed!');
-                groupId = user._id;
-            }
-            user._id && cardService.getUserCards(groupId).then((data) => {
+            user && cardService.getUserCards(groupId).then((data) => {
                 socket.emit('TakeCards', data);
             });
+            console.log('GetCards groupId: ' + groupId);
         });
         socket.on('PostCard', (data) => {
             const card = data.card;

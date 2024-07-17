@@ -8,8 +8,8 @@ const CardsList: React.FC = () => {
     const store = useContext(Context);
 
     useEffect(() => {
-        store.receiveCards(store.getCurrentGroupId());
-    }, [])
+        store.receiveGroupCards(store.getCurrentGroupId());
+    }, [store])
 
     return (
         <Paper sx={{

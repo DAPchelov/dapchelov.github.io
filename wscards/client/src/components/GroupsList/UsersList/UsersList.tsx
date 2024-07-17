@@ -8,7 +8,6 @@ import { IUser } from '../../../models/IUser';
 type IUserListProps = {
     users: [{
         userId: string,
-        isLoggedIn: boolean,
         email: string,
         _id: string,
     }],
@@ -23,7 +22,7 @@ const UsersList: React.FC<IUserListProps> = (props: IUserListProps) => {
         }}>
             {props.users.map(user => {
                 return (
-                    <User key={user._id} userId={user._id} isLoggedIn={user.isLoggedIn} email={user.email} _id={user._id} />
+                    <User key={user._id} userId={user._id} email={user.email} _id={user._id} />
                 )
             })}
         </Box>

@@ -5,7 +5,7 @@ const model = mongoose.model;
 
 const GroupUserSchema = new Schema({
     userId: { type: String, unique: false, required: true },
-    isLoggedIn: { type: Boolean, required: true, default: false },
+    // isLoggedIn: { type: Boolean, required: true, default: false },
     email: { type: String, unique: false, required: true },
 })
 

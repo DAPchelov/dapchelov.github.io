@@ -10,7 +10,7 @@ const ClearButton: React.FC = () => {
 
     const removeCallback = () => {
         store.removeCompletedCards(store.getCurrentGroupId()).then(() => {
-            store.receiveCards(store.getCurrentGroupId());
+            store.receiveGroupCards(store.getCurrentGroupId());
         });
     }
 

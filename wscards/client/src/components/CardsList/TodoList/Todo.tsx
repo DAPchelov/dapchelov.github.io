@@ -21,7 +21,11 @@ const Todo: React.FC<ITodoProps> = (props: ITodoProps) => {
                 background: 'linear-gradient(270deg, rgba(21,101,192,0.15) 0%, rgba(0,0,0,0) 17%, rgba(0,0,0,0) 83%, rgba(21,101,192,0.15) 100%)'
             }
         }}>
-            <ListItem disablePadding aria-multiline sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <ListItem disablePadding aria-multiline sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                minHeight: '42px',
+                }}>
                 <Checkbox
                     id={'checkBoxId' + props.content._id}
                     checked={props.content.isCompleted}

@@ -11,25 +11,26 @@ const GroupSelect: React.FC = () => {
     store.setCurrentGroupId(store.getUser()._id)
 
     useEffect(() => {
-        store.ReceiveUserLoggedInGroups();
+        // store.setCurrentGroupId(store.getUser()._id);
+        store.receiveUserAllGroups();
     }, [])
 
     const handleGroupChange = (event: SelectChangeEvent | undefined) => {
         event && store.setCurrentGroupId(event.target.value);
-        event && store.receiveCards(event.target.value);
+        event && store.receiveGroupCards(event.target.value);
     }
 
     return (
         <ListItem>
             <FormControl fullWidth>
-                <InputLabel>Groups</InputLabel>
+                <InputLabel>Group</InputLabel>
                 <Select
-                    defaultValue=''
+                    defaultValue={''}
                     label="Group"
                 onChange={handleGroupChange}
                 >
                     <MenuItem value={store.getUser()._id} key={store.getUser()._id}>My Cards</MenuItem>
-                    {store.getLoggedInGroups().length > 0 && store.getLoggedInGroups()
+                    {store.getAllUserGroups().length > 0 && store.getAllUserGroups()
                         .map(group => {
                             return (
                                 <MenuItem value={group._id} key={group._id}>{group.label}</MenuItem>

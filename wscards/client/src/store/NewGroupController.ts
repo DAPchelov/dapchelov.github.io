@@ -4,14 +4,16 @@ import { IUser } from "../models/IUser";
 
 class NewGroupController {
 
-    label: string = '';
-    groupUsers: IUser[] = [];
-    ownerId: string = '';
-    allUsers: IUser[] = [];
-
     socket: Socket = {} as Socket;
 
-    constructor(socket: Socket) {
+    label: string = '';
+    ownerId: string = '';
+
+    groupUsers: IUser[] = [];
+    allUsers: IUser[] = [];
+
+    
+    constructor(socket: Socket, label: string, ownerId: string, groupUsers: IUser[]) {
 
         this.socket = socket;
 

@@ -11,7 +11,7 @@ interface IUserProps {
     userId: string,
     // isLoggedIn: boolean,
     email: string,
-    _id: string,
+    // _id: string,
     // checkTodo(id: ITodo['_id']): void,
 }
 

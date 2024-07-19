@@ -17,7 +17,7 @@ class GroupService {
             const groupUsers = users.map((user) => {
                 return ({
                     userId: user.userId,
-                    isLoggedIn: false,
+                    // isLoggedIn: false,
                     email: user.email
                 })
             });
@@ -51,7 +51,12 @@ class GroupService {
     }
     async getUserAllGroups(userId) {
         const groups = await GroupModel.find({ 'users.userId': userId });
+
+        
+
         const groupsDto = groups.map((group) => { return new GroupDto(group) });
+
+
         return (groupsDto);
     }
 }

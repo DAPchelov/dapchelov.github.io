@@ -31,6 +31,7 @@ const Main: React.FC = () => {
           <Route path='/newcard' element={<NewCardForm />} />
           <Route path='/editcard' element={<EditCardForm />} />
           <Route path='/newgroup' element={<NewGroupForm />} />
+          <Route path='/editgroup' element={<NewGroupForm />} />
         </Routes>
     </Box>
   );

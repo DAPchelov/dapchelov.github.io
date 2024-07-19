@@ -9,7 +9,6 @@ type IUserListProps = {
     users: [{
         userId: string,
         email: string,
-        _id: string,
     }],
     // checkTodo (id: string | undefined): void,
 }
@@ -22,7 +21,7 @@ const UsersList: React.FC<IUserListProps> = (props: IUserListProps) => {
         }}>
             {props.users.map(user => {
                 return (
-                    <User key={user._id} userId={user._id} email={user.email} _id={user._id} />
+                    <User key={user.userId} userId={user.userId} email={user.email} />
                 )
             })}
         </Box>

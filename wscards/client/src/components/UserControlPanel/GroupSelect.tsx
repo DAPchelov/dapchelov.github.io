@@ -33,7 +33,7 @@ const GroupSelect: React.FC = () => {
                     {store.getAllUserGroups().length > 0 && store.getAllUserGroups()
                         .map(group => {
                             return (
-                                <MenuItem value={group._id} key={group._id}>{group.label}</MenuItem>
+                                <MenuItem value={group._id} key={group.label}>{group.label}</MenuItem>
                             )
                         })}
                 </Select>

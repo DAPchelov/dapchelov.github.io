@@ -10,11 +10,6 @@ import UserListForm from './UsersFields/UserListForm';
 const NewGroupForm: React.FC = () => {
   const store = useContext(Context);
 
-  // const onPush = (keyKode: string) => {
-  //   if (keyKode === 'Enter') {
-  //     store.newCard.postCard();
-  //   }
-  // };
   const pushCallback = () => {
     store.newGroup.label.length !==0 ? store.newGroup.createGroup() : alert('Group label is required');
   }

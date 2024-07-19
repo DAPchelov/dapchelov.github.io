@@ -97,9 +97,6 @@ class UserService {
     async setSocketId(userId, socketId) {
         await UserModel.updateOne({ _id: userId }, { $set: { socketId: socketId } });
     }
-    async addGroup(groupId) {
-
-    }
     async getUserEmail(userId) {
         const user = await UserModel.findById(userId);
         return (user.email);

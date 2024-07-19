@@ -6,9 +6,7 @@ export interface IGroup {
     label: string;
     users: [{
         userId: string,
-        // isLoggedIn: boolean,
         email: string,
-        _id: string,
     }];
     cards: ICard[];
     ownerId: string;

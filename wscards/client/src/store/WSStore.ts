@@ -2,6 +2,7 @@ import { makeAutoObservable } from 'mobx';
 import { io } from 'socket.io-client';
 import { ICard } from '../models/ICard';
 import { IUser } from '../models/IUser';
+import { IOtherUser } from '../models/IOtherUser';
 import { IGroup } from '../models/IGroup';
 
 import NewCardController from './NewCardController';
@@ -55,8 +56,15 @@ class WSStore {
         // this.socket.on('TakeUserLoggedInGroups', (data) => {
         //     this.setLoggedInGroups(data);
         // })
-        this.socket.on('TakeUserAllGroups', (data) => {
+        this.socket.on('TakeUserAllGroups', (data: [IGroup]) => {
+            // if(data.length > 0){
+            //     data.map((group) => {
+            //         console.log(group.label);
+            //         group.users.map((user) => {console.log(user)})
+            //     })
+            // }
             this.setAllUserGroups(data);
+           
         })
 
         makeAutoObservable(this);
@@ -90,6 +98,13 @@ class WSStore {
     }
     setAllUserGroups(groups: [IGroup]) {
         this.allUserGroups = groups;
+
+        // if(groups.length > 0){
+        //     groups.map((group) => {
+        //         console.log(group.label);
+        //         group.users.map((user) => {console.log(user._id)})
+        //     })
+        // }
     }
 
     getUser() {
@@ -111,6 +126,12 @@ class WSStore {
         return this.currentGroupId;
     }
     getAllUserGroups() {
+        // if(this.allUserGroups.length > 0){
+        //     this.allUserGroups.map((group) => {
+        //         console.log(group.label);
+        //         group.users.map((user) => {console.log(user._id)})
+        //     })
+        // }
         return this.allUserGroups;
     }
 
@@ -134,16 +155,15 @@ class WSStore {
     }
 
     editCard(_id: string) {
-        const editableCard = this.cards.find((card) => card._id === _id);
+        const editableCard = this.getCards().find((card) => card._id === _id);
         if (editableCard) {
             this.newCard = new NewCardController(editableCard._id, editableCard.message, editableCard.todos, this.socket)
         }
     }
     editGroup(_id: string) {
-        const editableGroup = this.allUserGroups.find((group) => group._id === _id);
+        const editableGroup = this.getAllUserGroups().find((group) => group._id === _id);
         if (editableGroup) {
             this.newGroup = new NewGroupController(this.socket, editableGroup.label, editableGroup.ownerId, editableGroup.users);
-            // this.newCard = new NewCardController(editableCard._id, editableCard.message, editableCard.todos, this.socket)
         }
     }
 

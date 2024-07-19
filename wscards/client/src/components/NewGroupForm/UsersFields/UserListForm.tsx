@@ -7,34 +7,33 @@ import UserFields from './UserFields';
 
 
 
-
 const UserListForm: React.FC = () => {
 
-    const store = useContext(Context);
-    const switchUser = store.newGroup.removeUserFromGroup.bind(store.newGroup);
+  const store = useContext(Context);
+  const switchUser = store.newGroup.removeUserFromGroup.bind(store.newGroup);
 
-    return (
-        <Grid item xs={8} md={8}>
-          <Paper elevation={2}
-            sx={{
-              margin: 1,
-              display: 'flex',
-              flexDirection: 'column',
-            }}>
-            <ListItem disablePadding aria-multiline >
-              <TextField
-                id='filled-basic'
-                label='New group label'
-                variant='filled'
-                fullWidth
-                value={store.newGroup.label}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.newGroup.setLabel(event.target.value)}
-              />
-            </ListItem>
-            <UserFields users={store.newGroup.getGroupUsers()} switchUser={switchUser} />
-          </Paper>
-        </Grid>
-    );
+  return (
+    <Grid item xs={8} md={8}>
+      <Paper elevation={2}
+        sx={{
+          margin: 1,
+          display: 'flex',
+          flexDirection: 'column',
+        }}>
+        <ListItem disablePadding aria-multiline >
+          <TextField
+            id='filled-basic'
+            label='New group label'
+            variant='filled'
+            fullWidth
+            value={store.newGroup.label}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.newGroup.setLabel(event.target.value)}
+          />
+        </ListItem>
+        <UserFields users={store.newGroup.getGroupUsers()} groupId={store.newGroup.label} switchUser={switchUser} />
+      </Paper>
+    </Grid>
+  );
 }
 
 export default observer(UserListForm);

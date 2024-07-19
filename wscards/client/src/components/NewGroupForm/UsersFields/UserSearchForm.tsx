@@ -36,7 +36,7 @@ const UserSearchForm: React.FC = () => {
                         onChange={(e) => setSearchRequest(e.target.value)}
                     />
                 </ListItem>
-                <UserFields users={filteredUsers} switchUser={switchUser} />
+                <UserFields users={filteredUsers} groupId='searchForm' switchUser={switchUser} />
             </Paper>
         </Grid>
     );

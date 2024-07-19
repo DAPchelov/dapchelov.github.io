@@ -21,7 +21,7 @@ const GroupList: React.FC = () => {
             {store.getAllUserGroups().length > 0 && store.getAllUserGroups()
                 .map(group => {
                         return (
-                            <Group key={group._id} _id={group._id} users={group.users} label={group.label} ownerId={group.ownerId} cards={group.cards}/>
+                            <Group key={group.label} _id={group._id} users={group.users} label={group.label} ownerId={group.ownerId} cards={group.cards}/>
                         )
                 })}
         </Paper>

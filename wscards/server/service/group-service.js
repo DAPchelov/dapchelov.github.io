@@ -17,26 +17,47 @@ class GroupService {
             const groupUsers = users.map((user) => {
                 return ({
                     userId: user.userId,
-                    // isLoggedIn: false,
                     email: user.email
                 })
             });
 
-            const group = await GroupModel.create({
+            GroupModel.create({
                 label: label,
                 ownerId: ownerId,
                 users: groupUsers,
-            });
-            const groupDto = new GroupDto(group);
+            }).then((group) => {
+                const groupDto = new GroupDto(group);
+                // CardLists use for groups and users
+                CardsListModel.create({ userId: groupDto._id, cards: [] });
+            }
+            );
 
-            // CardLists use for groups and users
-            CardsListModel.create({ userId: groupDto._id, cards: [] });
-            // add new users to group
-            // await GroupModel.updateOne({ label: label }, { $push: { users: groupUsers } });
         } catch (error) {
             console.log(error);
         }
+    };
 
+    async editGroup(label, ownerId, users) {
+        
+        try {
+            const candidate = await GroupModel.findOne({ label });
+            if (candidate.ownerId === ownerId) {
+                const groupUsers = users.map((user) => {
+                    return ({
+                        userId: user.userId,
+                        email: user.email
+                    })
+                });
+                // add new users to group
+                await GroupModel.updateOne({ label: label }, { $set: { users: groupUsers } });
+            } if (candidate.ownerId !== ownerId) {
+                throw ApiError.BadRequest(`Пользователь ${ownerId} не владелец группы ${label}`);
+            } if(!candidate) {
+                throw ApiError.BadRequest(`Группа с таким названием ${label} не существует`)
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     async getGroupCards(reqLabel) {
@@ -52,7 +73,7 @@ class GroupService {
     async getUserAllGroups(userId) {
         const groups = await GroupModel.find({ 'users.userId': userId });
 
-        
+
 
         const groupsDto = groups.map((group) => { return new GroupDto(group) });
 

@@ -5,7 +5,7 @@ class GroupDto {
     users;
 
     constructor(model) {
-        this._id = model.userId;
+        this._id = model._id
         this.label = model.label;
         this.ownerId = model.ownerId;
         this.users = model.users;

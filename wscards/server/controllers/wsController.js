@@ -74,6 +74,13 @@ const WsController = () => {
                 console.log(error);
             }
         });
+        socket.on('EditGroup', (data) => {
+            try {
+                user && groupService.editGroup(data.label, user._id, data.users);
+            } catch (error) {
+                console.log(error);
+            }
+        });
         socket.on('ReceiveAllUsers', () => {
             user && userService.getAllUsers().then((data) => {
                 socket.emit('TakeAllUsers', data);

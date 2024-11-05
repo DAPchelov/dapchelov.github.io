@@ -83,6 +83,16 @@ class NewGroupController {
         }
     }
 
+    editGroup() {
+        try {
+            const users = this.groupUsers.map((user) => { return ({ userId: user.userId, email: user.email }) });
+            this.socket.emit('EditGroup', { label: this.label, users: users });
+            this.clearForm();
+        } catch (e: any) {
+            console.log(e.response?.data?.message);
+        }
+    }
+
     receiveAllUsers() {
         this.socket.emit('ReceiveAllUsers');
     }

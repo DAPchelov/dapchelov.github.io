@@ -11,6 +11,7 @@ import EditCardForm from './EditCardForm';
 import NewGroupForm from './NewGroupForm/NewGroupForm';
 import UserControlPanel from './UserControlPanel/UserControlPanel';
 import GroupsList from './GroupsList/GroupsList';
+import EditGroupForm from './NewGroupForm/EditGroupForm';
 
 
 const Main: React.FC = () => {
@@ -31,7 +32,7 @@ const Main: React.FC = () => {
           <Route path='/newcard' element={<NewCardForm />} />
           <Route path='/editcard' element={<EditCardForm />} />
           <Route path='/newgroup' element={<NewGroupForm />} />
-          <Route path='/editgroup' element={<NewGroupForm />} />
+          <Route path='/editgroup' element={<EditGroupForm />} />
         </Routes>
     </Box>
   );

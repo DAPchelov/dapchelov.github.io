@@ -6,7 +6,7 @@ import authMiddleware from '../middlewares/auth-middleware.js';
 const restRouter = new Router();
 
 restRouter.post('/registration',
-    body('email').isEmail(),
+    // body('email').isEmail(),
     body('password').isLength({min:3, max: 32}),
     userController.registration
 );

@@ -6,37 +6,41 @@ import { Context } from '../App'
 
 const LoginForm: React.FC = () => {
 
-  const [email, setEmail] = useState<string>('');
+  const [login, setLogin] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [isValid, setIsValid] = useState<boolean>(false);
 
   const store = useContext(Context);
 
   useEffect(() => {
-    const regEmail = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    // RegExp for login`s login
+    // const regLogin = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    
+    // RegExp for any string login with length >= 3
+    // const regLogin = /^[A-Za-zА-Яа-я0-9_]{3,}$/;
 
-    if ((regEmail.test(email)) && (password.length > 5)) {
+    if ((login.length > 2) && (password.length > 5)) {
       setIsValid(true);
     } else if (isValid === true) {
       setIsValid(false);
     }
-  }, [email, password, isValid])
+  }, [login, password, isValid])
 
   const loginCallback = () => {
-    authController.login(email, password).then(() => {
+    authController.login(login, password).then(() => {
       store.setToken(localStorage.getItem('token'));
       store.getAuth();
     })
   };
 
   const registrationCallback = () => {
-    authController.registration(email, password).then(() => {
+    authController.registration(login, password).then(() => {
       loginCallback();
     })
   };
-  
+
   const handlePasswordFieldKeyPress = (keyCode: string) => {
-    if ((keyCode === "Enter") || (keyCode === "NumpadEnter")) {
+    if (((keyCode === "Enter") || (keyCode === "NumpadEnter") && isValid)) {
       loginCallback();
     }
   }
@@ -52,8 +56,8 @@ const LoginForm: React.FC = () => {
             label="Login"
             variant="standard"
             required
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
+            onChange={(e) => setLogin(e.target.value)}
+            value={login}
           />
           <TextField
             id="standard-password-input"

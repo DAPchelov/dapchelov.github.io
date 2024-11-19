@@ -38,7 +38,7 @@ class GroupService {
     };
 
     async editGroup(label, ownerId, users) {
-        
+
         try {
             const candidate = await GroupModel.findOne({ label });
             if (candidate.ownerId === ownerId) {
@@ -52,7 +52,7 @@ class GroupService {
                 await GroupModel.updateOne({ label: label }, { $set: { users: groupUsers } });
             } if (candidate.ownerId !== ownerId) {
                 throw ApiError.BadRequest(`Пользователь ${ownerId} не владелец группы ${label}`);
-            } if(!candidate) {
+            } if (!candidate) {
                 throw ApiError.BadRequest(`Группа с таким названием ${label} не существует`)
             }
         } catch (error) {

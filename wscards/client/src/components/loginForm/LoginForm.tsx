@@ -27,14 +27,19 @@ const LoginForm: React.FC = () => {
       store.setToken(localStorage.getItem('token'));
       store.getAuth();
     })
-    
   };
+
   const registrationCallback = () => {
     authController.registration(email, password).then(() => {
       loginCallback();
     })
-    
   };
+  
+  const handlePasswordFieldKeyPress = (keyCode: string) => {
+    if ((keyCode === "Enter") || (keyCode === "NumpadEnter")) {
+      loginCallback();
+    }
+  }
 
   return (
 
@@ -59,6 +64,7 @@ const LoginForm: React.FC = () => {
             required
             onChange={(e) => setPassword(e.target.value)}
             value={password}
+            onKeyDown={(e) => handlePasswordFieldKeyPress(e.code)}
           />
           <Button type="submit" variant={isValid ? "contained" : "outlined"} color="success" disabled={!isValid} sx={{ width: 200 }} onClick={() => loginCallback()}>SIGN IN</Button>
         </div>

@@ -15,9 +15,10 @@ const UserSearchForm: React.FC = () => {
         store.newGroup.receiveAllUsers();
     },[])
 
-    const filteredUsers = store.newGroup.allUsers.filter(user => {
+    const filteredUsersByPromt = store.newGroup.allUsers.filter(user => {
         return user.email.toLowerCase().includes(searchRequest);
     })
+
 
     return (
         <Grid item xs={4} md={4}>
@@ -36,7 +37,7 @@ const UserSearchForm: React.FC = () => {
                         onChange={(e) => setSearchRequest(e.target.value)}
                     />
                 </ListItem>
-                <UserFields users={filteredUsers} groupId='searchForm' switchUser={switchUser} />
+                <UserFields users={filteredUsersByPromt} groupId='searchForm' switchUser={switchUser} />
             </Paper>
         </Grid>
     );

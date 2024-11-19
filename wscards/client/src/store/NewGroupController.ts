@@ -48,15 +48,10 @@ class NewGroupController {
 
         if (!this.groupUsers.find((user) => (user.userId === userId))) {
             user && this.groupUsers.push(user);
-            this.setAllUsers(this.allUsers.filter((user => (user.userId !== userId))));
         }
     }
     removeUserFromGroup(removeUserId: IUser['userId']) {
-        const user = this.groupUsers.find((user) => (user.userId === removeUserId));
         this.setGroupUsers(this.groupUsers.filter(user => user.userId !== removeUserId));
-        if (user && !this.allUsers.find((user) => (user.userId === removeUserId))) {
-            this.allUsers.push(user);
-        }
     }
     getLabel() {
         return (this.label);

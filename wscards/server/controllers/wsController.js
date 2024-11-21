@@ -69,14 +69,15 @@ const WsController = () => {
         });
         socket.on('CreateNewGroup', (data) => {
             try {
-                user && groupService.createNewGroup(data.label, user._id, data.users);
+                console.log(data.ownerId + '' + data.label);
+                user && groupService.createNewGroup(data.label, data.ownerId, data.users);
             } catch (error) {
                 console.log(error);
             }
         });
         socket.on('EditGroup', (data) => {
             try {
-                user && groupService.editGroup(data.label, user._id, data.users);
+                user && groupService.editGroup(data._id, data.label, data.ownerId, data.users);
             } catch (error) {
                 console.log(error);
             }

@@ -37,24 +37,27 @@ class GroupService {
         }
     };
 
-    async editGroup(label, ownerId, users) {
+    async editGroup(req_id, reqLabel, reqOwnerId, reqUsers) {
 
         try {
-            const candidate = await GroupModel.findOne({ label });
-            if (candidate.ownerId === ownerId) {
-                const groupUsers = users.map((user) => {
-                    return ({
-                        userId: user.userId,
-                        email: user.email
-                    })
-                });
-                // add new users to group
-                await GroupModel.updateOne({ label: label }, { $set: { users: groupUsers } });
-            } if (candidate.ownerId !== ownerId) {
-                throw ApiError.BadRequest(`Пользователь ${ownerId} не владелец группы ${label}`);
-            } if (!candidate) {
-                throw ApiError.BadRequest(`Группа с таким названием ${label} не существует`)
-            }
+            const candidate = await GroupModel.findOne({ req_id });
+            // if (candidate.ownerId === ownerId) {
+            const groupUsers = reqUsers.map((user) => {
+                return ({
+                    userId: user.userId,
+                    email: user.email
+                })
+            });
+            // set new parameters to group
+            await GroupModel.updateOne({ _id: req_id }, { $set: { label: reqLabel } });
+            await GroupModel.updateOne({ _id: req_id }, { $set: { ownerId: reqOwnerId } });
+            await GroupModel.updateOne({ _id: req_id }, { $set: { users: groupUsers } });
+            // }
+            // if (candidate.ownerId !== ownerId) {
+            //     throw ApiError.BadRequest(`Пользователь ${ownerId} не владелец группы ${label}`);
+            // } if (!candidate) {
+            //     throw ApiError.BadRequest(`Группа с таким названием ${label} не существует`)
+            // }
         } catch (error) {
             console.log(error);
         }

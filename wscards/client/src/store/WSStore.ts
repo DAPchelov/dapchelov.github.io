@@ -27,7 +27,7 @@ class WSStore {
     private currentGroupId: string = this.user._id;
 
     newCard: NewCardController = new NewCardController('', '', [], this.socket);
-    newGroup: NewGroupController = new NewGroupController(this.socket, '', '', []);
+    newGroup: NewGroupController = new NewGroupController('', this.socket, this.user._id, '', []);
 
     constructor() {
         this.socket.on('TakeAuth', async (data) => {
@@ -160,10 +160,11 @@ class WSStore {
             this.newCard = new NewCardController(editableCard._id, editableCard.message, editableCard.todos, this.socket)
         }
     }
+
     editGroup(_id: string) {
         const editableGroup = this.getAllUserGroups().find((group) => group._id === _id);
         if (editableGroup) {
-            this.newGroup = new NewGroupController(this.socket, editableGroup.label, editableGroup.ownerId, editableGroup.users);
+            this.newGroup = new NewGroupController(_id, this.socket, editableGroup.label, editableGroup.ownerId, editableGroup.users);
         }
     }
 

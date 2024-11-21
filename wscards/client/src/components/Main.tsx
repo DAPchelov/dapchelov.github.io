@@ -11,7 +11,7 @@ import EditCardForm from './EditCardForm';
 import NewGroupForm from './NewGroupForm/NewGroupForm';
 import UserControlPanel from './UserControlPanel/UserControlPanel';
 import GroupsList from './GroupsList/GroupsList';
-import EditGroupForm from './NewGroupForm/EditGroupForm';
+import EditGroupForm from './EditGroupForm/EditGroupForm';
 
 
 const Main: React.FC = () => {

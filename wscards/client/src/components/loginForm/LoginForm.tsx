@@ -40,7 +40,7 @@ const LoginForm: React.FC = () => {
   };
 
   const handlePasswordFieldKeyPress = (keyCode: string) => {
-    if (((keyCode === "Enter") || (keyCode === "NumpadEnter") && isValid)) {
+    if (((keyCode === "Enter") || (keyCode === "NumpadEnter")) && isValid) {
       loginCallback();
     }
   }

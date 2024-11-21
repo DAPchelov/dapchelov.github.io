@@ -17,8 +17,7 @@ const EditGroupForm: React.FC = () => {
   return (
     <Paper elevation={2} sx={{
     }}>
-      <Grid container spacing={0} sx={{
-      }}>
+      <Grid container spacing={0}>
         <UserListForm />
         <UserSearchForm />
         <Grid item xs={12} md={12}>

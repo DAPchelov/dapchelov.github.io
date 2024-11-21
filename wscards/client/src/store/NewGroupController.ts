@@ -4,7 +4,7 @@ import { IUser } from "../models/IUser";
 import { IOtherUser } from "../models/IOtherUser";
 
 class NewGroupController {
-
+    _id: string;
     socket: Socket = {} as Socket;
 
     label: string = '';
@@ -14,8 +14,9 @@ class NewGroupController {
     allUsers: IOtherUser[] = [];
 
 
-    constructor(socket: Socket, label: string, ownerId: string, groupUsers: IOtherUser[]) {
+    constructor(_id:string, socket: Socket, label: string, ownerId: string, groupUsers: IOtherUser[]) {
 
+        this._id = _id;
         this.socket = socket;
         this.label = label;
         this.ownerId = ownerId;
@@ -64,6 +65,7 @@ class NewGroupController {
     }
 
     clearForm() {
+        this._id = '';
         this.label = '';
         this.groupUsers = [];
     }
@@ -71,7 +73,7 @@ class NewGroupController {
     createGroup() {
         try {
             const users = this.groupUsers.map((user) => { return ({ userId: user.userId, email: user.email }) });
-            this.socket.emit('CreateNewGroup', { label: this.label, users: users });
+            this.socket.emit('CreateNewGroup', { label: this.label, ownerId: this.ownerId, users: users });
             this.clearForm();
         } catch (e: any) {
             console.log(e.response?.data?.message);
@@ -81,7 +83,7 @@ class NewGroupController {
     editGroup() {
         try {
             const users = this.groupUsers.map((user) => { return ({ userId: user.userId, email: user.email }) });
-            this.socket.emit('EditGroup', { label: this.label, users: users });
+            this.socket.emit('EditGroup', {_id: this._id, label: this.label, ownerId: this.ownerId, users: users });
             this.clearForm();
         } catch (e: any) {
             console.log(e.response?.data?.message);
@@ -90,6 +92,9 @@ class NewGroupController {
 
     receiveAllUsers() {
         this.socket.emit('ReceiveAllUsers');
+    }
+    setOwnerId(ownerId: string) {
+        this.ownerId = ownerId;
     }
 }
 

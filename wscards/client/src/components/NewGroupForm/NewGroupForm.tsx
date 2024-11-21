@@ -1,5 +1,5 @@
 import Paper from '@mui/material/Paper';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../App'
 import { Button } from '@mui/material';
@@ -13,6 +13,9 @@ const NewGroupForm: React.FC = () => {
   const pushCallback = () => {
     store.newGroup.label.length !==0 ? store.newGroup.createGroup() : alert('Group label is required');
   }
+  useEffect(() => {
+    store.newGroup.setOwnerId(store.getUser()._id);
+},[])
 
   return (
     <Paper elevation={2} sx={{

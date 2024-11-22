@@ -11,8 +11,21 @@ const EditGroupForm: React.FC = () => {
   const store = useContext(Context);
 
   const pushCallback = () => {
-    store.newGroup.label.length !==0 ? store.newGroup.editGroup() : alert('Group label is required');
-  }
+    if (store.newGroup.label.length === 0) {
+      return (alert('Group label is required'));
+    }
+    if (store.newGroup.getGroupUsers().find((user) => user.userId === store.newGroup.ownerId)) {
+      return store.newGroup.editGroup();
+    } else {
+      return (alert('Group administrator is required'));
+    }
+    // store.newGroup.getGroupUsers().map((user) => {
+    //   if (user.userId === store.newGroup.ownerId) {
+    //     console.log('group with admin');
+    //     return store.newGroup.editGroup();
+    //   }
+    // })
+  };
 
   return (
     <Paper elevation={2} sx={{

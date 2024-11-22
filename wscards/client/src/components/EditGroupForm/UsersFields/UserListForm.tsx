@@ -28,7 +28,7 @@ const UserListForm: React.FC = () => {
         }}>
           <TextField sx={{
             width: '90%',
-            marginRight: 2,
+            marginRight: 1,
           }}
             id='filled-basic'
             label='New group label'
@@ -37,7 +37,7 @@ const UserListForm: React.FC = () => {
             value={store.newGroup.label}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.newGroup.setLabel(event.target.value)}
           />
-          <Button variant='contained' sx={{ fontSize: 10, width: '8%', height: 56 }} size='large' color="error" onClick={() => store.newCard.addTodo('', false)}>Delete group</Button>
+          <Button variant='contained' sx={{ fontSize: 10, width: '10%', height: 56, marginRight: 1 }} size='large' color="error" onClick={() => store.newCard.addTodo('', false)}>Delete group</Button>
         </ListItem>
         <UserFields users={store.newGroup.getGroupUsers()} groupId={store.newGroup.label} ownerId={store.newGroup.ownerId} switchUser={switchUser} />
       </Paper>

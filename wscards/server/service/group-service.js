@@ -2,7 +2,6 @@ import ApiError from '../exeptions/api-error.js'
 
 import GroupModel from "../models/group-model.js";
 import CardsListModel from '../models/cardsList-model.js';
-import UserModel from '../models/user-model.js'
 
 import GroupDto from '../dtos/group-dto.js';
 import CardsDto from '../dtos/cards-dto.js';
@@ -20,7 +19,6 @@ class GroupService {
                     email: user.email
                 })
             });
-
             GroupModel.create({
                 label: label,
                 ownerId: ownerId,
@@ -29,35 +27,27 @@ class GroupService {
                 const groupDto = new GroupDto(group);
                 // CardLists use for groups and users
                 CardsListModel.create({ userId: groupDto._id, cards: [] });
-            }
-            );
-
+            });
         } catch (error) {
             console.log(error);
         }
     };
 
     async editGroup(req_id, reqLabel, reqOwnerId, reqUsers) {
-
         try {
             const candidate = await GroupModel.findOne({ req_id });
-            // if (candidate.ownerId === ownerId) {
-            const groupUsers = reqUsers.map((user) => {
-                return ({
-                    userId: user.userId,
-                    email: user.email
-                })
-            });
-            // set new parameters to group
-            await GroupModel.updateOne({ _id: req_id }, { $set: { label: reqLabel } });
-            await GroupModel.updateOne({ _id: req_id }, { $set: { ownerId: reqOwnerId } });
-            await GroupModel.updateOne({ _id: req_id }, { $set: { users: groupUsers } });
-            // }
-            // if (candidate.ownerId !== ownerId) {
-            //     throw ApiError.BadRequest(`Пользователь ${ownerId} не владелец группы ${label}`);
-            // } if (!candidate) {
-            //     throw ApiError.BadRequest(`Группа с таким названием ${label} не существует`)
-            // }
+            if (candidate) {
+                const groupUsers = reqUsers.map((user) => {
+                    return ({
+                        userId: user.userId,
+                        email: user.email
+                    })
+                });
+                // set new parameters to group
+                await GroupModel.updateOne({ _id: req_id }, { $set: { label: reqLabel, ownerId: reqOwnerId, users: groupUsers } });
+            } if (!candidate) {
+                throw ApiError.BadRequest(`Редактируемая группа не найдена`);
+            }
         } catch (error) {
             console.log(error);
         }
@@ -67,22 +57,19 @@ class GroupService {
         const cardsList = await CardsListModel.findOne({ label: reqLabel });
         const cardsListDto = new CardsDto(cardsList);
         return { cards: cardsListDto.cards }
-    }
+    };
+
     async getUserLoggedInGroups(userId) {
         const groups = await GroupModel.find({ 'users.userId': userId, 'users.isLoggedIn': true });
         const groupsDto = groups.map((group) => { return (new GroupDto(group)) });
-        return groupsDto
-    }
+        return groupsDto;
+    };
+
     async getUserAllGroups(userId) {
         const groups = await GroupModel.find({ 'users.userId': userId });
-
-
-
         const groupsDto = groups.map((group) => { return new GroupDto(group) });
-
-
-        return (groupsDto);
-    }
+        return groupsDto;
+    };
 }
 
 export default new GroupService();

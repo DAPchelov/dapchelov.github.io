@@ -28,12 +28,12 @@ const UserField: React.FC<IUserProps> = (props: IUserProps) => {
         if (ownerId !== undefined) {
             if (userId === ownerId) {
                 return (
-                    <Button variant='contained' sx={{ fontSize: 10, width: '8%', height: 37 }} size='small' color="success" onClick={() => store.newGroup.setOwnerId(userId)}>Admin</Button>
+                    <Button variant='contained' sx={{ fontSize: 10, width: '10%', height: 37 }} size='small' color="success" onClick={() => store.newGroup.setOwnerId(userId)}>Admin</Button>
                 )
             }
             if (userId !== ownerId) {
                 return (
-                    <Button variant='outlined' sx={{ fontSize: 10, width: '8%', height: 37 }} size='small' color="primary" onClick={() => store.newGroup.setOwnerId(userId)}>User</Button>
+                    <Button variant='outlined' sx={{ fontSize: 10, width: '10%', height: 37 }} size='small' color="primary" onClick={() => store.newGroup.setOwnerId(userId)}>User</Button>
                 )
             }
         }
@@ -42,9 +42,8 @@ const UserField: React.FC<IUserProps> = (props: IUserProps) => {
     return (
         <ListItem
             sx={{
-                
-                paddingLeft: 0,
-                paddingRight: 0,
+                paddingLeft: 1,
+                paddingRight: 1,
             }}
             >
             <ListItemAvatar onClick={() => { props.switchUser(props.user.userId);}}>

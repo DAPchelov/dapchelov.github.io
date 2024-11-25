@@ -11,8 +11,15 @@ const NewGroupForm: React.FC = () => {
   const store = useContext(Context);
 
   const pushCallback = () => {
-    store.newGroup.label.length !==0 ? store.newGroup.createGroup() : alert('Group label is required');
-  }
+    if (store.newGroup.label.length === 0) {
+      return (alert('Group label is required'));
+    }
+    if (store.newGroup.getGroupUsers().find((user) => user.userId === store.newGroup.ownerId)) {
+      return store.newGroup.createGroup();
+    } else {
+      return (alert('Group administrator is required'));
+    }
+  };
   useEffect(() => {
     store.newGroup.setOwnerId(store.getUser()._id);
 },[])

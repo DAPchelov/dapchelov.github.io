@@ -8,10 +8,10 @@ import CardsList from './CardsList/CardsList'
 import NewCardForm from './NewCardForm';
 import ControlPanel from './ControlPanel/ControlPanel';
 import EditCardForm from './EditCardForm';
-import NewGroupForm from './NewGroupForm/NewGroupForm';
+import NewGroupForm from './GroupForms/NewGroupForm';
 import UserControlPanel from './UserControlPanel/UserControlPanel';
 import GroupsList from './GroupsList/GroupsList';
-import EditGroupForm from './EditGroupForm/EditGroupForm';
+import EditGroupForm from './GroupForms/EditGroupForm';
 
 
 const Main: React.FC = () => {

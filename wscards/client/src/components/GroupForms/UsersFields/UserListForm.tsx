@@ -1,7 +1,7 @@
 import ListItem from '@mui/material/ListItem';
 import React, { useContext, } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Grid, Paper, TextField } from '@mui/material';
+import { Button, Grid, Paper, TextField } from '@mui/material';
 import { Context } from '../../App'
 import UserFields from './UserFields';
 
@@ -20,8 +20,15 @@ const UserListForm: React.FC = () => {
           display: 'flex',
           flexDirection: 'column',
         }}>
-        <ListItem disablePadding aria-multiline >
-          <TextField
+        <ListItem disablePadding aria-multiline
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}>
+          <TextField sx={{
+            width: '90%',
+            marginRight: 1,
+          }}
             id='filled-basic'
             label='New group label'
             variant='filled'
@@ -29,8 +36,9 @@ const UserListForm: React.FC = () => {
             value={store.newGroup.label}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.newGroup.setLabel(event.target.value)}
           />
+          <Button variant='contained' sx={{ fontSize: 10, width: '10%', height: 56, marginRight: 1 }} size='large' color="error" onClick={() => store.newCard.addTodo('', false)}>Delete group</Button>
         </ListItem>
-        <UserFields users={store.newGroup.getGroupUsers()} groupId={store.newGroup.label} switchUser={switchUser} />
+        <UserFields users={store.newGroup.getGroupUsers()} groupId={store.newGroup.label} ownerId={store.newGroup.ownerId} switchUser={switchUser} />
       </Paper>
     </Grid>
   );

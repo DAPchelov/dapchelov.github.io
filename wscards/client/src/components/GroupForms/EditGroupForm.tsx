@@ -19,12 +19,6 @@ const EditGroupForm: React.FC = () => {
     } else {
       return (alert('Group administrator is required'));
     }
-    // store.newGroup.getGroupUsers().map((user) => {
-    //   if (user.userId === store.newGroup.ownerId) {
-    //     console.log('group with admin');
-    //     return store.newGroup.editGroup();
-    //   }
-    // })
   };
 
   return (

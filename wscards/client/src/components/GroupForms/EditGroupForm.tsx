@@ -9,6 +9,7 @@ import UserListForm from './UsersFields/UserListForm';
 
 const EditGroupForm: React.FC = () => {
   const store = useContext(Context);
+  const deleteGroupCallback = store.newGroup.deleteGroup.bind(store.newGroup)
 
   const pushCallback = () => {
     if (store.newGroup.label.length === 0) {
@@ -25,7 +26,7 @@ const EditGroupForm: React.FC = () => {
     <Paper elevation={2} sx={{
     }}>
       <Grid container spacing={0}>
-        <UserListForm />
+      <UserListForm deleteGroup={deleteGroupCallback} deleteButtonColor="error"/>
         <UserSearchForm />
         <Grid item xs={12} md={12}>
           <Button variant={'contained'} sx={{ fontSize: 12, width: '100%' }} size='small' onClick={() => pushCallback()}>Edit Group</Button>

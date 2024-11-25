@@ -7,8 +7,12 @@ import Grid from '@mui/material/Grid';
 import UserSearchForm from './UsersFields/UserSearchForm';
 import UserListForm from './UsersFields/UserListForm';
 
+
+
 const NewGroupForm: React.FC = () => {
+
   const store = useContext(Context);
+  const deleteGroupCallback = store.newGroup.clearForm.bind(store.newGroup)
 
   const pushCallback = () => {
     if (store.newGroup.label.length === 0) {
@@ -22,14 +26,14 @@ const NewGroupForm: React.FC = () => {
   };
   useEffect(() => {
     store.newGroup.setOwnerId(store.getUser()._id);
-},[])
+  }, [])
 
   return (
     <Paper elevation={2} sx={{
     }}>
       <Grid container spacing={0} sx={{
       }}>
-        <UserListForm />
+        <UserListForm deleteGroup={deleteGroupCallback} deleteButtonColor="error"/>
         <UserSearchForm />
         <Grid item xs={12} md={12}>
           <Button variant={'contained'} sx={{ fontSize: 12, width: '100%' }} size='small' onClick={() => pushCallback()}>Create Group</Button>

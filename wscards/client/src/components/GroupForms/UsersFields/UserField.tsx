@@ -1,5 +1,4 @@
 import ListItem from '@mui/material/ListItem';
-
 import React, { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Avatar, Button, ListItemAvatar, ListItemText } from '@mui/material';
@@ -7,22 +6,14 @@ import { assignColor } from '../../UserControlPanel/UserBadge'
 import { IOtherUser } from '../../../models/IOtherUser';
 import { Context } from '../../App'
 
-
-
 interface IUserProps {
     user: IOtherUser;
     ownerId: string | undefined;
     switchUser(id: IOtherUser['userId']): void | undefined,
 }
 
-
-
-
 const UserField: React.FC<IUserProps> = (props: IUserProps) => {
     const store = useContext(Context);
-    const setNewOwner = (newOwnerId: string) => {
-        store.newGroup.setOwnerId(newOwnerId);
-    }
 
     const adminSticker = (userId: string, ownerId: string | undefined) => {
         if (ownerId !== undefined) {

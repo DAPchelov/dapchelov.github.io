@@ -53,16 +53,7 @@ class WSStore {
         this.socket.on('TakeCards', (data) => {
             this.setCards(data.cards);
         })
-        // this.socket.on('TakeUserLoggedInGroups', (data) => {
-        //     this.setLoggedInGroups(data);
-        // })
         this.socket.on('TakeUserAllGroups', (data: [IGroup]) => {
-            // if(data.length > 0){
-            //     data.map((group) => {
-            //         console.log(group.label);
-            //         group.users.map((user) => {console.log(user)})
-            //     })
-            // }
             this.setAllUserGroups(data);
            
         })
@@ -90,21 +81,12 @@ class WSStore {
     setIsCompletedDisplayMode(mode: boolean | undefined) {
         this.isCompletedDisplayMode = mode;
     }
-    // setLoggedInGroups(groups: [IGroup]) {
-    //     this.loggedInGroups = groups;
-    // }
+
     setCurrentGroupId(id: string) {
         this.currentGroupId = id;
     }
     setAllUserGroups(groups: [IGroup]) {
         this.allUserGroups = groups;
-
-        // if(groups.length > 0){
-        //     groups.map((group) => {
-        //         console.log(group.label);
-        //         group.users.map((user) => {console.log(user._id)})
-        //     })
-        // }
     }
 
     getUser() {
@@ -119,19 +101,11 @@ class WSStore {
     getIsCompletedDisplayMode() {
         return this.isCompletedDisplayMode;
     }
-    // getLoggedInGroups() {
-    //     return this.loggedInGroups;
-    // }
+
     getCurrentGroupId() {
         return this.currentGroupId;
     }
     getAllUserGroups() {
-        // if(this.allUserGroups.length > 0){
-        //     this.allUserGroups.map((group) => {
-        //         console.log(group.label);
-        //         group.users.map((user) => {console.log(user._id)})
-        //     })
-        // }
         return this.allUserGroups;
     }
 
@@ -164,7 +138,7 @@ class WSStore {
     editGroup(_id: string) {
         const editableGroup = this.getAllUserGroups().find((group) => group._id === _id);
         if (editableGroup) {
-            this.newGroup = new NewGroupController(_id, this.socket, editableGroup.label, editableGroup.ownerId, editableGroup.users);
+            this.newGroup = new NewGroupController(editableGroup._id, this.socket, editableGroup.label, editableGroup.ownerId, editableGroup.users);
         }
     }
 
@@ -234,13 +208,7 @@ class WSStore {
             console.log(e.response?.data?.message);
         }
     }
-    // async ReceiveUserLoggedInGroups() {
-    //     try {
-    //         this.socket.emit('ReceiveUserLoggedInGroups');
-    //     } catch (e: any) {
-    //         console.log(e.response?.data?.message);
-    //     }
-    // }
+
     async receiveUserAllGroups() {
         try {
             this.socket.emit('ReceiveUserAllGroups');
@@ -248,6 +216,7 @@ class WSStore {
             console.log(e.response?.data?.message);
         }
     }
+
     async receiveGroupCards(groupId: string) {
         try {
             this.socket.emit('GetCards', { groupId });

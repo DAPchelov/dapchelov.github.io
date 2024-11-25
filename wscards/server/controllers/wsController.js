@@ -82,6 +82,13 @@ const WsController = () => {
                 console.log(error);
             }
         });
+        socket.on('DeleteGroup', (data) => {
+            try {
+                user && groupService.deleteGroup(data._id);
+            } catch (error) {
+                console.log(error);
+            }
+        });
         socket.on('ReceiveAllUsers', () => {
             user && userService.getAllUsers().then((data) => {
                 socket.emit('TakeAllUsers', data);

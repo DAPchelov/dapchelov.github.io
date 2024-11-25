@@ -53,6 +53,20 @@ class GroupService {
         }
     };
 
+    async deleteGroup(req_id) {
+        console.log('Удаление группы');
+        try {
+            const candidate = await GroupModel.findOne({ req_id });
+            if (candidate) {
+                await GroupModel.deleteOne({ _id: req_id });
+            } if (!candidate) {
+                throw ApiError.BadRequest(`Удаляемая группа не найдена`);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     async getGroupCards(reqLabel) {
         const cardsList = await CardsListModel.findOne({ label: reqLabel });
         const cardsListDto = new CardsDto(cardsList);

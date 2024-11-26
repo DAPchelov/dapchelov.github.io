@@ -73,12 +73,6 @@ class GroupService {
         return { cards: cardsListDto.cards }
     };
 
-    async getUserLoggedInGroups(userId) {
-        const groups = await GroupModel.find({ 'users.userId': userId, 'users.isLoggedIn': true });
-        const groupsDto = groups.map((group) => { return (new GroupDto(group)) });
-        return groupsDto;
-    };
-
     async getUserAllGroups(userId) {
         const groups = await GroupModel.find({ 'users.userId': userId });
         const groupsDto = groups.map((group) => { return new GroupDto(group) });

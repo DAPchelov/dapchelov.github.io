@@ -16,9 +16,10 @@ const Group: React.FC<IGroup> = (props: IGroup) => {
 
     const store = useContext(Context);
 
-    const checkTodo = (todoId: string) => {
-        store.checkTodo(props._id, todoId, store.getCurrentGroupId());
+    const getAdminName = () => {
+        return props.users.find((user) => user.userId === props.ownerId)?.email;
     }
+
     useEffect(() => {
         // store.getGroupUsersEmail(props);
     }, [])
@@ -27,35 +28,40 @@ const Group: React.FC<IGroup> = (props: IGroup) => {
         <Paper elevation={2} sx={{
             display: 'flex',
         }}>
-            <ListItem disablePadding aria-multiline sx={{
+            <ListItem aria-multiline sx={{
                 background: 'rgba(21,101,192,0.15)',
                 width: '25%',
-                minWidth: '250px'
+                minWidth: '200px',
+                display: 'flex',
+                justifyContent: 'space-between',
             }}>
-                {/* <Checkbox
-                    id={props._id}
-                    checked={props.users.find((user) => {user._id === store.getUser()._id})?.isLoggedIn}
-                    // onClick={() => store.checkCard(props._id, !props.isCompleted, store.getCurrentGroupId())}
-                    sx={{ cursor: 'pointer' }} /> */}
-
-                <Typography sx={{
-                    overflow: 'hidden',
-                    wordWrap: 'break-word',
-                    width: '100%',
+                <ListItem sx={{
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
                 }}>
-                    {props.label}
-                </Typography>
-                {/* <DeleteIcon fontSize='small' onClick={() => { store.removeOneCard(props._id, store.getCurrentGroupId()); }} sx={{ cursor: 'pointer', width: '30px' }} />
-                <Link to='/editcard'>
-                    <EditIcon fontSize='small' onClick={() => { store.editCard(props._id); }} sx={{ cursor: 'pointer', width: '30px' }} />
-                </Link> */}
+                    <Typography sx={{
+                        overflow: 'hidden',
+                        wordWrap: 'break-word',
+                        width: '100%',
+                    }}>
+                        {props.label}
+                    </Typography>
+                    <Typography sx={{
+                        overflow: 'hidden',
+                        wordWrap: 'break-word',
+                        width: '100%',
+                    }}>
+                        Admin: {getAdminName()}
+                    </Typography>
+                </ListItem>
                 {
                     store.getUser()._id === props.ownerId &&
                     <Link to='/editgroup'>
                         <EditIcon fontSize='small' onClick={() => { store.editGroup(props._id); }} sx={{ cursor: 'pointer', width: '30px' }} />
                     </Link>
                 }
-
             </ListItem>
             <UsersList users={props.users} />
         </Paper>

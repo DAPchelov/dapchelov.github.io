@@ -19,7 +19,7 @@ const UserField: React.FC<IUserProps> = (props: IUserProps) => {
         if (ownerId !== undefined) {
             if (userId === ownerId) {
                 return (
-                    <Button variant='contained' sx={{ fontSize: 10, width: '10%', height: 37 }} size='small' color="success" onClick={() => store.newGroup.setOwnerId(userId)}>Admin</Button>
+                    <Button variant='contained' sx={{ fontSize: 10, width: '10%', height: 37 }} size='small' color="primary" onClick={() => store.newGroup.setOwnerId(userId)}>Admin</Button>
                 )
             }
             if (userId !== ownerId) {

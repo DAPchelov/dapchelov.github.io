@@ -33,7 +33,7 @@ const NewGroupForm: React.FC = () => {
     }}>
       <Grid container spacing={0} sx={{
       }}>
-        <UserListForm deleteGroup={deleteGroupCallback} deleteButtonColor="error"/>
+        <UserListForm deleteGroup={deleteGroupCallback} deleteButtonColor="primary"/>
         <UserSearchForm />
         <Grid item xs={12} md={12}>
           <Button variant={'contained'} sx={{ fontSize: 12, width: '100%' }} size='small' onClick={() => pushCallback()}>Create Group</Button>

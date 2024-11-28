@@ -1,13 +1,11 @@
 import ListItem from '@mui/material/ListItem';
-import Checkbox from '@mui/material/Checkbox';
-import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Typography from '@mui/material/Typography';
 import UsersList from './UsersList/UsersList';
 import { Paper } from '@mui/material';
 
 import { observer } from 'mobx-react-lite';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Context } from '../App'
 import { Link } from 'react-router-dom';
 import { IGroup } from '../../models/IGroup';
@@ -19,10 +17,6 @@ const Group: React.FC<IGroup> = (props: IGroup) => {
     const getAdminName = () => {
         return props.users.find((user) => user.userId === props.ownerId)?.email;
     }
-
-    useEffect(() => {
-        // store.getGroupUsersEmail(props);
-    }, [])
 
     return (
         <Paper elevation={2} sx={{

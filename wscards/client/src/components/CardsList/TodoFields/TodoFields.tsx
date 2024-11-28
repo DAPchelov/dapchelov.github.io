@@ -5,14 +5,14 @@ import { ITodo } from '../../../models/ITodo';
 import { Box } from '@mui/material';
 
 
-type ITodoListProps = {
+type ITodoFieldsProps = {
     todos: ITodo[],
     removeTodo (id: string | undefined): void,
     checkTodo (id: string | undefined): void,
     setTodoMessage (message: string, id: string | undefined): void
 }
 
-const TodoFields: React.FC<ITodoListProps> = (props: ITodoListProps) => {
+const TodoFields: React.FC<ITodoFieldsProps> = (props: ITodoFieldsProps) => {
     
     return (
         <Box>

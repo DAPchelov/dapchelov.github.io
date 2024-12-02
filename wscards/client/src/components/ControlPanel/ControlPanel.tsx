@@ -6,7 +6,6 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import HomeControl from './HomeControl/HomeControl';
-import NewCardControl from './NewCardControl/NewCardControl';
 import NewGroupControl from './NewGroupControl/NewGroupControl';
 import Box from '@mui/material/Box';
 import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
@@ -39,8 +38,6 @@ const ControlPanel: React.FC = () => {
       </Box>
       <Routes>
         <Route path='/' element={<HomeControl />} />
-        <Route path='/newcard' element={<NewCardControl />} />
-        <Route path='/editcard' element={<NewCardControl />} />
         <Route path='/newgroup' element={<NewGroupControl />} />
         <Route path='/groups' element={<NewGroupControl />} />
       </Routes>

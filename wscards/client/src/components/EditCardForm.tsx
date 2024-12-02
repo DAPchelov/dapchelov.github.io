@@ -3,7 +3,7 @@ import Paper from '@mui/material/Paper';
 import { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Context } from './App'
-import { Box, Button, ListItem } from '@mui/material';
+import { Button, ListItem } from '@mui/material';
 import TodoFields from './CardsList/TodoFields/TodoFields';
 import { useNavigate } from 'react-router-dom';
 
@@ -29,31 +29,37 @@ const InputForm: React.FC = () => {
   }
 
   return (
-    <Box component='form' noValidate autoComplete='off'>
-      <Paper elevation={2} sx={{
-        padding: 2,
-        marginBottom: 1,
-        marginTop: 1,
+    <div>
+      <Paper sx={{
         display: 'flex',
         flexDirection: 'column',
+        rowGap: 0,
+        padding: 1,
+        boxShadow: 3,
       }}>
-        <ListItem disablePadding aria-multiline >
-          <TextField
-            id='filled-basic'
-            label='Card title'
-            variant='filled'
-            fullWidth
-            value={store.newCard.message}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.newCard.setMessage(event.target.value)}
-            onKeyUp={event => {
-              onPush(event.key);
-            }}
-          />
-        </ListItem>
+        <TextField
+          multiline
+          id='filled-basic'
+          label='New card title (press Enter to add a Card)'
+          variant='filled'
+          color='success'
+          value={store.newCard.message}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.newCard.setMessage(event.target.value)}
+          onKeyUp={event => {
+            onPush(event.key);
+          }}
+        />
         <TodoFields todos={store.newCard.todos} removeTodo={removeTodo} checkTodo={checkTodo} setTodoMessage={setTodoMessage} />
+        <ListItem sx={{
+          display: 'flex',
+          padding: 1,
+          boxShadow: 3,
+        }}>
+          <Button variant='contained' sx={{ fontSize: 12, height: '40px', width: '20%' }} size='small' onClick={updateCardCallback} >Обновить карточку</Button>
+          <Button variant='contained' sx={{ fontSize: 12, height: '40px', width: '80%' }} size='small' color="secondary" onClick={() => store.newCard.addTodo('', false)}>Добавить задачу</Button>
+        </ListItem>
       </Paper>
-      <Button variant={'contained'} sx={{ fontSize: 12, width: '100%' }} size='small' onClick={() => updateCardCallback()}>Update this card</Button>
-    </Box>
+    </div>
   );
 };
 

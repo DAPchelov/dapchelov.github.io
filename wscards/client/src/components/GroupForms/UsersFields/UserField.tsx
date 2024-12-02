@@ -29,16 +29,14 @@ const UserField: React.FC<IUserProps> = (props: IUserProps) => {
             }
         }
     }
-    
+
     return (
-        <ListItem
-            sx={{
-                paddingLeft: 1,
-                paddingRight: 1,
-            }}
-            >
-            <ListItemAvatar onClick={() => { props.switchUser(props.user.userId);}}>
-                <Avatar sx={{ bgcolor: assignColor(props.user.userId)[600], cursor: 'pointer'}}>{props.user.email[0].toUpperCase()}</Avatar>
+        <ListItem sx={{
+            paddingLeft: 1,
+            paddingRight: 1,
+        }}>
+            <ListItemAvatar onClick={() => { props.switchUser(props.user.userId); }}>
+                <Avatar sx={{ bgcolor: assignColor(props.user.userId)[600], cursor: 'pointer' }}>{props.user.email[0].toUpperCase()}</Avatar>
             </ListItemAvatar>
             <ListItemText primary={props.user.email} secondary='Команда Ракета' />
             {adminSticker(props.user.userId, props.ownerId)}

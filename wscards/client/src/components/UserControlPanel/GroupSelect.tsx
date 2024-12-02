@@ -11,7 +11,6 @@ const GroupSelect: React.FC = () => {
     store.setCurrentGroupId(store.getUser()._id)
 
     useEffect(() => {
-        // store.setCurrentGroupId(store.getUser()._id);
         store.receiveUserAllGroups();
     }, [])
 

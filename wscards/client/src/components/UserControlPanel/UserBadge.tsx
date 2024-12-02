@@ -45,15 +45,24 @@ export const assignColor = (userId: string) => {
 const UserBadge: React.FC = () => {
   const store = useContext(Context);
   const user = store.getUser();
-  
+  const getCurrentGroupLabel = () => {
+    if (store.getAllUserGroups() === undefined) {return('Команда Ракета')};
+    if (store.getCurrentGroupId() === undefined) {return('Загружаем карточки')};
+    if (store.getUser()._id === store.getCurrentGroupId()) {return('Мои карточки')};
+    const groupLabel = store.getAllUserGroups().find((group) => { if (group._id === store.getCurrentGroupId()) {
+      return group
+    }})?.label;
+    return (groupLabel);
+  }
+
   if (user.email !== undefined) {
-    
+
     return (
       <ListItem>
         <ListItemAvatar>
           <Avatar sx={{ bgcolor: assignColor(user._id)[600] }}>{user.email[0].toUpperCase()}</Avatar>
         </ListItemAvatar>
-        <ListItemText primary={store.getUser().email} secondary='Команда ракета' />
+        <ListItemText primary={store.getUser().email} secondary={getCurrentGroupLabel()} />
       </ListItem>
     );
   }

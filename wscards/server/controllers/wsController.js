@@ -60,7 +60,7 @@ const WsController = () => {
             const card = data.card;
             const groupId = data.groupId;
             user && cardService.removeOneCard(groupId, card._id).then(() => {
-                takeCards(socket, user)
+                takeCards(socket, groupId)
             });
         });
         socket.on('CheckTodo', (data) => {

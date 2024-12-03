@@ -23,7 +23,6 @@ const Card: React.FC<ICard> = (props: ICard) => {
     return (
         <Paper elevation={2} sx={{
             display: 'flex',
-            // flexDirection: 'column',
         }}>
             <ListItem disablePadding aria-multiline sx={{
                 background: 'rgba(21,101,192,0.15)',

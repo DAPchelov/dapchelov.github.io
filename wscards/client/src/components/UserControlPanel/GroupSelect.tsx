@@ -12,7 +12,7 @@ const GroupSelect: React.FC = () => {
 
     useEffect(() => {
         store.receiveUserAllGroups();
-    }, [])
+    },[])
 
     const handleGroupChange = (event: SelectChangeEvent | undefined) => {
         event && store.setCurrentGroupId(event.target.value);
@@ -20,15 +20,18 @@ const GroupSelect: React.FC = () => {
     }
 
     return (
-        <ListItem>
+        <ListItem sx={{
+            margin: 0,
+            padding: 0,
+        }}>
             <FormControl fullWidth>
                 <InputLabel>Group</InputLabel>
                 <Select
                     defaultValue={''}
-                    label="Group"
+                    label="Группы"
                 onChange={handleGroupChange}
                 >
-                    <MenuItem value={store.getUser()._id} key={store.getUser()._id}>My Cards</MenuItem>
+                    <MenuItem value={store.getUser()._id} key={store.getUser()._id}>Мои задачи</MenuItem>
                     {store.getAllUserGroups().length > 0 && store.getAllUserGroups()
                         .map(group => {
                             return (

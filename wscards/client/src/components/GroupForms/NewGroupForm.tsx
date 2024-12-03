@@ -26,7 +26,7 @@ const NewGroupForm: React.FC = () => {
   };
   useEffect(() => {
     store.newGroup.setOwnerId(store.getUser()._id);
-  }, [])
+  })
 
   return (
     <Paper elevation={2} sx={{

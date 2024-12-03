@@ -9,7 +9,7 @@ const GroupList: React.FC = () => {
 
     useEffect(() => {
         store.receiveUserAllGroups();
-    }, [])
+    },[])
 
     return (
         <Paper sx={{

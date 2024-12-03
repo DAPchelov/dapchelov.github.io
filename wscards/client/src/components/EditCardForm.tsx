@@ -52,6 +52,7 @@ const InputForm: React.FC = () => {
         <TodoFields todos={store.newCard.todos} removeTodo={removeTodo} checkTodo={checkTodo} setTodoMessage={setTodoMessage} />
         <ListItem sx={{
           display: 'flex',
+          columnGap: 1,
           padding: 1,
           boxShadow: 3,
         }}>

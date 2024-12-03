@@ -13,12 +13,11 @@ const UserSearchForm: React.FC = () => {
 
     useEffect(() => {
         store.newGroup.receiveAllUsers();
-    },[])
+    })
 
     const filteredUsersByPromt = store.newGroup.allUsers.filter(user => {
         return user.email.toLowerCase().includes(searchRequest);
     })
-
 
     return (
         <Grid item xs={4} md={4}>

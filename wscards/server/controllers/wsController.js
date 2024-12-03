@@ -59,7 +59,9 @@ const WsController = () => {
         socket.on('RemoveOneCard', (data) => {
             const card = data.card;
             const groupId = data.groupId;
-            user && cardService.removeOneCard(groupId, card._id).then(takeCards(socket, user));
+            user && cardService.removeOneCard(groupId, card._id).then(() => {
+                takeCards(socket, user)
+            });
         });
         socket.on('CheckTodo', (data) => {
             const card = data.card;

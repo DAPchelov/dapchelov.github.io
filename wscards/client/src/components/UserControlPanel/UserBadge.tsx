@@ -1,15 +1,11 @@
 import React, { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
-
 import { Context } from '../App'
 import Avatar from '@mui/material/Avatar';
 import ListItemText from '@mui/material/ListItemText';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import { pink, amber, blue, cyan, deepPurple, green, lime, indigo, yellow, deepOrange, purple, grey } from '@mui/material/colors';
-
-
-
 
 const createColorNum = (userId: string) => {
   let value = 0;
@@ -58,7 +54,7 @@ const UserBadge: React.FC = () => {
   if (user.email !== undefined) {
 
     return (
-      <ListItem>
+      <ListItem sx={{padding:0, margin:1}}>
         <ListItemAvatar>
           <Avatar sx={{ bgcolor: assignColor(user._id)[600] }}>{user.email[0].toUpperCase()}</Avatar>
         </ListItemAvatar>

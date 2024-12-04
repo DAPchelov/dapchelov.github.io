@@ -28,20 +28,20 @@ const ControlPanel: React.FC = () => {
         display: 'flex',
         justifyContent: 'space-between',
         columnGap: 1,
-        width: '45%',
-        maxWidth: '400px',
+        width: '50%',
+        maxWidth: '500px',
       }}>
-        <Button variant='contained' sx={{ fontSize: 10, width: '25%' }} size='small' color='secondary' startIcon={<AssignmentTurnedInOutlinedIcon />} onClick={() => navigate('/')}>Cards</Button>
-        <Button variant='contained' sx={{ fontSize: 10, width: '25%' }} size='small' color='secondary' startIcon={<AssignmentTurnedInOutlinedIcon />} onClick={() => navigate('/groups')}>Groups</Button>
-        <Button variant='contained' sx={{ fontSize: 10, width: '25%' }} size='small' onClick={() => navigate('/newcard')}>New Card</Button>
-        <Button variant='contained' sx={{ fontSize: 10, width: '25%' }} size='small' onClick={() => navigate('/newgroup')}>New Group</Button>
+        <Button variant='contained' sx={{ fontSize: 10, width: '100%' }} size='small' color='secondary' onClick={() => navigate('/')}>Карточки</Button>
+        <Button variant='contained' sx={{ fontSize: 10, width: '100%' }} size='small' color='secondary' onClick={() => navigate('/groups')}>Группы</Button>
+        <Button variant='contained' sx={{ fontSize: 10, width: '100%' }} size='small' onClick={() => navigate('/newcard')}>Новая карточка</Button>
+        <Button variant='contained' sx={{ fontSize: 10, width: '100%' }} size='small' onClick={() => navigate('/newgroup')}>Новая группа</Button>
       </Box>
       <Routes>
         <Route path='/' element={<HomeControl />} />
         <Route path='/newgroup' element={<NewGroupControl />} />
         <Route path='/groups' element={<NewGroupControl />} />
       </Routes>
-      <Button variant='outlined' sx={{ fontSize: 10, width: '8%' }} size='small' color='error' onClick={() => store.logout()}>Logout</Button>
+      <Button variant='outlined' sx={{ fontSize: 10, width: '8%' }} size='small' color='error' onClick={() => store.logout()}>Выход</Button>
     </Paper>
   );
 }

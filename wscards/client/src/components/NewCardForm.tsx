@@ -39,7 +39,7 @@ const NewCardForm: React.FC = () => {
           <TextField sx={{width: '100%'}}
             multiline
             id='filled-basic'
-            label='New card title (press Enter to add a Card)'
+            label='Заголовок'
             variant='filled'
             color='success'
             value={store.newCard.message}

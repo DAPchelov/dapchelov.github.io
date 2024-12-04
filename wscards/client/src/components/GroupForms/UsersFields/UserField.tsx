@@ -19,12 +19,12 @@ const UserField: React.FC<IUserProps> = (props: IUserProps) => {
         if (ownerId !== undefined) {
             if (userId === ownerId) {
                 return (
-                    <Button variant='contained' sx={{ fontSize: 10, width: '10%', height: 37 }} size='small' color="primary" onClick={() => store.newGroup.setOwnerId(userId)}>Admin</Button>
+                    <Button variant='contained' sx={{ fontSize: 10, width: '15%', height: 37 }} size='small' color="primary" onClick={() => store.newGroup.setOwnerId(userId)}>Администратор</Button>
                 )
             }
             if (userId !== ownerId) {
                 return (
-                    <Button variant='outlined' sx={{ fontSize: 10, width: '10%', height: 37 }} size='small' color="primary" onClick={() => store.newGroup.setOwnerId(userId)}>User</Button>
+                    <Button variant='outlined' sx={{ fontSize: 10, width: '15%', height: 37 }} size='small' color="primary" onClick={() => store.newGroup.setOwnerId(userId)}>Пользователь</Button>
                 )
             }
         }
@@ -38,7 +38,7 @@ const UserField: React.FC<IUserProps> = (props: IUserProps) => {
             <ListItemAvatar onClick={() => { props.switchUser(props.user.userId); }}>
                 <Avatar sx={{ bgcolor: assignColor(props.user.userId)[600], cursor: 'pointer' }}>{props.user.email[0].toUpperCase()}</Avatar>
             </ListItemAvatar>
-            <ListItemText primary={props.user.email} secondary='Команда Ракета' />
+            <ListItemText primary={props.user.email} />
             {adminSticker(props.user.userId, props.ownerId)}
         </ListItem>
     );

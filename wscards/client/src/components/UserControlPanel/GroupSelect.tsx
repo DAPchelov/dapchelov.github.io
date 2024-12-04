@@ -8,9 +8,9 @@ import { Context } from '../App'
 const GroupSelect: React.FC = () => {
 
     const store = useContext(Context);
-    store.setCurrentGroupId(store.getUser()._id)
-
+    
     useEffect(() => {
+        store.setCurrentGroupId(store.getUser()._id)
         store.receiveUserAllGroups();
     },[])
 
@@ -25,13 +25,13 @@ const GroupSelect: React.FC = () => {
             padding: 0,
         }}>
             <FormControl fullWidth>
-                <InputLabel>Group</InputLabel>
+                <InputLabel>Группа</InputLabel>
                 <Select
                     defaultValue={''}
-                    label="Группы"
+                    label="Группа"
                 onChange={handleGroupChange}
                 >
-                    <MenuItem value={store.getUser()._id} key={store.getUser()._id}>Мои задачи</MenuItem>
+                    <MenuItem value={store.getUser()._id} key={store.getUser()._id}>Мои карточки</MenuItem>
                     {store.getAllUserGroups().length > 0 && store.getAllUserGroups()
                         .map(group => {
                             return (

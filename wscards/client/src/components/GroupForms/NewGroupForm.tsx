@@ -16,12 +16,12 @@ const NewGroupForm: React.FC = () => {
 
   const pushCallback = () => {
     if (store.newGroup.label.length === 0) {
-      return (alert('Group label is required'));
+      return (alert('Введите название группы'));
     }
     if (store.newGroup.getGroupUsers().find((user) => user.userId === store.newGroup.ownerId)) {
       return store.newGroup.createGroup();
     } else {
-      return (alert('Group administrator is required'));
+      return (alert('Назначьте администратора группы'));
     }
   };
   useEffect(() => {
@@ -36,7 +36,7 @@ const NewGroupForm: React.FC = () => {
         <UserListForm deleteGroup={deleteGroupCallback} deleteButtonColor="primary"/>
         <UserSearchForm />
         <Grid item xs={12} md={12}>
-          <Button variant={'contained'} sx={{ fontSize: 12, width: '100%' }} size='small' onClick={() => pushCallback()}>Create Group</Button>
+          <Button variant={'contained'} sx={{ fontSize: 12, width: '100%' }} size='small' onClick={() => pushCallback()}>Создать группу</Button>
         </Grid>
       </Grid>
     </Paper>

@@ -30,7 +30,7 @@ const UserSearchForm: React.FC = () => {
                 <ListItem disablePadding aria-multiline >
                     <TextField
                         id='filled-basic'
-                        label='Find Users'
+                        label='Поиск пользователей'
                         variant='filled'
                         fullWidth
                         onChange={(e) => setSearchRequest(e.target.value)}

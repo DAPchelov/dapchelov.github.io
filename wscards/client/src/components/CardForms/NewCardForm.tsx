@@ -2,10 +2,10 @@ import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Context } from './App'
-import TodoFields from './CardsList/TodoFields/TodoFields';
+import { Context } from '../App'
+import TodoFields from '../CardsList/TodoFields/TodoFields';
 import { Box, Button } from '@mui/material';
-import GroupSelect from './UserControlPanel/GroupSelect';
+import GroupSelect from '../UserControlPanel/GroupSelect';
 
 
 const NewCardForm: React.FC = () => {

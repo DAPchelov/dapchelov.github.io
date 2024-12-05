@@ -5,9 +5,9 @@ import { observer } from 'mobx-react-lite';
 import Box from '@mui/material/Box';
 
 import CardsList from './CardsList/CardsList'
-import NewCardForm from './NewCardForm';
+import NewCardForm from './CardForms/NewCardForm';
 import ControlPanel from './ControlPanel/ControlPanel';
-import EditCardForm from './EditCardForm';
+import EditCardForm from './CardForms/EditCardForm';
 import NewGroupForm from './GroupForms/NewGroupForm';
 import UserControlPanel from './UserControlPanel/UserControlPanel';
 import GroupsList from './GroupsList/GroupsList';

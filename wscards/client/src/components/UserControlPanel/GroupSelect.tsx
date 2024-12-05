@@ -28,7 +28,7 @@ const GroupSelect: React.FC = () => {
                 <InputLabel>Группа</InputLabel>
                 <Select
                     defaultValue={''}
-                    label="Группа"
+                    label="Мои карточки"
                 onChange={handleGroupChange}
                 >
                     <MenuItem value={store.getUser()._id} key={store.getUser()._id}>Мои карточки</MenuItem>

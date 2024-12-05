@@ -2,9 +2,9 @@ import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Context } from './App'
+import { Context } from '../App'
 import { Button, ListItem } from '@mui/material';
-import TodoFields from './CardsList/TodoFields/TodoFields';
+import TodoFields from '../CardsList/TodoFields/TodoFields';
 import { useNavigate } from 'react-router-dom';
 
 const InputForm: React.FC = () => {

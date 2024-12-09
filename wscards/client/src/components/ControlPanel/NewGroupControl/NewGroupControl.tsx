@@ -8,7 +8,7 @@ const NewGroupControl: React.FC = () => {
     const navigate = useNavigate();
 
     return (
-        <Button variant={'contained'} sx={{ fontSize: 10, width: 120 }} size='small' onClick={() => navigate('/')}>Home</Button>
+        <Button variant={'contained'} sx={{ fontSize: 10, width: 120 }} size='small' onClick={() => navigate('/')}>Домой</Button>
     );
 }
 

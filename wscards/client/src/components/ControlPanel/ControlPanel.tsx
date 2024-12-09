@@ -6,9 +6,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import HomeControl from './HomeControl/HomeControl';
-import NewGroupControl from './NewGroupControl/NewGroupControl';
 import Box from '@mui/material/Box';
-import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
 
 const ControlPanel: React.FC = () => {
   const navigate = useNavigate();
@@ -36,11 +34,9 @@ const ControlPanel: React.FC = () => {
         <Button variant='contained' sx={{ fontSize: 10, width: '100%' }} size='small' onClick={() => navigate('/newcard')}>Новая карточка</Button>
         <Button variant='contained' sx={{ fontSize: 10, width: '100%' }} size='small' onClick={() => navigate('/newgroup')}>Новая группа</Button>
       </Box>
-      <Routes>
+      {/* <Routes>
         <Route path='/' element={<HomeControl />} />
-        <Route path='/newgroup' element={<NewGroupControl />} />
-        <Route path='/groups' element={<NewGroupControl />} />
-      </Routes>
+      </Routes> */}
       <Button variant='outlined' sx={{ fontSize: 10, width: '8%' }} size='small' color='error' onClick={() => store.logout()}>Выход</Button>
     </Paper>
   );

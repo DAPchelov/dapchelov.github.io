@@ -9,7 +9,7 @@ import errorMiddleware from './middlewares/error-middleware.js';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 
-import WsController from './controllers/wsController.js'
+import WsRouter from './router/wsRouter';
 
 dotenv.config();
 const PORT = process.env.PORT || 5000;
@@ -24,7 +24,7 @@ export const io = new Server(httpServer, {
     }
 });
 
-WsController();
+WsRouter();
 
 app.use(Express.json());
 app.use(cookieParser());

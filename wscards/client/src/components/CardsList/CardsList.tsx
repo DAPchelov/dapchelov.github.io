@@ -24,6 +24,7 @@ const CardsList: React.FC = () => {
             <Box sx={{
                 display: 'flex',
                 columnGap: 1,
+                justifyContent: 'spaceBetween',
             }}>
                 <GroupSelect />
                 <SelectButtons />

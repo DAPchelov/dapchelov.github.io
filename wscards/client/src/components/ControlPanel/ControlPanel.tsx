@@ -37,7 +37,7 @@ const ControlPanel: React.FC = () => {
       {/* <Routes>
         <Route path='/' element={<HomeControl />} />
       </Routes> */}
-      <Button variant='outlined' sx={{ fontSize: 10, width: '8%' }} size='small' color='error' onClick={() => store.logout()}>Выход</Button>
+      <Button variant='outlined' sx={{ fontSize: 10, width: '120px' }} size='small' color='error' onClick={() => store.logout()}>Выход</Button>
     </Paper>
   );
 }

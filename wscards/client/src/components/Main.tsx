@@ -22,7 +22,6 @@ const Main: React.FC = () => {
       flexDirection: 'column',
       rowGap: 1,
       height: '98vh',
-      minWidth: '560px'
     }}>
       <UserControlPanel />
       <ControlPanel />

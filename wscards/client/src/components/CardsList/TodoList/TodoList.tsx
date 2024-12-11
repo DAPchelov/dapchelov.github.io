@@ -13,7 +13,7 @@ const TodoList: React.FC<ITodoListProps> = (props: ITodoListProps) => {
 
     return (
         <Box sx ={{
-            width: '75%',
+            width: '100%',
         }}>
             {props.todos.map(todo => {
                 return (

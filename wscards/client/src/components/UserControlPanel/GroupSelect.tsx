@@ -23,6 +23,7 @@ const GroupSelect: React.FC = () => {
         <ListItem sx={{
             margin: 0,
             padding: 0,
+            width: '60%',
         }}>
             <FormControl fullWidth>
                 <InputLabel>Группа</InputLabel>

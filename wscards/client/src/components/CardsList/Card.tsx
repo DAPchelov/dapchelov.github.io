@@ -27,7 +27,8 @@ const Card: React.FC<ICard> = (props: ICard) => {
             <ListItem disablePadding aria-multiline sx={{
                 background: 'rgba(21,101,192,0.15)',
                 width: '25%',
-                minWidth: '250px'
+                minWidth: '150px',
+                maxWidth: '250px',
             }}>
                 <Checkbox
                     id={props._id}

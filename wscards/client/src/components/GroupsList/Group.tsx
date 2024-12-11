@@ -25,7 +25,8 @@ const Group: React.FC<IGroup> = (props: IGroup) => {
             <ListItem aria-multiline sx={{
                 background: 'rgba(21,101,192,0.15)',
                 width: '25%',
-                minWidth: '200px',
+                minWidth: '150px',
+                maxWidth: '300px',
                 display: 'flex',
                 justifyContent: 'space-between',
             }}>
@@ -33,7 +34,7 @@ const Group: React.FC<IGroup> = (props: IGroup) => {
                     height: '100%',
                     display: 'flex',
                     flexDirection: 'column',
-                    justifyContent: 'space-between',
+                    justifyContent: 'flex-start',
                 }}>
                     <Typography sx={{
                         overflow: 'hidden',

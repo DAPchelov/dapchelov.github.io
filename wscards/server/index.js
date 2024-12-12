@@ -9,7 +9,7 @@ import errorMiddleware from './middlewares/error-middleware.js';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 
-import WsRouter from './router/wsRouter';
+import WsRouter from './router/wsRouter.js';
 
 dotenv.config();
 const PORT = process.env.PORT || 5000;

@@ -2,6 +2,7 @@ import { io } from '../index.js';
 import WsUsersController from '../controllers/wsUsersController.js';
 import WsCardController from '../controllers/wsCardController.js';
 import WsGroupController from '../controllers/wsGroupController.js';
+import WsDocController from '../controllers/wsDocController.js';
 
 import tokenService from "../service/token-service.js";
 
@@ -22,6 +23,7 @@ const WsRouter = () => {
         const wsUsersCotrol = WsUsersController(socket, user);
         const wsCardCotrol = WsCardController(socket, user);
         const wsGroupControl = WsGroupController(socket, user);
+        const wsDocControl = WsDocController(socket, user);
     });
 }
 

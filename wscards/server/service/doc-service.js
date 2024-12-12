@@ -1,3 +1,4 @@
+import ApiError from '../exeptions/api-error.js'
 import CardsListModel from '../models/cardsList-model.js';
 import CardsDto from '../dtos/cards-dto.js';
 import DocModel from '../models/doc-model.js'
@@ -11,20 +12,22 @@ class DocService {
     //     await CardsListModel.updateOne({ userId: reqUserId, 'cards._id': cardId }, { $set: { 'cards.$.todos': postTodos } });
     // }
     async postNewDoc(reqUserId, postDoc) {
-        const newDoc = {
-            creatorId: reqUserId,
-            docDecNum: postDoc.docDecNum,
-            docName: postDoc.docName,
-            prodName: postDoc.prodName,
-            folderNum: postDoc.folderNum,
+        try {
+            const newDoc = {
+                creatorId: reqUserId,
+                docDecNum: postDoc.docDecNum,
+                docName: postDoc.docName,
+                prodName: postDoc.prodName,
+                folderNum: postDoc.folderNum,
+            }
+            const candidate = await DocModel.findOne({ docDecNum: newDoc.docDecNum });
+            if (candidate) {
+                throw ApiError.BadRequest(`Запись с таким номером ${newDoc.docDecNum} уже существует`)
+            }
+            await DocModel.create(newDoc);
+        } catch (error) {
+            console.log(error);
         }
-
-        const candidate = await DocModel.findOne(newDoc.docDecNum);
-        if (candidate) {
-            throw ApiError.BadRequest(`Запись с таким номером ${newDoc.docDecNum} уже существует`)
-        }
-
-        await DocModel.create(newDoc);
     }
     // async removeCompletedCards(reqUserId) {
     //     await CardsListModel.updateOne({ userId: reqUserId }, { $pull: { cards: { isCompleted: true } } });

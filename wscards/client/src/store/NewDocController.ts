@@ -27,9 +27,18 @@ class NewDocController {
     }
 
 
-    // setMessage(newCardMessage: string) {
-    //     this.message = newCardMessage;
-    // }
+    setDocDecNum(newDocDecNum: string) {
+        this.docDecNum = newDocDecNum;
+    }
+    setDocName(newDocName: string) {
+        this.docName = newDocName;
+    }
+    setProdName(newProdName: string) {
+        this.prodName = newProdName;
+    }
+    setFolderNum(newFolderNum: string) {
+        this.folderNum = newFolderNum;
+    }
 
     // setTodos(todos: ITodo[]) {
     //     this.todos = todos;

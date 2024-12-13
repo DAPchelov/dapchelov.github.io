@@ -35,7 +35,6 @@ const ControlPanel: React.FC = () => {
         <Button variant='contained' sx={{ fontSize: 10, width: '100%' }} size='small' color='inherit' onClick={() => navigate('/docs')}>Документы</Button>
         <Button variant='contained' sx={{ fontSize: 10, width: '100%' }} size='small' color='inherit' onClick={() => navigate('/newdoc')}>Новый документ</Button>
       </Box>
-      <Button variant='contained' sx={{ fontSize: 10, width: '120px' }} size='small' color='error' onClick={() => store.newDoc.postDoc('testCreatorId')}>Документ</Button>
     </Paper>
   );
 }

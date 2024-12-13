@@ -2,11 +2,11 @@ import { makeAutoObservable } from 'mobx';
 import { io } from 'socket.io-client';
 import { ICard } from '../models/ICard';
 import { IUser } from '../models/IUser';
-import { IOtherUser } from '../models/IOtherUser';
 import { IGroup } from '../models/IGroup';
 
 import NewCardController from './NewCardController';
 import NewGroupController from './NewGroupController';
+import NewDocController from './NewDocController';
 
 import AuthService from '../services/AuthService';
 
@@ -28,6 +28,7 @@ class WSStore {
 
     newCard: NewCardController = new NewCardController('', '', [], this.socket);
     newGroup: NewGroupController = new NewGroupController('', this.socket, this.user._id, '', []);
+    newDoc: NewDocController = new NewDocController('', 'testCreatorId', 'testDocDecNum', 'testDocName', 'testProdName', 'testFolderNum', this.socket);
 
     constructor() {
         this.socket.on('TakeAuth', async (data) => {

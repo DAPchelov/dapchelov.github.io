@@ -54,7 +54,7 @@ const UserBadge: React.FC = () => {
   if (user.email !== undefined) {
 
     return (
-      <ListItem sx={{padding:0, margin:1}}>
+      <ListItem sx={{padding:0}}>
         <ListItemAvatar>
           <Avatar sx={{ bgcolor: assignColor(user._id)[600] }}>{user.email[0].toUpperCase()}</Avatar>
         </ListItemAvatar>

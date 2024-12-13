@@ -3,7 +3,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import Typography from '@mui/material/Typography';
 import UsersList from './UsersList/UsersList';
 import { Paper } from '@mui/material';
-
 import { observer } from 'mobx-react-lite';
 import React, { useContext } from 'react';
 import { Context } from '../App'
@@ -24,9 +23,9 @@ const Group: React.FC<IGroup> = (props: IGroup) => {
         }}>
             <ListItem aria-multiline sx={{
                 background: 'rgba(21,101,192,0.15)',
-                width: '25%',
+                width: '35%',
                 minWidth: '150px',
-                maxWidth: '300px',
+                maxWidth: '260px',
                 display: 'flex',
                 justifyContent: 'space-between',
             }}>
@@ -51,12 +50,10 @@ const Group: React.FC<IGroup> = (props: IGroup) => {
                         Admin: {getAdminName()}
                     </Typography>
                 </ListItem>
-                {
-                    store.getUser()._id === props.ownerId &&
+                {store.getUser()._id === props.ownerId &&
                     <Link to='/editgroup'>
                         <EditIcon fontSize='small' onClick={() => { store.editGroup(props._id); }} sx={{ cursor: 'pointer', width: '30px' }} />
-                    </Link>
-                }
+                    </Link>}
             </ListItem>
             <UsersList users={props.users} />
         </Paper>

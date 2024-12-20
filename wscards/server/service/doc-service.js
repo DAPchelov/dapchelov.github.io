@@ -1,6 +1,4 @@
 import ApiError from '../exeptions/api-error.js'
-import CardsListModel from '../models/cardsList-model.js';
-import CardsDto from '../dtos/cards-dto.js';
 import DocModel from '../models/doc-model.js'
 
 
@@ -24,7 +22,8 @@ class DocService {
             if (candidate) {
                 throw ApiError.BadRequest(`Запись с таким номером ${newDoc.docDecNum} уже существует`)
             }
-            await DocModel.create(newDoc);
+            await DocModel.create(newDoc)
+            return(newDoc.docDecNum);
         } catch (error) {
             console.log(error);
         }

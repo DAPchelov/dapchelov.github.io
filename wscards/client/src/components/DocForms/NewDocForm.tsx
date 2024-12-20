@@ -9,11 +9,6 @@ import { Box, Button } from '@mui/material';
 const NewDocForm: React.FC = () => {
   const store = useContext(Context);
 
-  // bind the context to the method, for set it on callback
-  // const removeTodo = store.newCard.removeTodo.bind(store.newCard);
-  // const checkTodo = store.newCard.checkTodo.bind(store.newCard);
-  // const setTodoMessage = store.newCard.setTodoMessage.bind(store.newCard);
-
   // const onPush = (keyKode: string) => {
   //   if (keyKode === 'Enter') {
   //     store.newCard.postCard(store.getCurrentGroupId());

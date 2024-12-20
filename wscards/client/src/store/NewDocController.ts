@@ -14,6 +14,8 @@ class NewDocController {
 
     socket: Socket = {} as Socket;
 
+    addedDocDecNums: string[] = [];
+
     constructor(_id: string, creatorId: string, docDecNum: string, docName: string, prodName: string, folderNum: string, socket: Socket) {
 
         this._id = _id;
@@ -24,8 +26,16 @@ class NewDocController {
         this.folderNum = folderNum;
         this.socket = socket;
         makeAutoObservable(this);
-    }
 
+        this.socket.on('DocAdded', async (docDecNum: string) => {
+            if (docDecNum === null) {
+                alert('Ошибка, документ не добавлен');
+            };
+            if (docDecNum !== null) {
+                this.addedDocDecNums.push(docDecNum);
+            };
+        });
+    }
 
     setDocDecNum(newDocDecNum: string) {
         this.docDecNum = newDocDecNum;
@@ -38,6 +48,17 @@ class NewDocController {
     }
     setFolderNum(newFolderNum: string) {
         this.folderNum = newFolderNum;
+    }
+
+    promtNextDocDecNum() {
+        const regDocDecNum = /^[А-Я]{1}[0-9А-Я]{1}.{1}[0-9А-Я]{1}.{1}[0-9]{3}[-0-9]{1}([0-9]{0,1})?([-]{0,1})?0$/;
+        if (this.docDecNum.match(regDocDecNum)) {
+            const newDocNum = Number(this.docDecNum.split('.')[1].split('-0')[0]) + 1;
+            const docNum = this.docDecNum.split('.')[0] + '.' + newDocNum.toString() + '-0';
+            this.docDecNum = docNum;
+        } else {
+            this.docDecNum = '';
+        }
     }
 
     // setTodos(todos: ITodo[]) {
@@ -79,17 +100,27 @@ class NewDocController {
     postDoc(creatorId: string) {
         try {
             const newDoc = {
-                creatorId: this.creatorId,
+                creatorId: creatorId,
                 docDecNum: this.docDecNum,
                 docName: this.docName,
                 prodName: this.prodName,
                 folderNum: this.folderNum,
             };
 
-            // if ((this.docDecNum.length > 0) && (this.docName.length > 0)) {
+            if (this.docDecNum.length === 0) {
+                return (alert('Заполните обозначение документа'));
+            }
+            if (this.docName.length === 0) {
+                return (alert('Заполните наименование документа'));
+            }
+            if (this.folderNum.length === 0) {
+                return (alert('Заполните номер папки'));
+            }
+
             this.socket.emit('PostDoc', { newDoc: newDoc, creatorId });
-            // this.clearCard();
-            // }
+            this.docName = '';
+            this.promtNextDocDecNum();
+
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }

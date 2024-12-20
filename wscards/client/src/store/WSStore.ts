@@ -28,7 +28,7 @@ class WSStore {
 
     newCard: NewCardController = new NewCardController('', '', [], this.socket);
     newGroup: NewGroupController = new NewGroupController('', this.socket, this.user._id, '', []);
-    newDoc: NewDocController = new NewDocController('', 'testCreatorId', 'testDocDecNum', 'testDocName', 'testProdName', 'testFolderNum', this.socket);
+    newDoc: NewDocController = new NewDocController('', '', '', '', '', '', this.socket);
 
     constructor() {
         this.socket.on('TakeAuth', async (data) => {

@@ -1,6 +1,4 @@
-import React, { useContext } from 'react';
-import { Context } from '../App'
-import { observer } from 'mobx-react-lite';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Paper from '@mui/material/Paper';
@@ -9,8 +7,6 @@ import Box from '@mui/material/Box';
 
 const ControlPanel: React.FC = () => {
   const navigate = useNavigate();
-
-  const store = useContext(Context);
 
   return (
     <Paper
@@ -39,4 +35,4 @@ const ControlPanel: React.FC = () => {
   );
 }
 
-export default observer(ControlPanel);
+export default ControlPanel;

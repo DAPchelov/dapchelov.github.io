@@ -22,8 +22,11 @@ class DocService {
             if (candidate) {
                 throw ApiError.BadRequest(`Запись с таким номером ${newDoc.docDecNum} уже существует`)
             }
-            await DocModel.create(newDoc)
-            return(newDoc.docDecNum);
+            const addedDoc = await DocModel.create(newDoc)
+            return({
+                _id: addedDoc._id,
+                docDecNum: addedDoc.docDecNum,
+            });
         } catch (error) {
             console.log(error);
         }

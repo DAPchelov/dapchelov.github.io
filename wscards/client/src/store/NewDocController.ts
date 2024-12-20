@@ -1,7 +1,11 @@
 import { makeAutoObservable } from "mobx";
-import { ITodo } from "../models/ITodo";
 import { v4 as uuidv4 } from 'uuid';
 import { Socket } from "socket.io-client";
+
+type TaddedDoc = {
+    _id: string,
+    docDecNum: string,
+}
 
 class NewDocController {
 
@@ -14,7 +18,8 @@ class NewDocController {
 
     socket: Socket = {} as Socket;
 
-    addedDocDecNums: string[] = [];
+
+    addedDocs: TaddedDoc[] = [];
 
     constructor(_id: string, creatorId: string, docDecNum: string, docName: string, prodName: string, folderNum: string, socket: Socket) {
 
@@ -27,12 +32,13 @@ class NewDocController {
         this.socket = socket;
         makeAutoObservable(this);
 
-        this.socket.on('DocAdded', async (docDecNum: string) => {
+        this.socket.on('DocAdded', async (addedDoc: TaddedDoc) => {
             if (docDecNum === null) {
                 alert('Ошибка, документ не добавлен');
             };
             if (docDecNum !== null) {
-                this.addedDocDecNums.push(docDecNum);
+                this.addedDocs.push(addedDoc);
+                console.log(this.addedDocs);
             };
         });
     }

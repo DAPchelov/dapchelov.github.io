@@ -12,8 +12,8 @@ const WsDocController = (socket, user) => {
         socket.on('PostDoc', (data) => {
             const newDoc = data.newDoc;
             const creatorId = data.creatorId;
-            user && docService.postNewDoc(creatorId, newDoc).then((docDecNum) => {
-                socket.emit('DocAdded', docDecNum);
+            user && docService.postNewDoc(creatorId, newDoc).then((addedDoc) => {
+                socket.emit('DocAdded', addedDoc);
             });
             // user && docService.postNewDoc(creatorId, newDoc).then(() => {
             //     takeCards(socket, groupId)

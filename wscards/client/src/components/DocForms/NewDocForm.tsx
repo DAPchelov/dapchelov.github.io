@@ -3,7 +3,8 @@ import Paper from '@mui/material/Paper';
 import { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../App'
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
+import { IAddedDoc } from '../../store/NewDocController';
 
 
 const NewDocForm: React.FC = () => {
@@ -16,7 +17,11 @@ const NewDocForm: React.FC = () => {
   // };
 
   return (
-    <div>
+    <Box sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      rowGap: 1,
+    }}>
       <Paper sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -74,7 +79,27 @@ const NewDocForm: React.FC = () => {
           <Button variant='contained' sx={{ fontSize: 12, width: '20%' }} size='large' onClick={() => store.newDoc.postDoc(store.getUser()._id)}>Отправить документ</Button>
         </Box>
       </Paper>
-    </div>
+      <Paper sx={{
+        display: 'grid',
+        gap: 1,
+        gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr));',
+        // gridAutoRows: '1fr',
+        padding: 1,
+        boxShadow: 3,
+        alignItems: 'center',
+      }}>
+        <Typography variant="subtitle2">
+          Добавленные документы:
+        </Typography>
+        {store.newDoc.addedDocs.length > 0 && store.newDoc.addedDocs.map((addedDoc: IAddedDoc) => {
+          return (<Paper sx={{
+            padding: 1,
+          }}>
+            <Typography variant="subtitle1"> {addedDoc.docDecNum} </Typography>
+          </Paper>);
+        })}
+      </Paper>
+    </Box>
   );
 };
 

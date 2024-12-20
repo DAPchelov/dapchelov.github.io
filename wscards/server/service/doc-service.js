@@ -23,10 +23,28 @@ class DocService {
                 throw ApiError.BadRequest(`Запись с таким номером ${newDoc.docDecNum} уже существует`)
             }
             const addedDoc = await DocModel.create(newDoc)
-            return({
+            return ({
                 _id: addedDoc._id,
                 docDecNum: addedDoc.docDecNum,
             });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async editDoc(newDoc) {
+        try {
+            await DocModel.updateOne({ _id: newDoc._id }, { $set: { creatorId: newDoc.creatorId, docDecNum: newDoc.docDecNum, docName: newDoc.docName, folderNum: newDoc.folderNum } });
+            return ({ _id: newDoc._id, docDecNum: newDoc.docDecNum });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getDoc(docId) {
+        try {
+            const doc = await DocModel.findOne({ _id: docId });
+            return doc;
         } catch (error) {
             console.log(error);
         }

@@ -6,6 +6,15 @@ export interface IAddedDoc {
     docDecNum: string,
 }
 
+interface IEditableDoc {
+    _id: string,
+    creatorId: string,
+    docDecNum: string,
+    docName: string,
+    prodName: string,
+    folderNum: string,
+}
+
 class NewDocController {
 
     _id: string = '';
@@ -36,12 +45,25 @@ class NewDocController {
                 alert('Ошибка, документ не добавлен');
             };
             if (docDecNum !== null) {
+                this.addedDocs.length > 0 && this.filterAddedDocsById(addedDoc._id);
                 this.addedDocs.push(addedDoc);
-                console.log(this.addedDocs);
             };
         });
+        this.socket.on('TakeEditableDoc', async (editableDoc: IEditableDoc) => {
+            this.set_id(editableDoc._id);
+            this.setCreatorId(editableDoc.creatorId);
+            this.setDocDecNum(editableDoc.docDecNum);
+            this.setDocName(editableDoc.docName);
+            this.setProdName(editableDoc.prodName);
+            this.setFolderNum(editableDoc.folderNum);
+        });
     }
-
+    set_id(_id: string) {
+        this._id = _id;
+    }
+    setCreatorId(newCreatorId: string) {
+        this.creatorId = newCreatorId;
+    }
     setDocDecNum(newDocDecNum: string) {
         this.docDecNum = newDocDecNum;
     }
@@ -53,6 +75,9 @@ class NewDocController {
     }
     setFolderNum(newFolderNum: string) {
         this.folderNum = newFolderNum;
+    }
+    pushAddedDoc(newDoc: IAddedDoc) {
+        this.addedDocs.push(newDoc);
     }
 
     promtNextDocDecNum() {
@@ -66,6 +91,9 @@ class NewDocController {
         }
     }
 
+    getEditableDoc(docId: string) {
+        this.socket.emit('GetEditableDoc', { docId: docId })
+    }
     // setTodos(todos: ITodo[]) {
     //     this.todos = todos;
     // }
@@ -131,6 +159,42 @@ class NewDocController {
         }
     }
 
+    editDoc() {
+        try {
+            const editableDoc = {
+                _id: this._id,
+                creatorId: this.creatorId,
+                docDecNum: this.docDecNum,
+                docName: this.docName,
+                prodName: this.prodName,
+                folderNum: this.folderNum,
+            };
+
+            if (this.docDecNum.length === 0) {
+                return (alert('Заполните обозначение документа'));
+            }
+            if (this.docName.length === 0) {
+                return (alert('Заполните наименование документа'));
+            }
+            if (this.folderNum.length === 0) {
+                return (alert('Заполните номер папки'));
+            }
+
+            this.setDocDecNum('');
+            this.setDocName('');
+            this.setProdName('');
+            this.setFolderNum('');
+
+            this.socket.emit('EditDoc', { newDoc: editableDoc });
+
+        } catch (e: any) {
+            console.log(e.response?.data?.message);
+        }
+    }
+
+    filterAddedDocsById(docId: string) {
+        this.addedDocs = this.addedDocs.filter((doc) => doc._id !== docId);
+    }
     // editCard(groupId: string) {
     //     try {
     //         this.socket.emit('EditCard', { card: { _id: this._id, message: this.message, todos: this.todos }, groupId });

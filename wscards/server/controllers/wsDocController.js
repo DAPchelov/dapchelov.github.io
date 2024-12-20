@@ -19,6 +19,21 @@ const WsDocController = (socket, user) => {
             //     takeCards(socket, groupId)
             // });
         });
+
+        socket.on('EditDoc', (data) => {
+            const newDoc = data.newDoc;
+            user && docService.editDoc(newDoc).then((edittedDoc) => {
+                socket.emit('DocAdded', edittedDoc);
+            });
+            user && docService.editDoc(newDoc);
+        });
+
+        socket.on('GetEditableDoc', (data) => {
+            const docId = data.docId;
+            user && docService.getDoc(docId).then((doc) => {
+                socket.emit('TakeEditableDoc', doc);
+            });
+        });
         // socket.on('EditCard', (data) => {
         //     const card = data.card;
         //     const groupId = data.groupId;

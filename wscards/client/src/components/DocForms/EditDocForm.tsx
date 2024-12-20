@@ -5,7 +5,7 @@ import { Context } from '../App'
 import { Box, Button, Typography, Paper } from '@mui/material';
 import AddedDocList from './AddedDocList';
 
-const NewDocForm: React.FC = () => {
+const EditDocForm: React.FC = () => {
   const store = useContext(Context);
 
   // const onPush = (keyKode: string) => {
@@ -65,6 +65,7 @@ const NewDocForm: React.FC = () => {
           columnGap: 1,
           padding: 0,
         }}>
+          <Button variant='contained' sx={{ fontSize: 12, width: '20%' }} size='large' color='error' onClick={() => store.newDoc.postDoc(store.getUser()._id)}>Удалить документ</Button>
           <TextField sx={{ width: '80%' }}
             multiline
             id='filled-basic'
@@ -74,7 +75,7 @@ const NewDocForm: React.FC = () => {
             value={store.newDoc.prodName}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.newDoc.setProdName(event.target.value)}
           />
-          <Button variant='contained' sx={{ fontSize: 12, width: '20%' }} size='large' onClick={() => store.newDoc.postDoc(store.getUser()._id)}>Отправить документ</Button>
+          <Button variant='contained' sx={{ fontSize: 12, width: '20%' }} size='large' onClick={() => store.newDoc.editDoc()}>Изменить документ</Button>
         </Box>
       </Paper>
       <AddedDocList/>
@@ -82,4 +83,4 @@ const NewDocForm: React.FC = () => {
   );
 };
 
-export default observer(NewDocForm);
+export default observer(EditDocForm);

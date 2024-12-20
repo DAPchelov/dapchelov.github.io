@@ -13,6 +13,7 @@ import UserControlPanel from './UserControlPanel/UserControlPanel';
 import GroupsList from './GroupsList/GroupsList';
 import EditGroupForm from './GroupForms/EditGroupForm';
 import NewDocForm from './DocForms/NewDocForm';
+import EditDocForm from './DocForms/EditDocForm';
 
 
 const Main: React.FC = () => {
@@ -34,6 +35,7 @@ const Main: React.FC = () => {
           <Route path='/newgroup' element={<NewGroupForm />} />
           <Route path='/editgroup' element={<EditGroupForm />} />
           <Route path='/newdoc' element={<NewDocForm />} />
+          <Route path='/editdoc' element={<EditDocForm />} />
         </Routes>
     </Box>
   );

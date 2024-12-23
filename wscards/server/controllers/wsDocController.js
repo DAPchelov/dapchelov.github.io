@@ -23,7 +23,7 @@ const WsDocController = (socket, user) => {
         socket.on('EditDoc', (data) => {
             const newDoc = data.newDoc;
             user && docService.editDoc(newDoc).then((edittedDoc) => {
-                socket.emit('DocAdded', edittedDoc);
+                socket.emit('DocEditted', edittedDoc);
             });
             user && docService.editDoc(newDoc);
         });

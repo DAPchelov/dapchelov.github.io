@@ -47,6 +47,14 @@ class NewDocController {
                 this.addedDocs.push(addedDoc);
             };
         });
+        this.socket.on('DocEditted', async (edittedDoc: IAddedDoc | null) => {
+            if (edittedDoc === null) {
+                alert('Ошибка, документ не изменён');
+            } else {
+                this.addedDocs.length > 0 && this.filterAddedDocsById(edittedDoc._id);
+                this.addedDocs.push(edittedDoc);
+            };
+        });
         this.socket.on('TakeEditableDoc', async (editableDoc: IEditableDoc | null) => {
             if (editableDoc === null) {
                 alert('Ошибка, документ не найден');

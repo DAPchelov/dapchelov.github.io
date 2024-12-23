@@ -49,6 +49,20 @@ class DocService {
             console.log(error);
         }
     }
+
+    async deleteDoc(docId) {
+        try {
+            const candidate = await DocModel.findOne({ docId });
+            if (candidate) {
+                await DocModel.deleteOne({ _id: docId });
+                return (docId);
+            } if (!candidate) {
+                throw ApiError.BadRequest(`Удаляемый документ не найден`);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
     // async removeCompletedCards(reqUserId) {
     //     await CardsListModel.updateOne({ userId: reqUserId }, { $pull: { cards: { isCompleted: true } } });
     // }

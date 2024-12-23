@@ -34,6 +34,13 @@ const WsDocController = (socket, user) => {
                 socket.emit('TakeEditableDoc', doc);
             });
         });
+
+        socket.on('DeleteDoc', (data) => {
+            const docId = data.docId;
+            user && docService.deleteDoc(docId).then((docId) => {
+                socket.emit('TakeDeletedDocId', docId);
+            });
+        });
         // socket.on('EditCard', (data) => {
         //     const card = data.card;
         //     const groupId = data.groupId;

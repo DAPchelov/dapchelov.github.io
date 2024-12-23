@@ -27,7 +27,6 @@ class NewDocController {
     socket: Socket = {} as Socket;
 
     addedDocs: IAddedDoc[] = [];
-    deletedDocs: string[] = [];
 
     constructor(_id: string, creatorId: string, docDecNum: string, docName: string, prodName: string, folderNum: string, socket: Socket) {
 
@@ -40,25 +39,32 @@ class NewDocController {
         this.socket = socket;
         makeAutoObservable(this);
 
-        this.socket.on('DocAdded', async (addedDoc: IAddedDoc) => {
-            if (docDecNum === null) {
+        this.socket.on('DocAdded', async (addedDoc: IAddedDoc | null) => {
+            if (addedDoc === null) {
                 alert('Ошибка, документ не добавлен');
-            };
-            if (docDecNum !== null) {
+            } else {
                 this.addedDocs.length > 0 && this.filterAddedDocsById(addedDoc._id);
                 this.addedDocs.push(addedDoc);
             };
         });
-        this.socket.on('TakeEditableDoc', async (editableDoc: IEditableDoc) => {
-            this.set_id(editableDoc._id);
-            this.setCreatorId(editableDoc.creatorId);
-            this.setDocDecNum(editableDoc.docDecNum);
-            this.setDocName(editableDoc.docName);
-            this.setProdName(editableDoc.prodName);
-            this.setFolderNum(editableDoc.folderNum);
+        this.socket.on('TakeEditableDoc', async (editableDoc: IEditableDoc | null) => {
+            if (editableDoc === null) {
+                alert('Ошибка, документ не найден');
+            } else {
+                this.set_id(editableDoc._id);
+                this.setCreatorId(editableDoc.creatorId);
+                this.setDocDecNum(editableDoc.docDecNum);
+                this.setDocName(editableDoc.docName);
+                this.setProdName(editableDoc.prodName);
+                this.setFolderNum(editableDoc.folderNum);
+            }
         });
-        this.socket.on('TakeDeletedDocId', async (deletedDocId: string) => {
-            this.filterAddedDocsById(deletedDocId);
+        this.socket.on('TakeDeletedDocId', async (deletedDocId: string | null) => {
+            if (deletedDocId === null) {
+                alert('Ошибка, документ не найден');
+            } else {
+                this.filterAddedDocsById(deletedDocId);
+            }
         });
     }
     set_id(_id: string) {
@@ -81,9 +87,6 @@ class NewDocController {
     }
     pushAddedDoc(newDoc: IAddedDoc) {
         this.addedDocs.push(newDoc);
-    }
-    pushDeletedDocsId(newDocId: string) {
-        this.deletedDocs.push(newDocId);
     }
 
     promtNextDocDecNum() {

@@ -26,8 +26,8 @@ class NewDocController {
 
     socket: Socket = {} as Socket;
 
-
     addedDocs: IAddedDoc[] = [];
+    deletedDocs: string[] = [];
 
     constructor(_id: string, creatorId: string, docDecNum: string, docName: string, prodName: string, folderNum: string, socket: Socket) {
 
@@ -57,6 +57,9 @@ class NewDocController {
             this.setProdName(editableDoc.prodName);
             this.setFolderNum(editableDoc.folderNum);
         });
+        this.socket.on('TakeDeletedDocId', async (deletedDocId: string) => {
+            this.filterAddedDocsById(deletedDocId);
+        });
     }
     set_id(_id: string) {
         this._id = _id;
@@ -79,10 +82,13 @@ class NewDocController {
     pushAddedDoc(newDoc: IAddedDoc) {
         this.addedDocs.push(newDoc);
     }
+    pushDeletedDocsId(newDocId: string) {
+        this.deletedDocs.push(newDocId);
+    }
 
     promtNextDocDecNum() {
-        const regDocDecNum = /^[А-Я]{1}[0-9А-Я]{1}.{1}[0-9А-Я]{1}.{1}[0-9]{3}[-0-9]{1}([0-9]{0,1})?([-]{0,1})?0$/;
-        if (this.docDecNum.match(regDocDecNum)) {
+        const regexDocDecNum = /^[А-Я]{1}[0-9А-Я]{1}.{1}[0-9А-Я]{1}.{1}[0-9]{3}[-0-9]{1}([0-9]{0,1})?([-]{0,1})?0$/;
+        if (this.docDecNum.match(regexDocDecNum)) {
             const newDocNum = Number(this.docDecNum.split('.')[1].split('-0')[0]) + 1;
             const docNum = this.docDecNum.split('.')[0] + '.' + newDocNum.toString() + '-0';
             this.docDecNum = docNum;
@@ -91,8 +97,24 @@ class NewDocController {
         }
     }
 
+    checkDocFields() {
+        if (this.docDecNum.length === 0) {
+            return (alert('Заполните обозначение документа'));
+        }
+        if (this.docName.length === 0) {
+            return (alert('Заполните наименование документа'));
+        }
+        if (this.folderNum.length === 0) {
+            return (alert('Заполните номер папки'));
+        }
+    }
+
     getEditableDoc(docId: string) {
         this.socket.emit('GetEditableDoc', { docId: docId })
+    }
+
+    deleteDoc() {
+        this.socket.emit('DeleteDoc', { docId: this._id })
     }
     // setTodos(todos: ITodo[]) {
     //     this.todos = todos;
@@ -139,17 +161,7 @@ class NewDocController {
                 prodName: this.prodName,
                 folderNum: this.folderNum,
             };
-
-            if (this.docDecNum.length === 0) {
-                return (alert('Заполните обозначение документа'));
-            }
-            if (this.docName.length === 0) {
-                return (alert('Заполните наименование документа'));
-            }
-            if (this.folderNum.length === 0) {
-                return (alert('Заполните номер папки'));
-            }
-
+            this.checkDocFields();
             this.socket.emit('PostDoc', { newDoc: newDoc, creatorId });
             this.docName = '';
             this.promtNextDocDecNum();
@@ -169,16 +181,7 @@ class NewDocController {
                 prodName: this.prodName,
                 folderNum: this.folderNum,
             };
-
-            if (this.docDecNum.length === 0) {
-                return (alert('Заполните обозначение документа'));
-            }
-            if (this.docName.length === 0) {
-                return (alert('Заполните наименование документа'));
-            }
-            if (this.folderNum.length === 0) {
-                return (alert('Заполните номер папки'));
-            }
+            this.checkDocFields();
 
             this.setDocDecNum('');
             this.setDocName('');

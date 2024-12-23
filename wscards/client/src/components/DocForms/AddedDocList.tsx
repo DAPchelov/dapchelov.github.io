@@ -6,11 +6,11 @@ import { IAddedDoc } from '../../store/NewDocController';
 
 import { Button, Typography, Paper } from '@mui/material';
 
-
 const AddedDocList: React.FC = () => {
+
   const store = useContext(Context);
   const navigate = useNavigate();
-  
+
   const navigateCallback = (docId: string) => {
     store.newDoc.getEditableDoc(docId);
     navigate('/editdoc')

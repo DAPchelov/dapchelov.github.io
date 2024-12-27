@@ -3,7 +3,7 @@ import Paper from '@mui/material/Paper';
 import { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../App'
-import { Button, ListItem } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import TodoFields from '../CardsList/TodoFields/TodoFields';
 import { useNavigate } from 'react-router-dom';
 
@@ -50,15 +50,14 @@ const InputForm: React.FC = () => {
           }}
         />
         <TodoFields todos={store.newCard.todos} removeTodo={removeTodo} checkTodo={checkTodo} setTodoMessage={setTodoMessage} />
-        <ListItem sx={{
+        <Box sx={{
           display: 'flex',
           columnGap: 1,
-          padding: 1,
-          boxShadow: 3,
+          padding: 0,
         }}>
           <Button variant='contained' sx={{ fontSize: 12, height: '40px', width: '20%' }} size='small' onClick={updateCardCallback} >Обновить карточку</Button>
           <Button variant='contained' sx={{ fontSize: 12, height: '40px', width: '80%' }} size='small' color="secondary" onClick={() => store.newCard.addTodo('', false)}>Добавить задачу</Button>
-        </ListItem>
+        </Box>
       </Paper>
     </div>
   );

@@ -6,7 +6,7 @@ export interface IAddedDoc {
     docDecNum: string,
 }
 
-interface IEditableDoc {
+export interface IEditableDoc {
     _id: string,
     creatorId: string,
     docDecNum: string,
@@ -27,6 +27,7 @@ class NewDocController {
     socket: Socket = {} as Socket;
 
     addedDocs: IAddedDoc[] = [];
+    foundDocs: IEditableDoc[] = [];
 
     constructor(_id: string, creatorId: string, docDecNum: string, docName: string, prodName: string, folderNum: string, socket: Socket) {
 
@@ -67,14 +68,22 @@ class NewDocController {
                 this.setFolderNum(editableDoc.folderNum);
             }
         });
-        this.socket.on('TakeDeletedDocId', async (deletedDocId: string | null) => {
-            if (deletedDocId === null) {
+        this.socket.on('TakeDeletedDocDecNum', async (deletedDocDecNum: string | null) => {
+            if (deletedDocDecNum === null) {
                 alert('Ошибка, документ не найден');
             } else {
-                this.filterAddedDocsById(deletedDocId);
+                this.filterAddedDocsByDocDecNum(deletedDocDecNum);
+            }
+        });
+        this.socket.on('TakeFoundedDocs', async (foundedDocs: IEditableDoc[] | null) => {
+            if (foundedDocs === null) {
+                alert('Ошибка, документы не найдены');
+            } else {
+                this.foundDocs = foundedDocs;
             }
         });
     }
+
     set_id(_id: string) {
         this._id = _id;
     }
@@ -110,14 +119,18 @@ class NewDocController {
 
     checkDocFields() {
         if (this.docDecNum.length === 0) {
-            return (alert('Заполните обозначение документа'));
+            alert('Заполните обозначение документа')
+            return (false);
         }
         if (this.docName.length === 0) {
-            return (alert('Заполните наименование документа'));
+            alert('Заполните наименование документа')
+            return (false);
         }
         if (this.folderNum.length === 0) {
-            return (alert('Заполните номер папки'));
+            alert('Заполните номер папки')
+            return (false);
         }
+        return true;
     }
 
     getEditableDoc(docId: string) {
@@ -125,7 +138,11 @@ class NewDocController {
     }
 
     deleteDoc() {
-        this.socket.emit('DeleteDoc', { docId: this._id })
+        this.socket.emit('DeleteDoc', { docDecNum: this.docDecNum })
+    }
+
+    searchDocs(searchType: string, searchPromt: string) {
+        this.socket.emit('SearchDocs', {searchType: searchType, searchPromt: searchPromt});
     }
     // setTodos(todos: ITodo[]) {
     //     this.todos = todos;
@@ -172,11 +189,11 @@ class NewDocController {
                 prodName: this.prodName,
                 folderNum: this.folderNum,
             };
-            this.checkDocFields();
-            this.socket.emit('PostDoc', { newDoc: newDoc, creatorId });
-            this.docName = '';
-            this.promtNextDocDecNum();
-
+            if (this.checkDocFields()) {
+                this.socket.emit('PostDoc', { newDoc: newDoc, creatorId });
+                this.docName = '';
+                this.promtNextDocDecNum();
+            }
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }
@@ -192,15 +209,16 @@ class NewDocController {
                 prodName: this.prodName,
                 folderNum: this.folderNum,
             };
-            this.checkDocFields();
+            if (this.checkDocFields()) {
+                this.checkDocFields();
 
-            this.setDocDecNum('');
-            this.setDocName('');
-            this.setProdName('');
-            this.setFolderNum('');
+                this.setDocDecNum('');
+                this.setDocName('');
+                this.setProdName('');
+                this.setFolderNum('');
 
-            this.socket.emit('EditDoc', { newDoc: editableDoc });
-
+                this.socket.emit('EditDoc', { newDoc: editableDoc });
+            }
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }
@@ -208,6 +226,9 @@ class NewDocController {
 
     filterAddedDocsById(docId: string) {
         this.addedDocs = this.addedDocs.filter((doc) => doc._id !== docId);
+    }
+    filterAddedDocsByDocDecNum(docDecNum: string) {
+        this.addedDocs = this.addedDocs.filter((doc) => doc.docDecNum !== docDecNum);
     }
     // editCard(groupId: string) {
     //     try {

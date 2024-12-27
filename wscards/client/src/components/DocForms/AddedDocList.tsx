@@ -24,6 +24,7 @@ const AddedDocList: React.FC = () => {
       padding: 1,
       boxShadow: 3,
       alignItems: 'center',
+      minHeight: 30,
     }}>
       <Typography variant="subtitle2">
         Добавленные документы:

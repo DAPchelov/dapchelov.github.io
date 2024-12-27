@@ -2,17 +2,11 @@ import TextField from '@mui/material/TextField';
 import { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../App'
-import { Box, Button, Typography, Paper } from '@mui/material';
+import { Box, Button, Paper } from '@mui/material';
 import AddedDocList from './AddedDocList';
 
 const NewDocForm: React.FC = () => {
   const store = useContext(Context);
-
-  // const onPush = (keyKode: string) => {
-  //   if (keyKode === 'Enter') {
-  //     store.newCard.postCard(store.getCurrentGroupId());
-  //   }
-  // };
 
   return (
     <Box sx={{

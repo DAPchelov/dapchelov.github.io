@@ -3,12 +3,7 @@ import DocModel from '../models/doc-model.js'
 
 
 class DocService {
-    // async editCard(reqUserId, cardId, postMessage, postTodos) {
-    //     // delete TEMP todo IDs before post new card to BE. It will get new IDs in the database
-    //     postTodos.forEach(todo => { delete (todo._id) });
-    //     await CardsListModel.updateOne({ userId: reqUserId, 'cards._id': cardId }, { $set: { 'cards.$.message': postMessage } });
-    //     await CardsListModel.updateOne({ userId: reqUserId, 'cards._id': cardId }, { $set: { 'cards.$.todos': postTodos } });
-    // }
+
     async postNewDoc(reqUserId, postDoc) {
         try {
             const newDoc = {
@@ -50,14 +45,39 @@ class DocService {
         }
     }
 
-    async deleteDoc(docId) {
+    async deleteDoc(docDecNum) {
         try {
-            const candidate = await DocModel.findOne({ docId });
+            const candidate = await DocModel.findOne({ docDecNum });
             if (candidate) {
-                await DocModel.deleteOne({ _id: docId });
-                return (docId);
+                await DocModel.deleteOne({ docDecNum: docDecNum });
+                return (docDecNum);
             } if (!candidate) {
                 throw ApiError.BadRequest(`Удаляемый документ не найден`);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async searchDocs(searchType, searchPromt) {
+        try {
+            let docs = undefined;
+            if (searchType === 'docDecNum') {
+                docs = await DocModel.find({ docDecNum: searchPromt });
+            }
+            if (searchType === 'docName') {
+                docs = await DocModel.find({ docName: searchPromt });
+            }
+            if (searchType === 'prodName') {
+                docs = await DocModel.find({ prodName: searchPromt });
+            }
+            if (searchType === 'folderNum') {
+                docs = await DocModel.find({ folderNum: searchPromt });
+            }
+            if (docs.length > 0) {
+                return (docs);
+            } if (docs.length === 0) {
+                throw ApiError.BadRequest(`Искомые документы не найдены`);
             }
         } catch (error) {
             console.log(error);

@@ -36,9 +36,17 @@ const WsDocController = (socket, user) => {
         });
 
         socket.on('DeleteDoc', (data) => {
-            const docId = data.docId;
-            user && docService.deleteDoc(docId).then((docId) => {
-                socket.emit('TakeDeletedDocId', docId);
+            const docDecNum = data.docDecNum;
+            user && docService.deleteDoc(docDecNum).then((docDecNum) => {
+                socket.emit('TakeDeletedDocDecNum', docDecNum);
+            });
+        });
+
+        socket.on('SearchDocs', (data) => {
+            const searchType = data.searchType;
+            const searchPromt = data.searchPromt;
+            user && docService.searchDocs(searchType, searchPromt).then((docs) => {
+                socket.emit('TakeFoundedDocs', docs);
             });
         });
         // socket.on('EditCard', (data) => {

@@ -1,10 +1,10 @@
 import TextField from '@mui/material/TextField';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../App'
-import { Box, Button, Typography, Paper } from '@mui/material';
+import { Box, Button, Paper } from '@mui/material';
 import SearchSelect from './SearchSelect';
-import DocList from './DocList/DocList';
+import DocList from './DocList';
 
 const SearchDocForm: React.FC = () => {
     const store = useContext(Context);
@@ -12,7 +12,6 @@ const SearchDocForm: React.FC = () => {
     const [searchPromt, setSearchPromt] = useState('');
 
     return (
-        <div>
             <Paper sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -42,9 +41,8 @@ const SearchDocForm: React.FC = () => {
                     />
                     <Button variant='contained' sx={{ fontSize: 12, width: '20%' }} size='large' onClick={() => store.newDoc.searchDocs(searchType, searchPromt)}>Найти документы</Button>
                 </Box>
-                <DocList docs={store.newDoc.foundDocs} />
+                <DocList/>
             </Paper>
-        </div>
     );
 };
 

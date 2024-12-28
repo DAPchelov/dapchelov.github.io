@@ -23,7 +23,7 @@ const SearchSelect: React.FC<ISearchSelectProps> = (props: ISearchSelectProps) =
                 <InputLabel>Поиск</InputLabel>
                 <Select
                     defaultValue={''}
-                    label="Мои карточки"
+                    label="Способ поиска"
                     onChange={handleSearchChange}>
                     <MenuItem value={'docDecNum'} key={'docDecNum'}>По обозначению</MenuItem>
                     <MenuItem value={'docName'} key={'docName'}>По наименованию</MenuItem>

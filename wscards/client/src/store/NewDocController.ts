@@ -133,12 +133,20 @@ class NewDocController {
         return true;
     }
 
-    getEditableDoc(docId: string) {
+    clearForm() {
+        this.setDocDecNum('');
+        this.setDocName('');
+        this.setProdName('');
+        this.setFolderNum('');
+    }
+
+    getEditableDoc(docId: string | number) {
         this.socket.emit('GetEditableDoc', { docId: docId })
     }
 
     deleteDoc() {
         this.socket.emit('DeleteDoc', { docDecNum: this.docDecNum })
+        this.clearForm();
     }
 
     searchDocs(searchType: string, searchPromt: string) {
@@ -211,11 +219,7 @@ class NewDocController {
             };
             if (this.checkDocFields()) {
                 this.checkDocFields();
-
-                this.setDocDecNum('');
-                this.setDocName('');
-                this.setProdName('');
-                this.setFolderNum('');
+                this.clearForm();
 
                 this.socket.emit('EditDoc', { newDoc: editableDoc });
             }

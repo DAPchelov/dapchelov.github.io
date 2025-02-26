@@ -59,7 +59,7 @@ const EditDocForm: React.FC = () => {
           columnGap: 1,
           padding: 0,
         }}>
-          <Button variant='contained' sx={{ fontSize: 12, width: '20%' }} size='large' color='error' onClick={() => store.newDoc.deleteDoc()}>Удалить документ<br/>(по обозначению)</Button>
+          <Button variant='contained' sx={{ fontSize: 12, width: '20%' }} size='large' color='error' onClick={() => store.newDoc.deleteDoc()}>Удалить документ</Button>
           <TextField sx={{ width: '80%' }}
             multiline
             id='filled-basic'

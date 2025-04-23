@@ -63,17 +63,17 @@ class DocService {
         try {
             let docs = undefined;
             if (searchType === 'docDecNum') {
-                
-                docs = await DocModel.find({ docDecNum: { $regex: "^КСЮР([.]{0,1})?([2]{0,1})?([3]{0,1})?([4]{0,1})?([5]{0,1})?([6]{0,1})?([-]{0,1})?([0]{0,1})?$" } });
+
+                docs = await DocModel.find({ docDecNum: { $regex: searchPromt +  "([a-zA-Z0-9]?)"} });
             }
             if (searchType === 'docName') {
-                docs = await DocModel.find({ docName: searchPromt });
+                docs = await DocModel.find({ docName: { $regex: searchPromt +  "([a-zA-Z0-9]?)"} });
             }
             if (searchType === 'prodName') {
-                docs = await DocModel.find({ prodName: searchPromt });
+                docs = await DocModel.find({ prodName: { $regex: searchPromt +  "([a-zA-Z0-9]?)"} });
             }
             if (searchType === 'folderNum') {
-                docs = await DocModel.find({ folderNum: searchPromt });
+                docs = await DocModel.find({ folderNum: { $regex: searchPromt +  "([a-zA-Z0-9]?)"} });
             }
             if (docs.length > 0) {
                 return (docs);

@@ -14,7 +14,7 @@ const App: React.FC = () => {
     return (
         <Context.Provider value={store}>
             <Router>
-                {(store.getIsAuth()) ? <Main /> : <LoginForm/>}
+                {(store.authController.isAuth) ? <Main /> : <LoginForm/>}
             </Router>
         </Context.Provider>
     );

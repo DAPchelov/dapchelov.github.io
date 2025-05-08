@@ -2,41 +2,46 @@ import './LoginForm.css';
 import React, { useContext, useEffect, useState } from 'react';
 import { Card, Typography, CardActions, Button, TextField } from '@mui/material';
 import authController from '../../controllers/authColntroller';
+import { observer } from 'mobx-react-lite';
+
 import { Context } from '../App'
 
 const LoginForm: React.FC = () => {
 
-  const [login, setLogin] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [isValid, setIsValid] = useState<boolean>(false);
+  // const [login, setLogin] = useState<string>('');
+  // const [password, setPassword] = useState<string>('');
+  const [isValid, setIsValid] = useState<boolean>(true);
 
   const store = useContext(Context);
 
-  useEffect(() => {
-    // RegExp for login`s login
-    // const regLogin = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-    
-    // RegExp for any string login with length >= 3
-    // const regLogin = /^[A-Za-zА-Яа-я0-9_]{3,}$/;
+  // useEffect(() => {
+  // RegExp for login`s login
+  // const regLogin = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
 
-    if ((login.length > 2) && (password.length > 5)) {
-      setIsValid(true);
-    } else if (isValid === true) {
-      setIsValid(false);
-    }
-  }, [login, password, isValid])
+  // RegExp for any string login with length >= 3
+  // const regLogin = /^[A-Za-zА-Яа-я0-9_]{3,}$/;
+
+    // if ((store.authController.login.length > 2) && (store.authController.password.length > 5)) {
+    //   setIsValid(true);
+    // } else if (isValid === true) {
+    //   setIsValid(false);
+    // }
+  // }, [store.authController.login, store.authController.password, isValid])
+
+  const setLogin = (login: string) => {
+    store.authController.login = login;
+  }
+  const setPassword = (password: string) => {
+    store.authController.password = password;
+  }
 
   const loginCallback = () => {
-    authController.login(login, password).then(() => {
-      store.setToken(localStorage.getItem('token'));
-      store.getAuth();
-    })
+    store.authController.doLogin();
   };
 
   const registrationCallback = () => {
-    authController.registration(login, password).then(() => {
-      loginCallback();
-    })
+    store.authController.doRegistration();
+
   };
 
   const handlePasswordFieldKeyPress = (keyCode: string) => {
@@ -57,7 +62,7 @@ const LoginForm: React.FC = () => {
             variant="standard"
             required
             onChange={(e) => setLogin(e.target.value)}
-            value={login}
+            value={store.authController.login}
           />
           <TextField
             id="standard-password-input"
@@ -67,7 +72,7 @@ const LoginForm: React.FC = () => {
             autoComplete="current-password"
             required
             onChange={(e) => setPassword(e.target.value)}
-            value={password}
+            value={store.authController.password}
             onKeyDown={(e) => handlePasswordFieldKeyPress(e.code)}
           />
           <Button type="submit" variant={isValid ? "contained" : "outlined"} color="success" disabled={!isValid} sx={{ width: 200 }} onClick={() => loginCallback()}>SIGN IN</Button>
@@ -75,6 +80,7 @@ const LoginForm: React.FC = () => {
         <CardActions className="loginActions" sx={{ '& button': { m: 1 } }}>
           <div className='signUpBlock'>
             <Typography color="text.secondary" sx={{ fontSize: 28 }} gutterBottom>Create account</Typography>
+            
             <Button type="submit" variant={isValid ? "contained" : "outlined"} color="secondary" disabled={!isValid} sx={{ width: 200 }} onClick={() => registrationCallback()}>SIGN UP</Button>
           </div>
         </CardActions>
@@ -83,4 +89,4 @@ const LoginForm: React.FC = () => {
   );
 }
 
-export default LoginForm;
+export default observer (LoginForm);

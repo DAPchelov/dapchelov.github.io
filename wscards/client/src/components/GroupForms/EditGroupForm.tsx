@@ -9,14 +9,13 @@ import UserListForm from './UsersFields/UserListForm';
 
 const EditGroupForm: React.FC = () => {
   const store = useContext(Context);
-  const deleteGroupCallback = store.newGroup.deleteGroup.bind(store.newGroup)
 
   const pushCallback = () => {
     if (store.newGroup.label.length === 0) {
       return (alert('Введите название группы'));
     }
     if (store.newGroup.getGroupUsers().find((user) => user.userId === store.newGroup.ownerId)) {
-      return store.newGroup.editGroup();
+      return store.newGroup.editGroup(store.authController.userId);
     } else {
       return (alert('Назначьте администратора'));
     }
@@ -26,7 +25,7 @@ const EditGroupForm: React.FC = () => {
     <Paper elevation={2} sx={{
     }}>
       <Grid container spacing={0}>
-      <UserListForm deleteGroup={deleteGroupCallback} deleteButtonColor="error"/>
+      <UserListForm deleteButtonColor="error"/>
         <UserSearchForm />
         <Grid item xs={12} md={12}>
           <Button variant={'contained'} sx={{ fontSize: 12, width: '100%' }} size='small' onClick={() => pushCallback()}>Сохранить</Button>

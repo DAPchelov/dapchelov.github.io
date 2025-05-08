@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 import { Context } from '../App'
 import TodoFields from '../CardsList/TodoFields/TodoFields';
 import { Box, Button } from '@mui/material';
-import GroupSelect from '../UserControlPanel/GroupSelect';
+import GroupSelect from '../CardsList/GroupSelect';
 
 
 const NewCardForm: React.FC = () => {
@@ -18,7 +18,7 @@ const NewCardForm: React.FC = () => {
 
   const onPush = (keyKode: string) => {
     if (keyKode === 'Enter') {
-      store.newCard.postCard(store.getCurrentGroupId());
+      store.newCard.postCard(store.newGroup._id);
     }
   };
 
@@ -56,7 +56,7 @@ const NewCardForm: React.FC = () => {
           columnGap: 1,
           padding: 0,
         }}>
-          <Button variant='contained' sx={{ fontSize: 12, height: '40px', width: '20%' }} size='small' onClick={() => store.newCard.postCard(store.getCurrentGroupId())}>Отправить карточку</Button>
+          <Button variant='contained' sx={{ fontSize: 12, height: '40px', width: '20%' }} size='small' onClick={() => store.newCard.postCard(store.userController.user._id)}>Отправить карточку</Button>
           <Button variant='contained' sx={{ fontSize: 12, height: '40px', width: '80%' }} size='small' color="secondary" onClick={() => store.newCard.addTodo('', false)}>Добавить задачу</Button>
         </Box>
       </Paper>

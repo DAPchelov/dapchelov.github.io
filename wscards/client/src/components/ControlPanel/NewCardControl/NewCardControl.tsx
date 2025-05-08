@@ -9,7 +9,7 @@ const NewCardControl: React.FC = () => {
 
     return (
         <div>
-            <Button variant='contained' sx={{ fontSize: 10, width: 120 }} size='small' onClick={() => store.newCard.postCard(store.getCurrentGroupId())}>Add NEW card</Button>
+            <Button variant='contained' sx={{ fontSize: 10, width: 120 }} size='small' onClick={() => store.newCard.postCard(store.newGroup._id)}>Add NEW card</Button>
         </div>
     );
 }

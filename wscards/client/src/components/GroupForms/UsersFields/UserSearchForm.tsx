@@ -12,11 +12,11 @@ const UserSearchForm: React.FC = () => {
     const switchUser = store.newGroup.addUserToGroup.bind(store.newGroup);
 
     useEffect(() => {
-        store.newGroup.receiveAllUsers();
-    })
+        store.newGroup.receiveAllUsers(store.authController.userId);
+    },[])
 
     const filteredUsersByPromt = store.newGroup.allUsers.filter(user => {
-        return user.email.toLowerCase().includes(searchRequest);
+        return user.login.toLowerCase().includes(searchRequest);
     })
 
     return (

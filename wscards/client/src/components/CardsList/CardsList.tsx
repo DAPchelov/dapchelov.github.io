@@ -3,7 +3,7 @@ import Card from '../CardsList/Card'
 import { Context } from '../App'
 import { observer } from 'mobx-react-lite';
 import { Box, Paper } from '@mui/material';
-import GroupSelect from '../UserControlPanel/GroupSelect';
+import GroupSelect from './GroupSelect';
 import SelectButtons from '../ControlPanel/HomeControl/SelectButtons';
 import ClearButton from '../ControlPanel/HomeControl/ClearButton';
 
@@ -11,7 +11,7 @@ const CardsList: React.FC = () => {
     const store = useContext(Context);
 
     useEffect(() => {
-        store.receiveGroupCards(store.getCurrentGroupId());
+        store.newGroup.receiveGroupCards(store.newGroup._id);
     }, [])
 
     return (
@@ -30,7 +30,7 @@ const CardsList: React.FC = () => {
                 <SelectButtons />
                 <ClearButton />
             </Box>
-            {store.getCards().length > 0 && store.getCards()
+            {store.newCard.cards.length > 0 && store.newCard.cards
                 .map((card) => {
                     if (store.getIsCompletedDisplayMode() === undefined) {
                         return (

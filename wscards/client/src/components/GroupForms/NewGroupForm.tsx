@@ -12,20 +12,20 @@ import UserListForm from './UsersFields/UserListForm';
 const NewGroupForm: React.FC = () => {
 
   const store = useContext(Context);
-  const deleteGroupCallback = store.newGroup.clearForm.bind(store.newGroup)
+  // const deleteGroupCallback = store.newGroup.clearForm.bind(store.newGroup)
 
   const pushCallback = () => {
     if (store.newGroup.label.length === 0) {
       return (alert('Введите название группы'));
     }
     if (store.newGroup.getGroupUsers().find((user) => user.userId === store.newGroup.ownerId)) {
-      return store.newGroup.createGroup();
+      return store.newGroup.createGroup(store.authController.userId);
     } else {
       return (alert('Назначьте администратора группы'));
     }
   };
   useEffect(() => {
-    store.newGroup.setOwnerId(store.getUser()._id);
+    store.newGroup.setOwnerId(store.userController.user._id);
   })
 
   return (
@@ -33,7 +33,7 @@ const NewGroupForm: React.FC = () => {
     }}>
       <Grid container spacing={0} sx={{
       }}>
-        <UserListForm deleteGroup={deleteGroupCallback} deleteButtonColor="primary"/>
+        <UserListForm deleteButtonColor="primary"/>
         <UserSearchForm />
         <Grid item xs={12} md={12}>
           <Button variant={'contained'} sx={{ fontSize: 12, width: '100%' }} size='small' onClick={() => pushCallback()}>Создать группу</Button>

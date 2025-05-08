@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
+import { Context } from './App'
+
 
 import Box from '@mui/material/Box';
 
@@ -18,6 +20,35 @@ import SearchDocForm from './DocForms/SearchDocForm';
 
 
 const Main: React.FC = () => {
+  const store = useContext(Context);
+
+  useEffect(() => {
+      store.authController.getUserData();
+    },[])
+
+    if (store.userController.user._id)  {
+      return(
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          rowGap: 1,
+          height: '98vh',
+        }}>
+          <UserControlPanel />
+          <ControlPanel />
+            <Routes>
+              <Route path='/' element={<CardsList />} />
+              <Route path='/groups' element={<GroupsList />} />
+              <Route path='/newcard' element={<NewCardForm />} />
+              <Route path='/editcard' element={<EditCardForm />} />
+              <Route path='/newgroup' element={<NewGroupForm />} />
+              <Route path='/editgroup' element={<EditGroupForm />} />
+              <Route path='/newdoc' element={<NewDocForm />} />
+              <Route path='/editdoc' element={<EditDocForm />} />
+              <Route path='/docs' element={<SearchDocForm />} />
+            </Routes>
+        </Box>
+    )};
 
   return (
     <Box sx={{
@@ -27,18 +58,6 @@ const Main: React.FC = () => {
       height: '98vh',
     }}>
       <UserControlPanel />
-      <ControlPanel />
-        <Routes>
-          <Route path='/' element={<CardsList />} />
-          <Route path='/groups' element={<GroupsList />} />
-          <Route path='/newcard' element={<NewCardForm />} />
-          <Route path='/editcard' element={<EditCardForm />} />
-          <Route path='/newgroup' element={<NewGroupForm />} />
-          <Route path='/editgroup' element={<EditGroupForm />} />
-          <Route path='/newdoc' element={<NewDocForm />} />
-          <Route path='/editdoc' element={<EditDocForm />} />
-          <Route path='/docs' element={<SearchDocForm />} />
-        </Routes>
     </Box>
   );
 };

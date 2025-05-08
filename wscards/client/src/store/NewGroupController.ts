@@ -2,30 +2,35 @@ import { makeAutoObservable } from "mobx";
 import { Socket } from "socket.io-client";
 import { IUser } from "../models/IUser";
 import { IOtherUser } from "../models/IOtherUser";
+import { IGroup } from "../models/IGroup";
 
 class NewGroupController {
-    _id: string;
-    socket: Socket = {} as Socket;
-
+    _id: string = '';
     label: string = '';
     ownerId: string = '';
+    groupUsers: IOtherUser[] = [];
 
-    private groupUsers: IOtherUser[] = [];
     allUsers: IOtherUser[] = [];
 
+    allUserGroups: [IGroup] = {} as [IGroup];
+    socket: Socket = {} as Socket;
 
-    constructor(_id: string, socket: Socket, label: string, ownerId: string, groupUsers: IOtherUser[]) {
+    constructor(socket: Socket) {
 
-        this._id = _id;
+        // this._id = _id;
         this.socket = socket;
-        this.label = label;
-        this.ownerId = ownerId;
-        this.groupUsers = groupUsers;
+        // this.label = label;
+        // this.ownerId = ownerId;
+        // this.groupUsers = groupUsers;
+
+        this.socket.on('TakeUserAllGroups', (data: [IGroup]) => {
+            this.allUserGroups = data;
+        })
 
         this.socket.on('TakeAllUsers', (data: IUser[]) => {
             const allUsers = data.map((user: IUser) => {
                 return ({
-                    email: user.email,
+                    login: user.login,
                     userId: user._id,
                 })
             });
@@ -70,40 +75,55 @@ class NewGroupController {
         this.groupUsers = [];
     }
 
-    createGroup() {
-        try {
-            const users = this.groupUsers.map((user) => { return ({ userId: user.userId, email: user.email }) });
-            this.socket.emit('CreateNewGroup', { label: this.label, ownerId: this.ownerId, users: users });
-            this.clearForm();
-        } catch (e: any) {
-            console.log(e.response?.data?.message);
-        }
+    createGroup(userId: string) {
+        const users = this.groupUsers.map((user) => { return ({ userId: user.userId, login: user.login }) });
+        this.socket.emit('CreateNewGroup', { label: this.label, ownerId: this.ownerId, users: users, userId: userId });
+        this.clearForm();
+
     }
 
-    editGroup() {
-        try {
-            const users = this.groupUsers.map((user) => { return ({ userId: user.userId, email: user.email }) });
-            this.socket.emit('EditGroup', { _id: this._id, label: this.label, ownerId: this.ownerId, users: users });
-            this.clearForm();
-        } catch (e: any) {
-            console.log(e.response?.data?.message);
-        }
+    editGroup(userId: string) {
+        const users = this.groupUsers.map((user) => { return ({ userId: user.userId, login: user.login }) });
+        this.socket.emit('EditGroup', { _id: this._id, label: this.label, ownerId: this.ownerId, users: users, userId: userId });
+        this.clearForm();
     }
 
-    deleteGroup() {
-        try {
-            this.socket.emit('DeleteGroup', { _id: this._id });
-            this.clearForm();
-        } catch (e: any) {
-            console.log(e.response?.data?.message);
-        }
+    deleteGroup(userId: string) {
+        this.socket.emit('DeleteGroup', { _id: this._id, userId: userId });
+        this.clearForm();
     }
 
-    receiveAllUsers() {
-        this.socket.emit('ReceiveAllUsers');
+    receiveAllUsers(userId: string) {
+        this.socket.emit('ReceiveAllUsers', { userId: userId });
     }
     setOwnerId(ownerId: string) {
         this.ownerId = ownerId;
+    }
+
+    async receiveGroupCards(groupId: string) {
+        this.socket.emit('GetCards', { groupId });
+    }
+
+    setAllUserGroups(groups: [IGroup]) {
+        this.allUserGroups = groups;
+    }
+
+    getAllUserGroups() {
+        return this.allUserGroups;
+    }
+
+    redactGroup(_id: string) {
+        const editableGroup = this.allUserGroups.find((group) => group._id === _id);
+        if (editableGroup) {
+            this._id = editableGroup._id;
+            this.label = editableGroup.label;
+            this.ownerId = editableGroup.ownerId;
+            this.groupUsers = editableGroup.users;
+        }
+    }
+
+    createNewGroup(label: string) {
+        this.socket.emit('CreateNewGroup', { label: label });
     }
 }
 

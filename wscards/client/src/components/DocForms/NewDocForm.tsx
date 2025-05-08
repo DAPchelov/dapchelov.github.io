@@ -68,7 +68,7 @@ const NewDocForm: React.FC = () => {
             value={store.newDoc.prodName}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.newDoc.setProdName(event.target.value)}
           />
-          <Button variant='contained' sx={{ fontSize: 12, width: '20%' }} size='large' onClick={() => store.newDoc.postDoc(store.getUser()._id)}>Отправить документ</Button>
+          <Button variant='contained' sx={{ fontSize: 12, width: '20%' }} size='large' onClick={() => store.newDoc.postDoc(store.userController.user._id)}>Отправить документ</Button>
         </Box>
       </Paper>
       <AddedDocList/>

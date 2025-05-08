@@ -10,13 +10,16 @@ const GroupSelect: React.FC = () => {
     const store = useContext(Context);
     
     useEffect(() => {
-        store.setCurrentGroupId(store.getUser()._id)
-        store.receiveUserAllGroups();
+        // store.setCurrentGroupId(store.getUser()._id)
+        // check if it is possible without this
+        store.newGroup._id = store.userController.user._id
+        // console.log(store.userController.user);
+        store.userController.receiveUserAllGroups();
     },[])
 
-    const handleGroupChange = (event: SelectChangeEvent | undefined) => {
-        event && store.setCurrentGroupId(event.target.value);
-        event && store.receiveGroupCards(event.target.value);
+    const handleGroupChange = (event: SelectChangeEvent) => {
+        store.newGroup._id = event.target.value;
+        store.newGroup.receiveGroupCards(event.target.value);
     }
 
     return (
@@ -32,8 +35,8 @@ const GroupSelect: React.FC = () => {
                     label="Мои карточки"
                 onChange={handleGroupChange}
                 >
-                    <MenuItem value={store.getUser()._id} key={store.getUser()._id}>Мои карточки</MenuItem>
-                    {store.getAllUserGroups().length > 0 && store.getAllUserGroups()
+                    <MenuItem value={store.userController.user._id} key={store.userController.user._id}>Мои карточки</MenuItem>
+                    {store.newGroup.allUserGroups.length > 0 && store.newGroup.allUserGroups
                         .map(group => {
                             return (
                                 <MenuItem value={group._id} key={group.label}>{group.label}</MenuItem>

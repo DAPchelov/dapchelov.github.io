@@ -2,7 +2,7 @@ import ListItem from '@mui/material/ListItem';
 import EditIcon from '@mui/icons-material/Edit';
 import Typography from '@mui/material/Typography';
 import UsersList from './UsersList/UsersList';
-import { Paper } from '@mui/material';
+import { List, Paper } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import React, { useContext } from 'react';
 import { Context } from '../App'
@@ -14,23 +14,23 @@ const Group: React.FC<IGroup> = (props: IGroup) => {
     const store = useContext(Context);
 
     const getAdminName = () => {
-        return props.users.find((user) => user.userId === props.ownerId)?.email;
+        return props.users.find((user) => user.userId === props.ownerId)?.login;
     }
 
     return (
         <Paper elevation={2} sx={{
             display: 'flex',
         }}>
-            <ListItem aria-multiline sx={{
+            <List aria-multiline sx={{
                 background: 'rgba(21,101,192,0.15)',
                 width: '35%',
-                minWidth: '150px',
+                minWidth: '180px',
                 maxWidth: '260px',
                 display: 'flex',
                 justifyContent: 'space-between',
+                alignItems: 'center',
             }}>
                 <ListItem sx={{
-                    height: '100%',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'flex-start',
@@ -47,14 +47,16 @@ const Group: React.FC<IGroup> = (props: IGroup) => {
                         wordWrap: 'break-word',
                         width: '100%',
                     }}>
-                        Admin: {getAdminName()}
+                        Администратор:
+                        <br/>
+                        {getAdminName()}
                     </Typography>
                 </ListItem>
-                {store.getUser()._id === props.ownerId &&
+                {store.userController.user._id === props.ownerId &&
                     <Link to='/editgroup'>
-                        <EditIcon fontSize='small' onClick={() => { store.editGroup(props._id); }} sx={{ cursor: 'pointer', width: '30px' }} />
+                        <EditIcon fontSize='small' onClick={() => { store.newGroup.redactGroup(props._id); }} sx={{ cursor: 'pointer', width: '30px' }} />
                     </Link>}
-            </ListItem>
+            </List>
             <UsersList users={props.users} />
         </Paper>
     );

@@ -19,12 +19,12 @@ const InputForm: React.FC = () => {
 
   const onPush = (keyKode: string) => {
     if (keyKode === 'Enter') {
-      store.newCard.editCard(store.getCurrentGroupId());
+      store.newCard.editCard(store.newGroup._id);
       navigate('/');
     }
   };
   const updateCardCallback = () => {
-    store.newCard.editCard(store.getCurrentGroupId())
+    store.newCard.editCard(store.newGroup._id)
     navigate('/');
   }
 

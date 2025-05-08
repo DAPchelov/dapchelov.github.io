@@ -8,7 +8,7 @@ const GroupList: React.FC = () => {
     const store = useContext(Context);
 
     useEffect(() => {
-        store.receiveUserAllGroups();
+        store.userController.receiveUserAllGroups();
     },[])
 
     return (
@@ -18,7 +18,7 @@ const GroupList: React.FC = () => {
             rowGap: 2,
             padding: 1,
         }}>
-            {store.getAllUserGroups().length > 0 && store.getAllUserGroups()
+            {store.newGroup.allUserGroups.length > 0 && store.newGroup.allUserGroups
                 .map(group => {
                         return (
                             <Group key={group.label} _id={group._id} users={group.users} label={group.label} ownerId={group.ownerId} cards={group.cards}/>

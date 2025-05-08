@@ -21,7 +21,7 @@ const UserControlPanel: React.FC = () => {
         padding: 1,
       }}>
       <UserBadge />
-      <Button variant='outlined' sx={{ fontSize: 10, width: '120px', height: '60px' }} size='small' color='error' onClick={() => store.logout()}>Выход</Button>
+      <Button variant='outlined' sx={{ fontSize: 10, width: '120px', height: '60px' }} size='small' color='error' onClick={() => store.authController.doLogout()}>Выход</Button>
     </Paper>
   );
 }

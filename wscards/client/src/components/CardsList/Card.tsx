@@ -17,7 +17,7 @@ const Card: React.FC<ICard> = (props: ICard) => {
     const store = useContext(Context);
 
     const checkTodo = (todoId: string) => {
-        store.checkTodo(props._id, todoId, store.getCurrentGroupId());
+        store.newCard.checkCardTodo(props._id, todoId, store.newGroup._id);
     }
 
     return (
@@ -33,7 +33,7 @@ const Card: React.FC<ICard> = (props: ICard) => {
                 <Checkbox
                     id={props._id}
                     checked={props.isCompleted}
-                    onClick={() => store.checkCard(props._id, !props.isCompleted, store.getCurrentGroupId())}
+                    onClick={() => store.newCard.checkCard(props._id, !props.isCompleted, store.newGroup._id)}
                     sx={{ cursor: 'pointer' }} />
 
                 <Typography sx={{
@@ -43,9 +43,9 @@ const Card: React.FC<ICard> = (props: ICard) => {
                 }}>
                     {props.message}
                 </Typography>
-                <DeleteIcon fontSize='small' onClick={() => { store.removeOneCard(props._id, store.getCurrentGroupId()); }} sx={{ cursor: 'pointer', width: '30px' }} />
+                <DeleteIcon fontSize='small' onClick={() => { store.newCard.removeOneCard(props._id, store.newGroup._id); }} sx={{ cursor: 'pointer', width: '30px' }} />
                 <Link to='/editcard'>
-                    <EditIcon fontSize='small' onClick={() => { store.editCard(props._id); }} sx={{ cursor: 'pointer', width: '30px' }} />
+                    <EditIcon fontSize='small' onClick={() => { store.newCard.redactCard(props._id); }} sx={{ cursor: 'pointer', width: '30px' }} />
                 </Link>
             </ListItem>
             <TodoList todos={props.todos} checkTodo={checkTodo} />

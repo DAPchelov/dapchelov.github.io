@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../App'
 import Avatar from '@mui/material/Avatar';
@@ -40,25 +40,27 @@ export const assignColor = (userId: string) => {
 
 const UserBadge: React.FC = () => {
   const store = useContext(Context);
-  const user = store.getUser();
-  const getCurrentGroupLabel = () => {
-    if (store.getAllUserGroups() === undefined) {return('Команда Ракета')};
-    if (store.getCurrentGroupId() === undefined) {return('Загружаем карточки')};
-    if (store.getUser()._id === store.getCurrentGroupId()) {return('Мои карточки')};
-    const groupLabel = store.getAllUserGroups().find((group) => { if (group._id === store.getCurrentGroupId()) {
-      return group
-    }})?.label;
-    return (groupLabel);
-  }
+  const user = store.userController.user;
 
-  if (user.email !== undefined) {
+  // const getCurrentGroupLabel = () => {
+  //   if (store.getAllUserGroups() === undefined) {return('Команда Ракета')};
+  //   if (store.getCurrentGroupId() === undefined) {return('Загружаем карточки')};
+  //   if (store.getUser()._id === store.getCurrentGroupId()) {return('Мои карточки')};
+  //   const groupLabel = store.getAllUserGroups().find((group) => { if (group._id === store.getCurrentGroupId()) {
+  //     return group
+  //   }})?.label;
+  //   return (groupLabel);
+  // }
 
+  if (user._id) {
     return (
-      <ListItem sx={{padding:0}}>
+      <ListItem sx={{ padding: 0 }}>
         <ListItemAvatar>
-          <Avatar sx={{ bgcolor: assignColor(user._id)[600] }}>{user.email[0].toUpperCase()}</Avatar>
+          <Avatar sx={{ bgcolor: assignColor(user._id)[600] }}>{user.login[0].toUpperCase()}</Avatar>
         </ListItemAvatar>
-        <ListItemText primary={store.getUser().email} secondary={getCurrentGroupLabel()} />
+        <ListItemText primary={store.userController.user.login}
+        // secondary={ getCurrentGroupLabel() }
+        />
       </ListItem>
     );
   }
@@ -67,10 +69,11 @@ const UserBadge: React.FC = () => {
       <ListItemAvatar>
         <Avatar sx={{ bgcolor: grey[600] }}>L</Avatar>
       </ListItemAvatar>
-      <ListItemText primary='Loading User' secondary='Команда Ракета' />
+      <ListItemText primary='Загрузка пользователя'
+      // secondary='Команда Ракета'
+      />
     </ListItem>
   );
-
 };
 
 export default observer(UserBadge);

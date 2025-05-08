@@ -16,7 +16,7 @@ class GroupService {
             const groupUsers = users.map((user) => {
                 return ({
                     userId: user.userId,
-                    email: user.email
+                    login: user.login
                 })
             });
             GroupModel.create({
@@ -40,7 +40,7 @@ class GroupService {
                 const groupUsers = reqUsers.map((user) => {
                     return ({
                         userId: user.userId,
-                        email: user.email
+                        login: user.login
                     })
                 });
                 // set new parameters to group

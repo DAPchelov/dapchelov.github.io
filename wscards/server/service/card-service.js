@@ -28,8 +28,8 @@ class CardService {
     async removeOneCard(reqUserId, cardId) {
         await CardsListModel.updateOne({ userId: reqUserId }, { $pull: { cards: { _id: cardId } } });
     }
-    async getUserCards(reqUserId) {
-        const cardsList = await CardsListModel.findOne({ userId: reqUserId });
+    async getGroupCards(reqGroupId) {
+        const cardsList = await CardsListModel.findOne({ userId: reqGroupId });
         const cardsListDto = new CardsDto(cardsList);
         return { cards: cardsListDto.cards }
     }

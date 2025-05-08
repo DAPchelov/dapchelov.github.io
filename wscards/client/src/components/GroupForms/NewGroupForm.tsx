@@ -12,20 +12,20 @@ import UserListForm from './UsersFields/UserListForm';
 const NewGroupForm: React.FC = () => {
 
   const store = useContext(Context);
-  // const deleteGroupCallback = store.newGroup.clearForm.bind(store.newGroup)
+  // const deleteGroupCallback = store.groupController.clearForm.bind(store.groupController)
 
   const pushCallback = () => {
-    if (store.newGroup.label.length === 0) {
+    if (store.groupController.label.length === 0) {
       return (alert('Введите название группы'));
     }
-    if (store.newGroup.getGroupUsers().find((user) => user.userId === store.newGroup.ownerId)) {
-      return store.newGroup.createGroup(store.authController.userId);
+    if (store.groupController.getGroupUsers().find((user) => user.userId === store.groupController.ownerId)) {
+      return store.groupController.createGroup(store.authController.userId);
     } else {
       return (alert('Назначьте администратора группы'));
     }
   };
   useEffect(() => {
-    store.newGroup.setOwnerId(store.userController.user._id);
+    store.groupController.setOwnerId(store.userController.user._id);
   })
 
   return (

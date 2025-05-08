@@ -13,7 +13,7 @@ type IUserListForm = {
 const UserListForm: React.FC<IUserListForm> = (props: IUserListForm) => {
 
   const store = useContext(Context);
-  const switchUser = store.newGroup.removeUserFromGroup.bind(store.newGroup);
+  const switchUser = store.groupController.removeUserFromGroup.bind(store.groupController);
 
   return (
     <Grid item xs={8} md={8}>
@@ -36,12 +36,12 @@ const UserListForm: React.FC<IUserListForm> = (props: IUserListForm) => {
             label='Название группы'
             variant='filled'
             fullWidth
-            value={store.newGroup.label}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.newGroup.setLabel(event.target.value)}
+            value={store.groupController.label}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.groupController.setLabel(event.target.value)}
           />
-          <Button variant='contained' sx={{ fontSize: 10, width: '15%', height: 56, marginRight: 1 }} size='large' color={props.deleteButtonColor} onClick={() => store.newGroup.deleteGroup(store.newGroup._id)}>Удалить группу</Button>
+          <Button variant='contained' sx={{ fontSize: 10, width: '15%', height: 56, marginRight: 1 }} size='large' color={props.deleteButtonColor} onClick={() => store.groupController.deleteGroup(store.groupController._id)}>Удалить группу</Button>
         </ListItem>
-        <UserFields users={store.newGroup.getGroupUsers()} groupId={store.newGroup.label} ownerId={store.newGroup.ownerId} switchUser={switchUser} />
+        <UserFields users={store.groupController.getGroupUsers()} groupId={store.groupController.label} ownerId={store.groupController.ownerId} switchUser={switchUser} />
       </Paper>
     </Grid>
   );

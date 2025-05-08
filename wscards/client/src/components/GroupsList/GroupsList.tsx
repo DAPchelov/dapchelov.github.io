@@ -18,7 +18,7 @@ const GroupList: React.FC = () => {
             rowGap: 2,
             padding: 1,
         }}>
-            {store.newGroup.allUserGroups.length > 0 && store.newGroup.allUserGroups
+            {store.groupController.allUserGroups.length > 0 && store.groupController.allUserGroups
                 .map(group => {
                         return (
                             <Group key={group.label} _id={group._id} users={group.users} label={group.label} ownerId={group.ownerId} cards={group.cards}/>

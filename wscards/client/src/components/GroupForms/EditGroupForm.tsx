@@ -11,11 +11,11 @@ const EditGroupForm: React.FC = () => {
   const store = useContext(Context);
 
   const pushCallback = () => {
-    if (store.newGroup.label.length === 0) {
+    if (store.groupController.label.length === 0) {
       return (alert('Введите название группы'));
     }
-    if (store.newGroup.getGroupUsers().find((user) => user.userId === store.newGroup.ownerId)) {
-      return store.newGroup.editGroup(store.authController.userId);
+    if (store.groupController.getGroupUsers().find((user) => user.userId === store.groupController.ownerId)) {
+      return store.groupController.editGroup(store.authController.userId);
     } else {
       return (alert('Назначьте администратора'));
     }

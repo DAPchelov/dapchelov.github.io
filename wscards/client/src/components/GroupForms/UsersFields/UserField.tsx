@@ -19,12 +19,12 @@ const UserField: React.FC<IUserProps> = (props: IUserProps) => {
         if (ownerId !== undefined) {
             if (userId === ownerId) {
                 return (
-                    <Button variant='contained' sx={{ fontSize: 10, width: '15%', height: 37 }} size='small' color="primary" onClick={() => store.newGroup.setOwnerId(userId)}>Администратор</Button>
+                    <Button variant='contained' sx={{ fontSize: 10, width: '15%', height: 37 }} size='small' color="primary" onClick={() => store.groupController.setOwnerId(userId)}>Администратор</Button>
                 )
             }
             if (userId !== ownerId) {
                 return (
-                    <Button variant='outlined' sx={{ fontSize: 10, width: '15%', height: 37 }} size='small' color="primary" onClick={() => store.newGroup.setOwnerId(userId)}>Пользователь</Button>
+                    <Button variant='outlined' sx={{ fontSize: 10, width: '15%', height: 37 }} size='small' color="primary" onClick={() => store.groupController.setOwnerId(userId)}>Пользователь</Button>
                 )
             }
         }

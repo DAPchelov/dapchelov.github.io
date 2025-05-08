@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { Context } from '../App'
 import { observer } from 'mobx-react-lite';
-import { IAddedDoc } from '../../store/NewDocController';
+import { IAddedDoc } from '../../store/DocController';
 
 import { Button, Typography, Paper } from '@mui/material';
 
@@ -12,7 +12,7 @@ const AddedDocList: React.FC = () => {
   const navigate = useNavigate();
 
   const navigateCallback = (docId: string) => {
-    store.newDoc.getEditableDoc(docId);
+    store.docController.getEditableDoc(docId);
     navigate('/editdoc')
   };
 
@@ -29,7 +29,7 @@ const AddedDocList: React.FC = () => {
       <Typography variant="subtitle2">
         Добавленные документы:
       </Typography>
-      {store.newDoc.addedDocs.length > 0 && store.newDoc.addedDocs.map((addedDoc: IAddedDoc) => {
+      {store.docController.addedDocs.length > 0 && store.docController.addedDocs.map((addedDoc: IAddedDoc) => {
         return (
           <Button key={addedDoc._id} variant='contained' sx={{ fontSize: 12, width: '100%' }} size='small' color='inherit' onClick={() => navigateCallback(addedDoc._id)}>{addedDoc.docDecNum}</Button>
         );

@@ -11,7 +11,7 @@ const CardsList: React.FC = () => {
     const store = useContext(Context);
 
     useEffect(() => {
-        store.newGroup.receiveGroupCards(store.newGroup._id);
+        store.groupController.receiveGroupCards(store.groupController._id);
     }, [])
 
     return (
@@ -30,7 +30,7 @@ const CardsList: React.FC = () => {
                 <SelectButtons />
                 <ClearButton />
             </Box>
-            {store.newCard.cards.length > 0 && store.newCard.cards
+            {store.cardController.cards.length > 0 && store.cardController.cards
                 .map((card) => {
                     if (store.getIsCompletedDisplayMode() === undefined) {
                         return (

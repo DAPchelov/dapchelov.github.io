@@ -13,11 +13,11 @@ const DocList: React.FC = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        store.newDoc.foundDocs.length = 0;
+        store.docController.foundDocs.length = 0;
     })
 
     const navigateCallback = (docId: string | number) => {
-        store.newDoc.getEditableDoc(docId);
+        store.docController.getEditableDoc(docId);
         navigate('/editdoc')
     };
 
@@ -33,7 +33,7 @@ const DocList: React.FC = () => {
         <Paper sx={{ width: '100%' }}>
             <DataGrid
                 getRowId={(doc) => doc._id}
-                rows={store.newDoc.foundDocs}
+                rows={store.docController.foundDocs}
                 columns={columns}
                 initialState={{ pagination: { paginationModel } }}
                 pageSizeOptions={[5, 10, 20]}

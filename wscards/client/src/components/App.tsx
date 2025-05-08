@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React, { createContext } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import WSStore from '../store/WSStore';
+import WSStore from '../store/Store';
 
 import LoginForm from './loginForm/LoginForm';
 import Main from './Main';

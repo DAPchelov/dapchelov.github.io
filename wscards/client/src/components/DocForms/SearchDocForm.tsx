@@ -35,11 +35,8 @@ const SearchDocForm: React.FC = () => {
                         color='success'
                         value={searchPromt}
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => setSearchPromt(event.target.value)}
-                        onKeyUp={event => {
-                            // store.newDoc.searchDocs(searchType, searchPromt);
-                        }}
                     />
-                    <Button variant='contained' sx={{ fontSize: 12, width: '20%' }} size='large' onClick={() => store.newDoc.searchDocs(searchType, searchPromt)}>Найти документы</Button>
+                    <Button variant='contained' sx={{ fontSize: 12, width: '20%' }} size='large' onClick={() => store.docController.searchDocs(searchType, searchPromt)}>Найти документы</Button>
                 </Box>
                 <DocList/>
             </Paper>

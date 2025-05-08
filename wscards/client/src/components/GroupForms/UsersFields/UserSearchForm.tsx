@@ -9,13 +9,13 @@ const UserSearchForm: React.FC = () => {
 
     const store = useContext(Context);
     const [searchRequest, setSearchRequest] = useState('');
-    const switchUser = store.newGroup.addUserToGroup.bind(store.newGroup);
+    const switchUser = store.groupController.addUserToGroup.bind(store.groupController);
 
     useEffect(() => {
-        store.newGroup.receiveAllUsers(store.authController.userId);
+        store.groupController.receiveAllUsers(store.authController.userId);
     },[])
 
-    const filteredUsersByPromt = store.newGroup.allUsers.filter(user => {
+    const filteredUsersByPromt = store.groupController.allUsers.filter(user => {
         return user.login.toLowerCase().includes(searchRequest);
     })
 

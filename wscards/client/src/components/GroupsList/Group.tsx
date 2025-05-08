@@ -54,7 +54,7 @@ const Group: React.FC<IGroup> = (props: IGroup) => {
                 </ListItem>
                 {store.userController.user._id === props.ownerId &&
                     <Link to='/editgroup'>
-                        <EditIcon fontSize='small' onClick={() => { store.newGroup.redactGroup(props._id); }} sx={{ cursor: 'pointer', width: '30px' }} />
+                        <EditIcon fontSize='small' onClick={() => { store.groupController.redactGroup(props._id); }} sx={{ cursor: 'pointer', width: '30px' }} />
                     </Link>}
             </List>
             <UsersList users={props.users} />

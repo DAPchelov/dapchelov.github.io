@@ -32,8 +32,8 @@ const NewDocForm: React.FC = () => {
             label='Обозначение'
             variant='filled'
             color='success'
-            value={store.newDoc.docDecNum}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.newDoc.setDocDecNum(event.target.value)}
+            value={store.docController.docDecNum}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.docController.setDocDecNum(event.target.value)}
           />
           <TextField sx={{ width: '50%' }}
             multiline
@@ -41,8 +41,8 @@ const NewDocForm: React.FC = () => {
             label='Наименование'
             variant='filled'
             color='success'
-            value={store.newDoc.docName}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.newDoc.setDocName(event.target.value)}
+            value={store.docController.docName}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.docController.setDocName(event.target.value)}
           />
           <TextField sx={{ width: '20%' }}
             multiline
@@ -50,8 +50,8 @@ const NewDocForm: React.FC = () => {
             label='Папка №'
             variant='filled'
             color='success'
-            value={store.newDoc.folderNum}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.newDoc.setFolderNum(event.target.value)}
+            value={store.docController.folderNum}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.docController.setFolderNum(event.target.value)}
           />
         </Box>
         <Box sx={{
@@ -65,10 +65,10 @@ const NewDocForm: React.FC = () => {
             label='Название изделия'
             variant='filled'
             color='success'
-            value={store.newDoc.prodName}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.newDoc.setProdName(event.target.value)}
+            value={store.docController.prodName}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.docController.setProdName(event.target.value)}
           />
-          <Button variant='contained' sx={{ fontSize: 12, width: '20%' }} size='large' onClick={() => store.newDoc.postDoc(store.userController.user._id)}>Отправить документ</Button>
+          <Button variant='contained' sx={{ fontSize: 12, width: '20%' }} size='large' onClick={() => store.docController.postDoc(store.userController.user._id)}>Отправить документ</Button>
         </Box>
       </Paper>
       <AddedDocList/>

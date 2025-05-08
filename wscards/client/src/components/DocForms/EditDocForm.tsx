@@ -32,8 +32,8 @@ const EditDocForm: React.FC = () => {
             label='Обозначение'
             variant='filled'
             color='success'
-            value={store.newDoc.docDecNum}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.newDoc.setDocDecNum(event.target.value)}
+            value={store.docController.docDecNum}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.docController.setDocDecNum(event.target.value)}
           />
           <TextField sx={{ width: '50%' }}
             multiline
@@ -41,8 +41,8 @@ const EditDocForm: React.FC = () => {
             label='Наименование'
             variant='filled'
             color='success'
-            value={store.newDoc.docName}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.newDoc.setDocName(event.target.value)}
+            value={store.docController.docName}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.docController.setDocName(event.target.value)}
           />
           <TextField sx={{ width: '20%' }}
             multiline
@@ -50,8 +50,8 @@ const EditDocForm: React.FC = () => {
             label='Папка №'
             variant='filled'
             color='success'
-            value={store.newDoc.folderNum}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.newDoc.setFolderNum(event.target.value)}
+            value={store.docController.folderNum}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.docController.setFolderNum(event.target.value)}
           />
         </Box>
         <Box sx={{
@@ -59,17 +59,17 @@ const EditDocForm: React.FC = () => {
           columnGap: 1,
           padding: 0,
         }}>
-          <Button variant='contained' sx={{ fontSize: 12, width: '20%' }} size='large' color='error' onClick={() => store.newDoc.deleteDoc()}>Удалить документ</Button>
+          <Button variant='contained' sx={{ fontSize: 12, width: '20%' }} size='large' color='error' onClick={() => store.docController.deleteDoc()}>Удалить документ</Button>
           <TextField sx={{ width: '80%' }}
             multiline
             id='filled-basic'
             label='Название изделия'
             variant='filled'
             color='success'
-            value={store.newDoc.prodName}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.newDoc.setProdName(event.target.value)}
+            value={store.docController.prodName}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => store.docController.setProdName(event.target.value)}
           />
-          <Button variant='contained' sx={{ fontSize: 12, width: '20%' }} size='large' onClick={() => store.newDoc.editDoc()}>Изменить документ</Button>
+          <Button variant='contained' sx={{ fontSize: 12, width: '20%' }} size='large' onClick={() => store.docController.editDoc()}>Изменить документ</Button>
         </Box>
       </Paper>
       <AddedDocList/>

@@ -12,7 +12,6 @@ import UserListForm from './UsersFields/UserListForm';
 const NewGroupForm: React.FC = () => {
 
   const store = useContext(Context);
-  // const deleteGroupCallback = store.groupController.clearForm.bind(store.groupController)
 
   const pushCallback = () => {
     if (store.groupController.label.length === 0) {

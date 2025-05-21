@@ -56,7 +56,7 @@ const NewCardForm: React.FC = () => {
           columnGap: 1,
           padding: 0,
         }}>
-          <Button variant='contained' sx={{ fontSize: 12, height: '40px', width: '20%' }} size='small' onClick={() => store.cardController.postCard(store.userController.user._id)}>Отправить карточку</Button>
+          <Button variant='contained' sx={{ fontSize: 12, height: '40px', width: '20%' }} size='small' onClick={() => store.cardController.postCard(store.groupController._id)}>Отправить карточку</Button>
           <Button variant='contained' sx={{ fontSize: 12, height: '40px', width: '80%' }} size='small' color="secondary" onClick={() => store.cardController.addTodo('', false)}>Добавить задачу</Button>
         </Box>
       </Paper>

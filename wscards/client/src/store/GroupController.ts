@@ -4,7 +4,7 @@ import { IUser } from "../models/IUser";
 import { IOtherUser } from "../models/IOtherUser";
 import { IGroup } from "../models/IGroup";
 
-class NewGroupController {
+class GroupController {
     _id: string = '';
     label: string = '';
     ownerId: string = '';
@@ -127,4 +127,4 @@ class NewGroupController {
     }
 }
 
-export default NewGroupController;
+export default GroupController;

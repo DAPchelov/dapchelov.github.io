@@ -39,10 +39,10 @@ const LoginForm: React.FC = () => {
     <div className="loginPage">
       <Card className="loginFrame">
         <div className="loginContent">
-          <Typography color="text.secondary" sx={{ fontSize: 28 }} gutterBottom>Sign in</Typography>
+          <Typography color="text.secondary" sx={{ fontSize: 28 }} gutterBottom>Войти</Typography>
           <TextField
             id="standard-basic"
-            label="Login"
+            label="Логин"
             variant="standard"
             required
             onChange={(e) => setLogin(e.target.value)}
@@ -50,7 +50,7 @@ const LoginForm: React.FC = () => {
           />
           <TextField
             id="standard-password-input"
-            label="Password"
+            label="Пароль"
             variant="standard"
             type="password"
             autoComplete="current-password"
@@ -59,13 +59,13 @@ const LoginForm: React.FC = () => {
             value={store.authController.password}
             onKeyDown={(e) => handlePasswordFieldKeyPress(e.code)}
           />
-          <Button type="submit" variant={isValid ? "contained" : "outlined"} color="success" disabled={!isValid} sx={{ width: 200 }} onClick={() => loginCallback()}>SIGN IN</Button>
+          <Button type="submit" variant={isValid ? "contained" : "outlined"} color="success" disabled={!isValid} sx={{ width: 200 }} onClick={() => loginCallback()}>ВХОД</Button>
         </div>
         <CardActions className="loginActions" sx={{ '& button': { m: 1 } }}>
           <div className='signUpBlock'>
-            <Typography color="text.secondary" sx={{ fontSize: 28 }} gutterBottom>Create account</Typography>
+            <Typography color="text.secondary" sx={{ fontSize: 28 }} gutterBottom>Зарегистрироваться</Typography>
             
-            <Button type="submit" variant={isValid ? "contained" : "outlined"} color="secondary" disabled={!isValid} sx={{ width: 200 }} onClick={() => registrationCallback()}>SIGN UP</Button>
+            <Button type="submit" variant={isValid ? "contained" : "outlined"} color="secondary" disabled={!isValid} sx={{ width: 200 }} onClick={() => registrationCallback()}>РЕГИСТРАЦИЯ</Button>
           </div>
         </CardActions>
       </Card>

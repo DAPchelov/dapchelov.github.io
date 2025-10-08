@@ -1,5 +1,5 @@
 import { Router } from "express";
-import userController from "../controllers/auth-controller.js";
+import userController from "../controllers/user-controller.js";
 import { body } from 'express-validator';
 
 const restRouter = new Router();

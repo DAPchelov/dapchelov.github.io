@@ -29,7 +29,6 @@ const WsRouter = () => {
             const wsCardCotrol = WsCardController(socket);
             const wsGroupControl = WsGroupController(socket);
             const wsDocControl = WsDocController(socket);
-        
     });
 }
 

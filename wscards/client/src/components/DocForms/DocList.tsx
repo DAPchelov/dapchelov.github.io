@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import {  Paper } from '@mui/material';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { Button, Paper } from '@mui/material';
+import { DataGrid, GridColDef, GridRowParams } from '@mui/x-data-grid';
 
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
@@ -13,20 +13,36 @@ const DocList: React.FC = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        store.docController.foundDocs.length = 0;
-    })
+        // store.docController.foundDocs.length = 0;
+    }, [])
 
     const navigateCallback = (docId: string | number) => {
+       
         store.docController.getEditableDoc(docId);
         navigate('/editdoc')
     };
+
+    const editingButton = (docId: string | number) => {
+        return (
+            <Button onClick={() => navigateCallback(docId)}>
+                Редактировать
+            </Button>
+        )
+    }
 
     const columns: GridColDef[] = [
         { field: 'docDecNum', headerName: 'Документ', flex: 16, minWidth: 120, maxWidth: 300 },
         { field: 'docName', headerName: 'Наименование', flex: 16 },
         { field: 'prodName', headerName: 'Название изделия', flex: 16 },
         { field: 'folderNum', headerName: '№ папки', flex: 8, maxWidth: 100 },
+        {
+            field: 'docEdit', headerName: '', flex: 16, maxWidth: 160, hideSortIcons: true,
+            renderCell: ({ row }: Partial<GridRowParams>) => editingButton(row._id)
+        },
     ];
+
+
+
     const paginationModel = { page: 0, pageSize: 10 };
 
     return (
@@ -37,7 +53,7 @@ const DocList: React.FC = () => {
                 columns={columns}
                 initialState={{ pagination: { paginationModel } }}
                 pageSizeOptions={[5, 10, 20]}
-                onRowClick={(row) => { navigateCallback(row.id) }}
+                // onRowClick={(row) => { navigateCallback(row.id) }}
                 sx={{ border: 0 }}
             />
         </Paper>

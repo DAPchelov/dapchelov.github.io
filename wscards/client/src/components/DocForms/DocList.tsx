@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Button, Paper } from '@mui/material';
+import { Button, Chip, Paper } from '@mui/material';
 import { DataGrid, GridColDef, GridRowParams } from '@mui/x-data-grid';
 
 import { useNavigate } from 'react-router-dom';
@@ -36,6 +36,10 @@ const DocList: React.FC = () => {
         { field: 'prodName', headerName: 'Название изделия', flex: 16 },
         { field: 'folderNum', headerName: '№ папки', flex: 8, maxWidth: 100 },
         {
+            field: 'numCrossings', headerName: '<->', flex: 8, maxWidth: 60, hideSortIcons: true,
+            renderCell: ({ row }: Partial<GridRowParams>) => (<Chip label = {row.crossedDocs.length}/>)
+        },
+        {
             field: 'docEdit', headerName: '', flex: 16, maxWidth: 160, hideSortIcons: true,
             renderCell: ({ row }: Partial<GridRowParams>) => editingButton(row._id)
         },
@@ -53,7 +57,6 @@ const DocList: React.FC = () => {
                 columns={columns}
                 initialState={{ pagination: { paginationModel } }}
                 pageSizeOptions={[5, 10, 20]}
-                // onRowClick={(row) => { navigateCallback(row.id) }}
                 sx={{ border: 0 }}
             />
         </Paper>

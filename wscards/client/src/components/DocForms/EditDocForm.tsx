@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { Context } from '../App'
 import { Box, Button, Paper } from '@mui/material';
 import AddedDocList from './AddedDocList';
+import CrossedDocList from './CrossedDocList';
 
 const EditDocForm: React.FC = () => {
   const store = useContext(Context);
@@ -72,6 +73,7 @@ const EditDocForm: React.FC = () => {
           <Button variant='contained' sx={{ fontSize: 12, width: '20%' }} size='large' onClick={() => store.docController.editDoc()}>Изменить документ</Button>
         </Box>
       </Paper>
+      <CrossedDocList />
       <AddedDocList/>
     </Box>
   );

@@ -14,7 +14,7 @@ class WSStore {
     userController: UserController = new UserController(this.authController.socket);
     cardController: CardController = new CardController(this.authController.socket);
     groupController: GroupController = new GroupController (this.authController.socket);
-    docController: DocController = new DocController('', '', '', '', '', '', this.authController.socket);
+    docController: DocController = new DocController('', '', '', '', '', '', [], this.authController.socket);
 
 
     constructor() {

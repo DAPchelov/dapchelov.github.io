@@ -13,6 +13,7 @@ export interface IEditableDoc {
     docName: string,
     prodName: string,
     folderNum: string,
+    crossedDocs: string[];
 }
 
 class NewDocController {
@@ -23,13 +24,14 @@ class NewDocController {
     docName: string = '';
     prodName: string = '';
     folderNum: string = '';
+    crossedDocs: string[] = [];
 
     socket: Socket = {} as Socket;
 
     addedDocs: IAddedDoc[] = [];
     foundDocs: IEditableDoc[] = [];
 
-    constructor(_id: string, creatorId: string, docDecNum: string, docName: string, prodName: string, folderNum: string, socket: Socket) {
+    constructor(_id: string, creatorId: string, docDecNum: string, docName: string, prodName: string, folderNum: string, crossedDocs: string[], socket: Socket) {
 
         this._id = _id;
         this.creatorId = creatorId;
@@ -37,6 +39,7 @@ class NewDocController {
         this.docName = docName;
         this.prodName = prodName;
         this.folderNum = folderNum;
+        this.crossedDocs = crossedDocs;
         this.socket = socket;
         makeAutoObservable(this);
 
@@ -66,6 +69,7 @@ class NewDocController {
                 this.setDocName(editableDoc.docName);
                 this.setProdName(editableDoc.prodName);
                 this.setFolderNum(editableDoc.folderNum);
+                this.setCrossedDocs(editableDoc.crossedDocs)
             }
         });
         this.socket.on('TakeDeletedDocDecNum', async (deletedDocDecNum: string | null) => {
@@ -102,6 +106,10 @@ class NewDocController {
     setFolderNum(newFolderNum: string) {
         this.folderNum = newFolderNum;
     }
+    setCrossedDocs(newCrossedDocs: string[]) {
+        this.crossedDocs = newCrossedDocs;
+    }
+
     pushAddedDoc(newDoc: IAddedDoc) {
         this.addedDocs.push(newDoc);
     }
@@ -115,6 +123,16 @@ class NewDocController {
         } else {
             this.docDecNum = '';
         }
+    }
+
+    addCrossedDoc(docDecNum: string) {
+        if (this.crossedDocs.filter((doc) => doc === docDecNum).length === 0) {
+            this.crossedDocs.push(docDecNum);
+        }
+    }
+    removeCrossedDoc(docDecNum: string) {
+        const newCrossedDocs = this.crossedDocs.filter((doc) => doc !== docDecNum);
+        this.crossedDocs = newCrossedDocs;
     }
 
     checkDocFields() {
@@ -138,6 +156,7 @@ class NewDocController {
         this.setDocName('');
         this.setProdName('');
         this.setFolderNum('');
+        this.setCrossedDocs(['']);
     }
 
     getEditableDoc(docId: string | number) {
@@ -161,6 +180,7 @@ class NewDocController {
                 docName: this.docName,
                 prodName: this.prodName,
                 folderNum: this.folderNum,
+                crossedDocs: this.crossedDocs,
             };
             if (this.checkDocFields()) {
                 this.socket.emit('PostDoc', { newDoc: newDoc, creatorId });
@@ -181,6 +201,7 @@ class NewDocController {
                 docName: this.docName,
                 prodName: this.prodName,
                 folderNum: this.folderNum,
+                crossedDocs: this.crossedDocs,
             };
             if (this.checkDocFields()) {
                 this.checkDocFields();

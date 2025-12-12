@@ -20,7 +20,7 @@ const UserSearchForm: React.FC = () => {
     })
 
     return (
-        <Grid item xs={4} md={4}>
+        <Grid size={{ xs: 4, md: 4 }}>
             <Paper elevation={2} sx={{
                 margin: 1,
                 display: 'flex',

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../App'
 import Avatar from '@mui/material/Avatar';
@@ -41,16 +41,6 @@ export const assignColor = (userId: string) => {
 const UserBadge: React.FC = () => {
   const store = useContext(Context);
   const user = store.userController.user;
-
-  // const getCurrentGroupLabel = () => {
-  //   if (store.getAllUserGroups() === undefined) {return('Команда Ракета')};
-  //   if (store.getCurrentGroupId() === undefined) {return('Загружаем карточки')};
-  //   if (store.getUser()._id === store.getCurrentGroupId()) {return('Мои карточки')};
-  //   const groupLabel = store.getAllUserGroups().find((group) => { if (group._id === store.getCurrentGroupId()) {
-  //     return group
-  //   }})?.label;
-  //   return (groupLabel);
-  // }
 
   if (user._id) {
     return (

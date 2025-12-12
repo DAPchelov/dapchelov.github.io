@@ -16,7 +16,7 @@ const UserListForm: React.FC<IUserListForm> = (props: IUserListForm) => {
   const switchUser = store.groupController.removeUserFromGroup.bind(store.groupController);
 
   return (
-    <Grid item xs={8} md={8}>
+    <Grid size={{ xs: 8, md: 8 }}>
       <Paper elevation={2}
         sx={{
           margin: 1,

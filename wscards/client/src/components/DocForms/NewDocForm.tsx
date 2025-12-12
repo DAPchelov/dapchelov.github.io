@@ -104,15 +104,6 @@ const NewDocForm: React.FC = () => {
             <Button variant='contained' sx={{ fontSize: 12, width: '100%', height: '100%' }} size='large' onClick={() => store.docController.postDoc(store.userController.user._id)}>Отправить документ</Button>
           </Box>
         </Box>
-
-        {/* <Box sx={{
-          display: 'flex',
-          columnGap: 1,
-          paddingTop: 1,
-          justifyContent: 'right',
-        }}>
-          
-        </Box> */}
       </Paper>
       <CrossedDocList />
       <AddedDocList />

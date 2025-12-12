@@ -30,7 +30,7 @@ class DocService {
 
     async editDoc(newDoc) {
         try {
-            await DocModel.updateOne({ _id: newDoc._id }, { $set: { creatorId: newDoc.creatorId, docDecNum: newDoc.docDecNum, docName: newDoc.docName, prodName: newDoc.prodName, folderNum: newDoc.folderNum } });
+            await DocModel.updateOne({ _id: newDoc._id }, { $set: { creatorId: newDoc.creatorId, docDecNum: newDoc.docDecNum, docName: newDoc.docName, prodName: newDoc.prodName, folderNum: newDoc.folderNum, crossedDocs: newDoc.crossedDocs } });
             return ({ _id: newDoc._id, docDecNum: newDoc.docDecNum });
         } catch (error) {
             console.log(error);
@@ -64,7 +64,10 @@ class DocService {
         try {
             let docs = undefined;
             if (searchType === 'docDecNum') {
-                docs = await DocModel.find({ docDecNum: { $regex: searchPromt + "([a-zA-Z0-9]?)" } });
+                docs = await DocModel.find({ docDecNum: searchPromt });
+                if (docs.length === 0) {
+                    docs = await DocModel.find({ docDecNum: { $regex: searchPromt + "([a-zA-Z0-9]?)" } });
+                }
             }
             if (searchType === 'docName') {
                 docs = await DocModel.find({ docName: { $regex: searchPromt + "([a-zA-Z0-9]?)" } });
@@ -73,7 +76,7 @@ class DocService {
                 docs = await DocModel.find({ prodName: { $regex: searchPromt + "([a-zA-Z0-9]?)" } });
             }
             if (searchType === 'folderNum') {
-                docs = await DocModel.find({ folderNum: { $regex: searchPromt } });
+                docs = await DocModel.find({ folderNum: searchPromt });
             }
             if (docs.length > 0) {
                 return (docs);

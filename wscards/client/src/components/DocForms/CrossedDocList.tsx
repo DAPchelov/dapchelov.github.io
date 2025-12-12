@@ -1,20 +1,14 @@
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { Context } from '../App'
 import { observer } from 'mobx-react-lite';
-import { IAddedDoc } from '../../store/DocController';
 
 import { Button, Typography, Paper } from '@mui/material';
 
 const CrossedDocList: React.FC = () => {
 
   const store = useContext(Context);
-  const navigate = useNavigate();
-
-  const navigateCallback = (docId: string) => {
-    store.docController.getEditableDoc(docId);
-    navigate('/editdoc')
-  };
+  // const navigate = useNavigate();
 
   return (
     <Paper sx={{

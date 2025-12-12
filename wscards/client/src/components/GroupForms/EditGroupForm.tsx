@@ -25,9 +25,9 @@ const EditGroupForm: React.FC = () => {
     <Paper elevation={2} sx={{
     }}>
       <Grid container spacing={0}>
-      <UserListForm deleteButtonColor="error"/>
+        <UserListForm deleteButtonColor="error" />
         <UserSearchForm />
-        <Grid item xs={12} md={12}>
+        <Grid size={{ xs: 12, md: 12 }}>
           <Button variant={'contained'} sx={{ fontSize: 12, width: '100%' }} size='small' onClick={() => pushCallback()}>Сохранить</Button>
         </Grid>
       </Grid>

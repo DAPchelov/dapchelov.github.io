@@ -1,18 +1,13 @@
 import ListItem from '@mui/material/ListItem';
-import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 
 import React from 'react';
-import { ITodo } from '../../../models/ITodo';
 import { observer } from 'mobx-react-lite';
 import { Box } from '@mui/material';
 
 interface IUserProps {
     userId: string,
-    // isLoggedIn: boolean,
     email: string,
-    // _id: string,
-    // checkTodo(id: ITodo['_id']): void,
 }
 
 const User: React.FC<IUserProps> = (props: IUserProps) => {

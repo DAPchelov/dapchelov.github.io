@@ -1,5 +1,5 @@
 import TextField from '@mui/material/TextField';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../App'
 import { Box, Button, Paper } from '@mui/material';
@@ -7,6 +7,11 @@ import AddedDocList from './AddedDocList';
 import CrossedDocList from './CrossedDocList';
 
 const EditDocForm: React.FC = () => {
+  const [crossedDoc, setCrossedDoc] = useState<string>();
+
+  useEffect(() => {
+  }, [])
+
   const store = useContext(Context);
 
   return (
@@ -61,7 +66,7 @@ const EditDocForm: React.FC = () => {
           padding: 0,
         }}>
           <Button variant='contained' sx={{ fontSize: 12, width: '20%' }} size='large' color='error' onClick={() => store.docController.deleteDoc()}>Удалить документ</Button>
-          <TextField sx={{ width: '80%' }}
+          <TextField sx={{ width: '60%' }}
             multiline
             id='filled-basic'
             label='Название изделия'
@@ -72,9 +77,27 @@ const EditDocForm: React.FC = () => {
           />
           <Button variant='contained' sx={{ fontSize: 12, width: '20%' }} size='large' onClick={() => store.docController.editDoc()}>Изменить документ</Button>
         </Box>
+        <Box sx={{
+            display: 'flex',
+            columnGap: 1,
+            justifyContent: 'space-between',
+            width: '30%',
+            paddingTop: 1,
+          }}>
+          <TextField sx={{ width: '90%' }}
+            multiline
+            id='filled-basic'
+            label='Заимствованный документ'
+            variant='filled'
+            color='success'
+            value={crossedDoc}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setCrossedDoc(event.target.value)}
+          />
+          <Button variant='contained' sx={{ fontSize: 12, width: '10%' }} size='large' onClick={() => { crossedDoc && store.docController.addCrossedDoc(crossedDoc) }}>+1</Button>
+        </Box>
       </Paper>
       <CrossedDocList />
-      <AddedDocList/>
+      <AddedDocList />
     </Box>
   );
 };

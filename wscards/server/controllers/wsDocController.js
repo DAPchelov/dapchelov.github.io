@@ -1,6 +1,6 @@
 import docService from "../service/doc-service.js";
 
-const WsDocController = (socket, user) => {
+const WsDocController = (socket) => {
         socket.on('PostDoc', (data) => {
             const newDoc = data.newDoc;
             const creatorId = data.creatorId;
@@ -14,7 +14,6 @@ const WsDocController = (socket, user) => {
             newDoc && docService.editDoc(newDoc).then((edittedDoc) => {
                 socket.emit('DocEditted', edittedDoc);
             });
-            user && docService.editDoc(newDoc);
         });
 
         socket.on('GetEditableDoc', (data) => {

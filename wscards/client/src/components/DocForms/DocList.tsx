@@ -34,20 +34,20 @@ const DocList: React.FC = () => {
         { field: 'docDecNum', headerName: 'Документ', flex: 16, minWidth: 120, maxWidth: 300 },
         { field: 'docName', headerName: 'Наименование', flex: 16 },
         { field: 'prodName', headerName: 'Название изделия', flex: 16 },
-        { field: 'folderNum', headerName: '№ папки', flex: 8, maxWidth: 100 },
+        { field: 'folderNum', headerName: '№ папки', flex: 8, maxWidth: 150 },
         {
-            field: 'numCrossings', headerName: '<->', flex: 8, maxWidth: 60, hideSortIcons: true,
+            field: 'numCrossings', headerName: '<->', flex: 6, maxWidth: 60, hideSortIcons: true,
             renderCell: ({ row }: Partial<GridRowParams>) => (<Chip label = {row.crossedDocs.length}/>)
         },
         {
-            field: 'docEdit', headerName: '', flex: 16, maxWidth: 160, hideSortIcons: true,
+            field: 'docEdit', headerName: '', flex: 14, maxWidth: 160, hideSortIcons: true,
             renderCell: ({ row }: Partial<GridRowParams>) => editingButton(row._id)
         },
     ];
 
 
 
-    const paginationModel = { page: 0, pageSize: 10 };
+    const paginationModel = { page: 0, pageSize: 11 };
 
     return (
         <Paper sx={{ width: '100%' }}>
@@ -56,7 +56,9 @@ const DocList: React.FC = () => {
                 rows={store.docController.foundDocs}
                 columns={columns}
                 initialState={{ pagination: { paginationModel } }}
-                pageSizeOptions={[5, 10, 20]}
+                pageSizeOptions={[5, 11, 22, 100]}
+                disableColumnFilter={true}
+                disableColumnMenu={true}
                 sx={{ border: 0 }}
             />
         </Paper>

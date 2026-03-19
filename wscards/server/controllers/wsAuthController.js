@@ -13,7 +13,7 @@ class WsAuthController {
                 accessToken: userData.accessToken,
                 refreshToken: userData.refreshToken,
             }
-            socket.emit('TakeAuth', authData);
+            // socket.emit('TakeAuth', authData);
         })
 
         socket.on('Login', async (loginData) => {

@@ -30,10 +30,10 @@
 
 .loginFrame {
     min-width: 300px;
-    width: 40vw;
+    width: 35vw;
     max-width: 435px;
     min-height: 390px;
-    height: 60vh;
+    height: 50vh;
     max-height: 580px;
     z-index: 2;
     display: flex;

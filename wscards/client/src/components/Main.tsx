@@ -17,38 +17,41 @@ import EditGroupForm from './GroupForms/EditGroupForm';
 import NewDocForm from './DocForms/NewDocForm';
 import EditDocForm from './DocForms/EditDocForm';
 import SearchDocForm from './DocForms/SearchDocForm';
+import NewUserForm from './AdminForm/NewUserForm';
 
 
 const Main: React.FC = () => {
   const store = useContext(Context);
 
   useEffect(() => {
-      store.authController.getUserData();
-    },[])
+    store.authController.getUserData();
+  }, [])
 
-    if (store.userController.user._id)  {
-      return(
-        <Box sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          rowGap: 1,
-          height: '98vh',
-        }}>
-          <UserControlPanel />
-          <ControlPanel />
-            <Routes>
-              <Route path='/' element={<CardsList />} />
-              <Route path='/groups' element={<GroupsList />} />
-              <Route path='/newcard' element={<NewCardForm />} />
-              <Route path='/editcard' element={<EditCardForm />} />
-              <Route path='/newgroup' element={<NewGroupForm />} />
-              <Route path='/editgroup' element={<EditGroupForm />} />
-              <Route path='/newdoc' element={<NewDocForm />} />
-              <Route path='/editdoc' element={<EditDocForm />} />
-              <Route path='/docs' element={<SearchDocForm />} />
-            </Routes>
-        </Box>
-    )};
+  if (store.userController.user._id) {
+    return (
+      <Box sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        rowGap: 1,
+        height: '98vh',
+      }}>
+        <UserControlPanel />
+        <ControlPanel />
+        <Routes>
+          <Route path='/' element={<CardsList />} />
+          <Route path='/groups' element={<GroupsList />} />
+          <Route path='/newcard' element={<NewCardForm />} />
+          <Route path='/editcard' element={<EditCardForm />} />
+          <Route path='/newgroup' element={<NewGroupForm />} />
+          <Route path='/editgroup' element={<EditGroupForm />} />
+          <Route path='/newdoc' element={<NewDocForm />} />
+          <Route path='/editdoc' element={<EditDocForm />} />
+          <Route path='/docs' element={<SearchDocForm />} />
+          <Route path='/admin' element={<NewUserForm />} />
+        </Routes>
+      </Box>
+    )
+  };
 
   return (
     <Box sx={{

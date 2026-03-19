@@ -10,7 +10,7 @@ class WSAuthController {
     login: string = '';
     password: string = '';
 
-    socket = io('http://pchel.ddns.net:5000/', {
+    socket = io('http://localhost:5000/', {
         auth: {
             token: this.accessToken
         }
@@ -29,6 +29,8 @@ class WSAuthController {
             localStorage.setItem('refreshToken', authData.refreshToken);
             this.socket.close();
             this.socket.open();
+            this.login = '';
+            this.password = '';
         })
         makeAutoObservable(this);
     }
@@ -41,6 +43,8 @@ class WSAuthController {
     }
     doRegistration() {
         this.socket.emit('Registration', { login: this.login, password: this.password });
+        this.login = '';
+        this.password = '';
     }
     getUserData() {
         this.socket.emit('GetUserData', this.userId)

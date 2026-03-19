@@ -6,7 +6,6 @@ import { Context } from '../../App'
 import UserFields from './UserFields';
 
 type IUserListForm = {
-  // deleteGroup(userId: string): void;
   deleteButtonColor: "inherit" | "error" | "primary" | "secondary" | "info" | "success" | "warning";
 }
 

@@ -60,13 +60,13 @@ const LoginForm: React.FC = () => {
           />
           <Button type="submit" variant={isValid ? "contained" : "outlined"} color="success" disabled={!isValid} sx={{ width: 200 }} onClick={() => loginCallback()}>ВХОД</Button>
         </div>
-        {/* <CardActions className="loginActions" sx={{ '& button': { m: 1 } }}>
+        <CardActions className="loginActions" sx={{ '& button': { m: 1 } }}>
           <div className='signUpBlock'>
             <Typography color="text.secondary" sx={{ fontSize: 28 }} gutterBottom>Зарегистрироваться</Typography>
 
             <Button type="submit" variant={isValid ? "contained" : "outlined"} color="secondary" disabled={!isValid} sx={{ width: 200 }} onClick={() => { registrationCallback(); loginCallback() }}>РЕГИСТРАЦИЯ</Button>
           </div>
-        </CardActions> */}
+        </CardActions>
       </Card>
     </div>
   );

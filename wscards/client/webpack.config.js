@@ -1,3 +1,7 @@
-export const devServer = {
-    open: false,
-};
+
+export default {
+    devServer: {
+        open: false,
+        port: 3000,
+    }
+}

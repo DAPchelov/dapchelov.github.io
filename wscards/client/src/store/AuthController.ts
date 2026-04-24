@@ -10,7 +10,7 @@ class WSAuthController {
     login: string = '';
     password: string = '';
 
-    socket = io('http://localhost:5000/', {
+    socket = io('http://pchel.ddns.net:5000/', {
         auth: {
             token: this.accessToken
         }
